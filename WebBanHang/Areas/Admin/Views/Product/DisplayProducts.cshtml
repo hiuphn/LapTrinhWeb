@@ -1,0 +1,15 @@
+﻿@model WebBanHang.Models.DisplayProductsViewModel
+
+@{
+    ViewData["Title"] = "Display Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Sản phẩm liên quan đến @Model.Category.Name</h1>
+
+<ul>
+    @foreach (var product in Model.Products)
+    {
+        <li>@product.Name - @product.Price</li>
+    }
+</ul>

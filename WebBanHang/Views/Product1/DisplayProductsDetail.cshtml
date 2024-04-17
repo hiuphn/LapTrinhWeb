@@ -1,0 +1,19 @@
+﻿@model DisplayProductdetail
+@{
+    ViewData["Title"] = "DisplayProductsDetail";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<h1>DisplayProductsDetail</h1>
+
+
+
+<h2>@Model.subcategory.Name</h2>
+
+<h3>Products:</h3>
+<ul>
+    @foreach (var product in Model.Products)
+    {
+        <li>@product.Name - @product.Price</li>
+    }
+</ul>

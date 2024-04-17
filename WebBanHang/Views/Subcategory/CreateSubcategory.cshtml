@@ -1,0 +1,20 @@
+﻿@model SubcategoryViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+
+<h1>Thêm mục con mới</h1>
+
+<form asp-action="CreateSubcategory">
+    <input type="hidden" asp-for="CategoryId" />
+
+    <div class="form-group">
+        <label asp-for="Name">Tên mục con:</label>
+        <input class="form-control" asp-for="Name" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Thêm</button>
+</form>
+

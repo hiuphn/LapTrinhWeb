@@ -1,0 +1,102 @@
+﻿@model Order
+
+@* @{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+} *@
+
+@* <h2>Checkout</h2>
+<form action="/Checkout/Checkout1" method="post">
+    <div class="form-group">
+        <label for="ShippingAddress">Shipping Address</label>
+        <input type="text" id="ShippingAddress" name="ShippingAddress" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="Notes">Notes</label>
+        <textarea id="Notes" name="Notes" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Place Order</button>
+</form> *@
+<div style="padding-top:100px; padding-left:50px">
+<!-- Checkout Page Start -->
+        <div class="container-fluid py-5" style="padding-top:50px">
+            <div class="container py-5">
+                <h1 class="mb-4">Chi Tiết Thanh Toán</h1>
+        <form asp-action="Checkout" method="post">
+                    <div class="row g-5">
+                        <div class="col-md-12 col-lg-6 col-xl-7">
+                            <div class="row">
+                                
+                            </div>
+                            
+                            <div class="form-item">
+                        <label asp-for="ShippingAddress" class="form-label my-3">Address <sup>*</sup></label>
+                        <input asp-for="ShippingAddress" type="text" class="form-control" placeholder="Địa chỉ">
+                            </div>
+                            
+                            <div class="form-item">
+                        <label asp-for="Notes">Ghi Chú</label>
+                        <textarea asp-for="Notes" class="form-control"  placeholder="Ghi chú cho đơn hàng"></textarea>
+                            </div>
+                        </div>
+                <div class="col-md-12 col-lg-6 col-xl-5">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sản Phẩm</th>
+                                    <th scope="col">Tên</th>
+                                    <th scope="col">Giá</th>
+                                    <th scope="col">Số Lượng</th>
+                                    <th scope="col">Tổng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in ViewBag.Cart)
+                                {
+                                    decimal totalPrice = item.Price * item.Quantity;
+                                    
+                                    
+                                    <tr>
+                                        <th scope="row">
+                                            <div class="d-flex align-items-center mt-2">
+                                                <img src="@item.ImageUrl" class="img-fluid rounded-circle" style="width: 90px; height: 90px;" alt="">
+                                            </div>
+                                        </th>
+                                        <td class="py-5">@item.Name</td>
+                                        <td class="py-5">@item.Price</td>
+                                        <td class="py-5" style="text-align:center">@item.Quantity</td>
+                                        <td class="py-5">@totalPrice</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <th scope="row">
+                                    </th>
+                                    <td class="py-5">
+                                        <p class="mb-0 text-dark text-uppercase py-3">TOTAL</p>
+                                    </td>
+                                    <td class="py-5"></td>
+                                    <td class="py-5"></td>
+                                    <td class="py-5">
+                                        
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                            <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+                                <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Đặt Hàng</button>
+                            </div>
+                
+                    
+
+                    </div>
+               
+        </form>
+
+                    </div>
+                
+        </div>
+        <!-- Checkout Page End -->
+        </div>

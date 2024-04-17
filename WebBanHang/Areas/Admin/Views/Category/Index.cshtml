@@ -1,0 +1,82 @@
+﻿@model IEnumerable<WebBanHang.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div style="padding-top:100px; padding-left:50px">
+<h1>Thêm Danh Mục</h1>
+
+<p>
+        <a asp-action="Add" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="bi bi-plus-square-fill"></i> Create New</a>
+</p>
+@* <table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning btn-rounded" data-mdb-ripple-init data-mdb-ripple-color="dark"><i class="bi bi-pencil-square"></i>Sửa</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-rounded" data-mdb-ripple-init data-mdb-ripple-color="dark"><i class="bi bi-list-task"></i>ChiTiết</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-rounded" data-mdb-ripple-init data-mdb-ripple-color="dark"><i class="bi bi-trash"></i>Xóa</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table> *@
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="">
+                <div class="table-responsive">
+                    <table class="table project-list-table table-nowrap align-middle table-borderless">
+                        <thead>
+                            <tr>
+                                
+                                    <th scope="col">Tên</th>
+                                    <th scope="col">Danh Mục</th>
+                                    
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>
+                                        <a href="#" class="text-body">@item.Name</a>
+                                    </td>
+                                    
+                                    <td>
+                                        <ul class="list-inline mb-0" style="align-items:center">
+                                            <li class="list-inline-item">
+                                                <a asp-action="Update" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Sửa" class="px-2 text-warning"><i class="bi bi-pencil-square font-size-200"></i></a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a asp-action="Display" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Chi Tiết" class="px-2 text-success"><i class="bi bi-list-task font-size-200"></i></a>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a asp-action="Delete" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Xóa" class="px-2 text-danger"><i class="bi bi-trash font-size-200"></i></a>
+                                            </li>
+
+                                        </ul>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

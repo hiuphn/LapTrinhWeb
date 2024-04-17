@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Category>
+
+@{
+    ViewData["Title"] = "Display Categories";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Danh mục sản phẩm</h1>
+
+<ul>
+    @foreach (var category in Model)
+    {
+        <li><a href="/Product/DisplayProducts?categoryId=@category.Id">@category.Name</a></li>
+    }
+</ul>

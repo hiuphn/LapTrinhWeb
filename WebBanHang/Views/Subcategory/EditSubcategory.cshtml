@@ -1,0 +1,19 @@
+﻿@model SubcategoryViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<h1>Sửa mục con</h1>
+
+<form asp-action="EditSubcategory">
+    <input type="hidden" asp-for="CategoryId" />
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Name">Tên mục con:</label>
+        <input class="form-control" asp-for="Name" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lưu</button>
+</form>
