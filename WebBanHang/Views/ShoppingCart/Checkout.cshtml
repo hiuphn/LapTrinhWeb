@@ -28,14 +28,18 @@
                             <div class="row">
                                 
                             </div>
-                            
+
+                        <div class="form-item">
+                            <label asp-for="CustomerName" class="form-label my-3">CustomerName <sup>*</sup></label>
+                            <input asp-for="CustomerName" type="text" class="form-control" placeholder="Tên Khách Hàng">
+                        </div>
                             <div class="form-item">
                         <label asp-for="ShippingAddress" class="form-label my-3">Address <sup>*</sup></label>
                         <input asp-for="ShippingAddress" type="text" class="form-control" placeholder="Địa chỉ">
                             </div>
                             
                             <div class="form-item">
-                        <label asp-for="Notes">Ghi Chú</label>
+                            <label asp-for="Notes">Ghi Chú</label><br />
                         <textarea asp-for="Notes" class="form-control"  placeholder="Ghi chú cho đơn hàng"></textarea>
                             </div>
                         </div>

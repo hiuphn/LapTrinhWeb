@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using WebBanHang.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -32,6 +33,20 @@ namespace WebBanHang.Areas.Admin.Pages
                 // Lấy danh sách đơn hàng tất cả
                 Orders = _dbContext.Orders.ToList();
             }
+        }
+        public IActionResult UpdateStatus(int orderId, OrderStatus status)
+        {
+            var order = _dbContext.Orders.Find(orderId);
+            if (order != null)
+            {
+                order.Status = status;
+                _dbContext.Update(order);
+                return RedirectToPage("ManageOrders");
+            }
+
+            ModelState.AddModelError("", "Không tìm thấy đơn hàng.");
+
+            return Page();
         }
     }
 }

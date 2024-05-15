@@ -260,6 +260,10 @@ namespace WebBanHang.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Notes")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -270,6 +274,9 @@ namespace WebBanHang.Migrations
                     b.Property<string>("ShippingAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
@@ -343,11 +350,16 @@ namespace WebBanHang.Migrations
                     b.Property<int>("SubcategoryId")
                         .HasColumnType("int");
 
+                    b.Property<int>("SupplierID")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("SubcategoryId");
+
+                    b.HasIndex("SupplierID");
 
                     b.ToTable("Products");
                 });
@@ -394,6 +406,39 @@ namespace WebBanHang.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Subcategorys");
+                });
+
+            modelBuilder.Entity("WebBanHang.Models.Supplier", b =>
+                {
+                    b.Property<int>("SupplierID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SupplierID"));
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Logo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SuplierPhone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SupplierAddress")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("SupplierID");
+
+                    b.ToTable("Suppliers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -491,7 +536,15 @@ namespace WebBanHang.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("WebBanHang.Models.Supplier", "Supplier")
+                        .WithMany()
+                        .HasForeignKey("SupplierID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Supplier");
 
                     b.Navigation("subcategory");
                 });

@@ -14,11 +14,14 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.VisualBasic;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebBanHang.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
+        private readonly ApplicationDbContext _context;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -33,7 +36,8 @@ namespace WebBanHang.Areas.Identity.Pages.Account
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _roleManager = roleManager;
             _userManager = userManager;
@@ -42,6 +46,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         /// <summary>
@@ -69,12 +74,31 @@ namespace WebBanHang.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
-        
+            [Required]
+            [StringLength(100, ErrorMessage = "Tên phải dài ít nhất 5 kí tự.", MinimumLength = 5)]
             public string FullName { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            /// [Required]
+            [Display(Name = "Địa chỉ")]
+            public string Address { get; set; }
+
+            [Required]
+            [Display(Name = "Ngày sinh")]
+            public DateTime Age { get; set; }
+
+            [Required(ErrorMessage = "Vui lòng chọn giới tính.")]
+            [Display(Name = "Giới tính")]
+            public bool Sex { get; set; }
+
+            [Required]
+            [StringLength(10, ErrorMessage = "Số Điện Thoại phải có 10 số", MinimumLength = 10)]
+            [DataType(DataType.PhoneNumber)]
+            [Display(Name = "Số điện thoại")]
+            public string PhoneNumber { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -85,7 +109,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "Mật Khẩu phải dài ít nhất 6 kí tự.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -96,12 +120,15 @@ namespace WebBanHang.Areas.Identity.Pages.Account
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "Mật khẩu và mật khẩu xác nhận không khớp.")]
             public string ConfirmPassword { get; set; }
 
+            [BindProperty]
+            [Required(ErrorMessage = "Vui lòng chọn vai trò.")]
             public string? Role { get; set; }
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
+
         }
 
 
@@ -112,7 +139,6 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Customer)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Employee)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).GetAwaiter().GetResult();
-                _roleManager.CreateAsync(new IdentityRole(SD.Role_Company)).GetAwaiter().GetResult();
             }
             Input = new()
             {
@@ -134,6 +160,10 @@ namespace WebBanHang.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
                 user.FullName = Input.FullName;
+                user.Address = Input.Address;
+                user.Age = Input.Age;
+                user.PhoneNumber = Input.PhoneNumber;
+                user.Sex = Input.Sex;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -150,6 +180,56 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                     {
                         await _userManager.AddToRoleAsync(user, SD.Role_Customer);
                     }
+                    //Tạo thông tin nhân viên hoặc khách hàng và lưu vào cơ sở dữ liệu
+                    if (Input.Role == "Nhân viên" || Input.Role == "Admin")
+                    {
+                        var roleEmployee = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Nhân viên");
+                        var roleAdmin = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Admin");
+
+                        var roleName = "";
+                        var roleId = "";
+                        var userRoles = await _userManager.GetRolesAsync(user);
+                        if (userRoles.Contains("Nhân viên"))
+                        {
+                            roleName = "Nhân viên";
+                            roleId = roleEmployee.Id;
+                        }
+                        else if (userRoles.Contains("Admin"))
+                        {
+                            roleName = "Admin";
+                            roleId = roleAdmin.Id;
+                        }
+
+                        var staff = new Staff
+                        {
+                            UserId = user.Id,
+                            StaffName = Input.FullName,
+                            Sex = Input.Sex,
+                            Position = roleName,
+                            BirthDay = Input.Age,
+                            Address = Input.Address,
+                            RoleId = roleId,
+                            StaffPhone = Input.PhoneNumber,
+                            Email = Input.Email
+                        };
+                        _context.Staffs.Add(staff);
+                    }
+                    else if (Input.Role == "Khách hàng")
+                    {
+                        var customer = new Customer
+                        {
+                            UserId = user.Id,
+                            CustomerName = Input.FullName,
+                            Sex = Input.Sex,
+                            BirthDay = Input.Age,
+                            CustomerAddress = Input.Address,
+                            CustomerPhone = Input.PhoneNumber,
+                            Email = Input.Email
+                        };
+                        _context.Customers.Add(customer);
+                    }
+
+                    await _context.SaveChangesAsync();
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -161,7 +241,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
+                    
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });

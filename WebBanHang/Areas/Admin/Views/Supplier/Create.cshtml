@@ -1,0 +1,56 @@
+﻿@model WebBanHang.Models.Supplier
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<h1>Create</h1>
+
+<h4>Supplier</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CompanyName" class="control-label"></label>
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Logo" class="control-label"></label>
+                <input type="file" asp-for="Logo" class="form-control" />
+                <span asp-validation-for="Logo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SuplierPhone" class="control-label"></label>
+                <input asp-for="SuplierPhone" class="form-control" />
+                <span asp-validation-for="SuplierPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SupplierAddress" class="control-label"></label>
+                <input asp-for="SupplierAddress" class="form-control" />
+                <span asp-validation-for="SupplierAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

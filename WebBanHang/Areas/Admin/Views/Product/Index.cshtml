@@ -84,13 +84,19 @@
                                     <td>
                                         <ul class="list-inline mb-0" style="align-items:center">
                                             <li class="list-inline-item">
-                                                <a asp-action="Update" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Sửa" class="px-2 text-warning" ><i class="bi bi-pencil-square font-size-200"></i></a>
+                                                <span class="badge badge-soft-warning mb-0">
+                                                    <a asp-action="Update" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Sửa" class="px-2 text-warning" ><i class="bi bi-pencil-square font-size-200"></i></a>
+                                                </span>
                                             </li>
                                             <li class="list-inline-item">
-                                                <a asp-action="Details" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Chi Tiết" class="px-2 text-success"><i class="bi bi-list-task font-size-200"></i></a>
+                                                <span class="badge badge-soft-success mb-0">
+                                                    <a asp-action="Details" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Chi Tiết" class="px-2 text-success"><i class="bi bi-list-task font-size-200"></i></a>
+                                                </span>
                                             </li>
                                             <li class="list-inline-item">
-                                                <a asp-action="Delete" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Xóa" class="px-2 text-danger"><i class="bi bi-trash font-size-200"></i></a>
+                                                <span class="badge badge-soft-danger mb-0">
+                                                    <a asp-action="Delete" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Xóa" class="px-2 text-danger"><i class="bi bi-trash font-size-200"></i></a>
+                                                </span>
                                             </li>
                                             
                                         </ul>

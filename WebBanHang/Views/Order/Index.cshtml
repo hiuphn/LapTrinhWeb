@@ -1,23 +1,24 @@
-﻿@page 
-@using Microsoft.AspNetCore.Mvc.Rendering
-@model WebBanHang.Areas.Admin.Pages.ManageOrders
-
+﻿@model List<WebBanHang.Models.Order>
 @{
-    ViewData["Title"] = "Quản lý đơn hàng";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
 }
-
-
-
 <div style="padding-top: 200px;padding-left:50px">
-<h1>Quản lý đơn hàng</h1>
+    <h1>Lịch Sử Đơn Hàng</h1>
 
-<form method="get">
-    <label for="date">Chọn ngày:</label>
-    <input type="date" id="date" name="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
-        <button type="submit" class="btn btn-outline-success btn-rounded" data-mdb-ripple-init data-mdb-ripple-color="dark"><i class="bi bi-eye"></i>Xem</button>
-</form>
-
+    @* <form method="get">
+        <label for="date">Chọn ngày:</label>
+        <input type="date" id="date" name="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+        <button type="submit" class="btn btn-outline-warning btn-rounded" data-mdb-ripple-init data-mdb-ripple-color="dark"> <i class="bi bi-eye"></i> </i>Xem </button>
+    </form> *@
+    @using (Html.BeginForm("FilterOrders", "Order", FormMethod.Get))
+    {
+        <p>
+            Lọc Theo ngày:
+            <input type="date" name="filterDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+            <button type="submit" class="btn btn-outline-danger btn-rounded" data-mdb-ripple-init data-mdb-ripple-color="dark"> <i class="bi bi-eye">Xem</i> </button>
+        </p>
+    }
     <div class="row">
         <div class="col-lg-12">
             <div class="">
@@ -34,7 +35,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.Orders)
+                            @foreach (var item in Model)
                             {
                                 <tr>
 
@@ -47,22 +48,6 @@
                                     <td><span class="badge badge-soft-success mb-0">@item.ShippingAddress</span></td>
                                     <td><span class="badge badge-soft-danger mb-0">@item.TotalPrice</span></td>
                                     <td><span class="badge badge-soft-danger mb-0">@item.Status</span></td>
-                                    <td>
-                                        <span class="badge badge-soft-danger mb-0">
-                                            <form action="UpdateStatus" method="post">
-                                                <input type="hidden" name="orderId" value="@item.Id" />
-                                                <label>Trạng thái mới:</label>
-                                                <select name="status">
-                                                    <option value="@WebBanHang.Models.OrderStatus.Chưa_Giải_Quyết">Chờ xử lý</option>
-                                                    <option value="@WebBanHang.Models.OrderStatus.Đã_Xử_Lí">Đang xử lý Đơn Hàng</option>
-                                                    <option value="@WebBanHang.Models.OrderStatus.Đã_Vận_Chuyển">Đã Gửi Đơn Hàng Đi</option>
-                                                    <option value="@WebBanHang.Models.OrderStatus.Đã_Giao_Hàng">Đã giao hàng</option>
-                                                    <option value="@WebBanHang.Models.OrderStatus.Đã_Hủy">Đã hủy</option>
-                                                </select>
-                                                <button type="submit">Cập nhật trạng thái</button>
-                                            </form>
-                                        </span>
-                                    </td>
                                     
                                     <td>
                                         <ul class="list-inline mb-0" style="align-items:center">
@@ -79,3 +64,22 @@
     </div>
 </div>
 </div>
+@* <h2 style="padding-top: 100px">Thông tin đơn hàng</h2>
+
+<p>Mã đơn hàng: @Model.UserId</p>
+<p>Tên khách hàng: @Model.CustomerName</p>
+<p>Tổng giá trị: @Model.TotalPrice</p>
+<p>Trạng thái: @Model.Status</p>
+ *@
+@* <form asp-action="UpdateStatus" method="post">
+    <input type="hidden" name="orderId" value="@Model.Id" />
+    <label>Trạng thái mới:</label>
+    <select name="status">
+        <option value="@OrderStatus.ChuaGiaiQuyet">Chờ xử lý</option>
+        <option value="@OrderStatus.XuLy">Đang xử lý</option>
+        <option value="@OrderStatus.ĐaVanChuyen">Đã gửi</option>
+        <option value="@OrderStatus.DaGiaoHang">Đã giao hàng</option>
+        <option value="@OrderStatus.DaHuy">Đã hủy</option>
+    </select>
+    <button type="submit">Cập nhật trạng thái</button>
+</form> *@

@@ -40,7 +40,9 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddScoped<IProductRespository, EFProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, EFCategoryRepository>();
+builder.Services.AddScoped<ISupplierRespository, EFSupplierRepository>();
 builder.Services.AddScoped<ISubcategory, EFSubcategory>();
+builder.Services.AddScoped<OrderRepository>();
 builder.Services.AddAuthentication()
     .AddGoogle(googleOptions =>
     {

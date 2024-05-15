@@ -48,6 +48,7 @@
                                     <th scope="col">Tên</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">UserName</th>
+                                    <th scope="col">Số Điện Thoại</th>
                                     <th scope="col">Khóa Tài Khoản </th>
                             </tr>
                         </thead>
@@ -60,8 +61,9 @@
                                         
                                         <p class="text-body">@item.FullName</p>
                                     </td>
-                                    <td><span class="badge badge-soft-success mb-0">@item.Email</span></td>
+                                    <td><span class="badge badge-soft-success mb-0">@item.UserName</span></td>
                                     <td><span class="badge badge-soft-info mb-0">@item.UserName</span></td>
+                                    <td><span class="badge badge-soft-info mb-0">@item.PhoneNumber</span></td>
                                     <td>
                                         <ul class="list-inline mb-0" style="align-items:center">
                                             @if (!item.IsLocked)

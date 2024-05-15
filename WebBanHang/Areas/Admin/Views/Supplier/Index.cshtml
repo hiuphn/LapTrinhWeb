@@ -1,0 +1,66 @@
+﻿@model IEnumerable<WebBanHang.Models.Supplier>
+@{
+    ViewData["Title"] = "Index";
+}
+<div style="padding-top:100px;padding-left:50px;padding-right:50px">
+    <h1 style=" text-align:center">Thêm Nhà Cung Cấp Mới</h1>
+    <a asp-action="Create" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="bi bi-plus-square-fill"></i> Create New</a>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="">
+                <div class="table-responsive">
+                    <table class="table project-list-table table-nowrap align-middle table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col">Logo</th>
+                                <th scope="col">Tên Công Ty</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Số Điện Thoại</th>
+                                <th scope="col">Địa Chỉ</th>
+                                <th scope="col">Mô tả</th>
+                                <th scope="col" style="width: 200px;height:100px">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>
+                                        <img src="@Html.DisplayFor(modelItem => item.Logo)" width="500px" alt="" class="avatar-sm rounded-circle me-2" />
+                                    <td><span class="badge badge-soft-danger mb-0">@item.CompanyName</span></td>
+                                    <td><span class="badge badge-soft-success mb-0">@item.Email</span></td>
+                                    <td><span class="badge badge-soft-info mb-0">@item.SuplierPhone</span></td>
+                                    <td><span class="badge badge-soft-info mb-0">@item.SupplierAddress</span></td>
+                                    <td><span class="badge badge-soft-danger mb-0">@item.Description</span></td>
+                                    <td>
+                                        <ul class="list-inline mb-0" style="align-items:center">
+                                            <li class="list-inline-item">
+                                                <span class="badge badge-soft-warning mb-0">
+                                                    <a asp-action="Edit" asp-route-id="@item.SupplierID" data-bs-toggle="tooltip" data-bs-placement="top" title="Sửa" class="px-2 text-warning"><i class="bi bi-pencil-square font-size-200"></i></a>
+                                                </span>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <span class="badge badge-soft-success mb-0">
+                                                    <a asp-action="Details" asp-route-id="@item.SupplierID" data-bs-toggle="tooltip" data-bs-placement="top" title="Chi Tiết" class="px-2 text-success"><i class="bi bi-list-task font-size-200"></i></a>
+                                                </span>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <span class="badge badge-soft-danger mb-0">
+                                                    <a asp-action="Delete" asp-route-id="@item.SupplierID" data-bs-toggle="tooltip" data-bs-placement="top" title="Xóa" class="px-2 text-danger"><i class="bi bi-trash font-size-200"></i></a>
+                                                </span>
+                                            </li>
+
+                                        </ul>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

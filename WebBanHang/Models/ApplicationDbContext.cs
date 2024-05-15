@@ -24,10 +24,13 @@ namespace WebBanHang.Models
 		public DbSet<Order> Orders { get; set; }
 		public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Subcategory> Subcategorys { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Staff> Staffs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=WINDOWS-11;Database=QLBanHangtestt;Trusted_Connection=True;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=WINDOWS-11;Database=QLBanHangtestttttttttt;Trusted_Connection=True;TrustServerCertificate=True;");
         }
         
     }
