@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<WebBanHang.Models.Product>
 
 @{
-    ViewData["Title"] = "Index";}
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
 <div style="padding-top:100px;padding-left:50px;padding-right:50px">
 <h1 style=" text-align:center">Thêm Sản Phẩm Mới</h1>
 <a  asp-action="Add" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="bi bi-plus-square-fill"></i> Create New</a>

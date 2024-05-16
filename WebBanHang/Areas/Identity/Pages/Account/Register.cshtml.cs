@@ -123,8 +123,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "Mật khẩu và mật khẩu xác nhận không khớp.")]
             public string ConfirmPassword { get; set; }
 
-            [BindProperty]
-            [Required(ErrorMessage = "Vui lòng chọn vai trò.")]
+            
             public string? Role { get; set; }
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
@@ -139,6 +138,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Customer)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Employee)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Admin)).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(SD.Role_Company)).GetAwaiter().GetResult();
             }
             Input = new()
             {
@@ -171,7 +171,6 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
                     if (!string.IsNullOrEmpty(Input.Role))
                     {
                         await _userManager.AddToRoleAsync(user, Input.Role);
@@ -181,10 +180,10 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, SD.Role_Customer);
                     }
                     //Tạo thông tin nhân viên hoặc khách hàng và lưu vào cơ sở dữ liệu
-                    if (Input.Role == "Nhân viên" || Input.Role == "Admin")
+                    if (Input.Role == "Nhân viên" || Input.Role == "Khách hàng")
                     {
                         var roleEmployee = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Nhân viên");
-                        var roleAdmin = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Admin");
+                        var roleAdmin = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Khách hàng");
 
                         var roleName = "";
                         var roleId = "";
@@ -194,9 +193,9 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                             roleName = "Nhân viên";
                             roleId = roleEmployee.Id;
                         }
-                        else if (userRoles.Contains("Admin"))
+                        else if (userRoles.Contains("Khách hàng"))
                         {
-                            roleName = "Admin";
+                            roleName = "Khách hàng";
                             roleId = roleAdmin.Id;
                         }
 
@@ -213,8 +212,22 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                             Email = Input.Email
                         };
                         _context.Staffs.Add(staff);
+                        if (Input.Role == "Khách hàng")
+                        {
+                            var customer = new Customer
+                            {
+                                UserId = user.Id,
+                                CustomerName = Input.FullName,
+                                Sex = Input.Sex,
+                                BirthDay = Input.Age,
+                                CustomerAddress = Input.Address,
+                                CustomerPhone = Input.PhoneNumber,
+                                Email = Input.Email
+                            };
+                            _context.Customers.Add(customer);
+                        }
                     }
-                    else if (Input.Role == "Khách hàng")
+                    /*else if (Input.Role == "Khách hàng")
                     {
                         var customer = new Customer
                         {
@@ -227,7 +240,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                             Email = Input.Email
                         };
                         _context.Customers.Add(customer);
-                    }
+                    }*/
 
                     await _context.SaveChangesAsync();
                     var userId = await _userManager.GetUserIdAsync(user);
