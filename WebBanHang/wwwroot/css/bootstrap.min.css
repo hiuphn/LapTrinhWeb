@@ -29,7 +29,7 @@
     --bs-dark: #45595B;
     --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0))
+    --bs-gradient: linear-gradient(rgb(255 255 255 / 15%), rgba(0, 0, 0, .25))
 }
 
 *, *::before, *::after {
@@ -48,8 +48,8 @@ body {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: #747d88;
-    background-color: #fff;
+    color: #000;
+    background-color: #000;
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: rgba(0,0,0,0)
 }
@@ -197,12 +197,12 @@ sup {
 }
 
 a {
-    color: #dc3545;
+    color: #000;
     text-decoration: none
 }
 
     a:hover {
-        color: #dc3545
+        color: #000
     }
 
     a:not([href]):not([class]), a:not([href]):not([class]):hover {
@@ -2916,8 +2916,8 @@ textarea.form-control-lg {
 
 .btn-primary {
     color: #000;
-    background-color: #dc3545;
-    border-color: #dc3545
+    background-color: #000;
+    border-color: #fff
 }
 
     .btn-primary:hover {
@@ -3929,7 +3929,7 @@ textarea.form-control-lg {
 .nav-link {
     display: block;
     padding: .5rem 1rem;
-    color: #dc3545;
+    color: #000;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out
 }
 
@@ -6812,7 +6812,7 @@ textarea.form-control-lg {
 }
 
 .border-secondary {
-    border-color: #ffb524 !important
+    border-color: #000 !important
 }
 
 .border-success {
@@ -7785,13 +7785,15 @@ textarea.form-control-lg {
 }
 
 .text-primary {
-    color: #dc3545 !important
+    color: #000 !important
 }
 
 .text-secondary {
-    color: #ced4da !important
+    color: #fff !important
 }
-
+.text-yellow {
+    color: #ffc107 !important
+}
 .text-success {
     color: #198754 !important
 }
@@ -7819,7 +7821,9 @@ textarea.form-control-lg {
 .text-white {
     color: #fff !important
 }
-
+.text-star {
+    color: #57e32c !important
+}
 .text-body {
     color: #747d88 !important
 }
@@ -7841,9 +7845,11 @@ textarea.form-control-lg {
 }
 
 .bg-primary {
-    background-color: #dc3545 !important
+    background-color: #000 !important
 }
-
+.bg-banner {
+    background-color: #fff !important
+}
 .bg-secondary {
     background-color: #ffb524 !important
 }
