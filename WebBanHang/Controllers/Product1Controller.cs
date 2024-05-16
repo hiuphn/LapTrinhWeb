@@ -27,6 +27,7 @@ namespace WebBanHang.Controllers
             ViewBag.Motors = motors;
             return View(products);
         }
+
         public async Task<IActionResult> Add()
         {
             var categories = await _categoryRepository.GetAllAsync();
