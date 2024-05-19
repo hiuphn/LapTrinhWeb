@@ -128,6 +128,7 @@ namespace WebBanHang.Areas.Admin.Controllers
                 existingProduct.SuplierPhone = nhacungcap.SuplierPhone;
                 existingProduct.SupplierAddress = nhacungcap.SupplierAddress;
                 existingProduct.Description = nhacungcap.Description;
+                existingProduct.Logo= nhacungcap.Logo;
                 await _supplierRespository.UpdateAsync(existingProduct);
                 return RedirectToAction(nameof(Index));
             }
