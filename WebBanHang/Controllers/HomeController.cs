@@ -27,8 +27,12 @@ namespace WebBanHang.Controllers
             ViewBag.Motors = motors;
             return View(products);
 		}
+        public IActionResult Contact()
+        {
+            return View();
+        }
 
-		public IActionResult Privacy()
+        public IActionResult Privacy()
         {
             return View();
         }

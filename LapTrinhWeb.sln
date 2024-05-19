@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuAnDauTien", "DuAnDauTien\DuAnDauTien.csproj", "{96D75519-A3C9-48FD-A240-136C74552301}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebBanHang", "WebBanHang\WebBanHang.csproj", "{0B84DCEA-63CE-4CC6-A3EC-DDE9A537AC9A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuan2", "Tuan2\Tuan2.csproj", "{B9FA4B90-4719-4F09-BD60-38D24682AE4E}"
 EndProject
@@ -17,18 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{96D75519-A3C9-48FD-A240-136C74552301}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{96D75519-A3C9-48FD-A240-136C74552301}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{96D75519-A3C9-48FD-A240-136C74552301}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{96D75519-A3C9-48FD-A240-136C74552301}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B9FA4B90-4719-4F09-BD60-38D24682AE4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B9FA4B90-4719-4F09-BD60-38D24682AE4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B9FA4B90-4719-4F09-BD60-38D24682AE4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B9FA4B90-4719-4F09-BD60-38D24682AE4E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA02F612-AB92-4002-B837-F28152B263E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA02F612-AB92-4002-B837-F28152B263E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA02F612-AB92-4002-B837-F28152B263E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA02F612-AB92-4002-B837-F28152B263E8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0B84DCEA-63CE-4CC6-A3EC-DDE9A537AC9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0B84DCEA-63CE-4CC6-A3EC-DDE9A537AC9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B84DCEA-63CE-4CC6-A3EC-DDE9A537AC9A}.Release|Any CPU.ActiveCfg = Release|Any CPU

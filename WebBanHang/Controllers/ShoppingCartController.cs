@@ -70,9 +70,19 @@ namespace WebBanHang.Controllers
 			}
 			return RedirectToAction("Index");
 		}
-		public IActionResult Checkout()
+
+        public IActionResult EmptyCart()
+        {
+            return View();
+
+        }
+        public IActionResult Checkout()
 		{
             var cart = HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart");
+            if (cart == null || cart.Items.Count == 0)
+            {
+                return View("EmptyCart"); 
+            }
             List<CartItem> cartItem = cart.Items;
 			ViewBag.Cart = cartItem;
             return View(new Order());
