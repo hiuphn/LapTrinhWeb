@@ -43,6 +43,8 @@ namespace WebBanHang.Models
         [DisplayName("Danh mục")]
         public Subcategory? subcategory { get; set; }
 
+        public int SupplierID { get; set; }
+        public Supplier? Supplier { get; set; }
 
 
 

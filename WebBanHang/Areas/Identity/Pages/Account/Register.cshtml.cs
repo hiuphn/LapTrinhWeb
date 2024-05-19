@@ -14,11 +14,14 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.VisualBasic;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebBanHang.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {
+        private readonly ApplicationDbContext _context;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
@@ -26,14 +29,16 @@ namespace WebBanHang.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-
+        private readonly IWebHostEnvironment _webHostEnvironment;
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IUserStore<ApplicationUser> userStore,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context,
+            IWebHostEnvironment webHostEnvironment)
         {
             _roleManager = roleManager;
             _userManager = userManager;
@@ -42,6 +47,8 @@ namespace WebBanHang.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         /// <summary>
@@ -69,12 +76,30 @@ namespace WebBanHang.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
-        
+            [Required]
+            [StringLength(100, ErrorMessage = "Tên phải dài ít nhất 5 kí tự.", MinimumLength = 5)]
             public string FullName { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            /// [Required]
+            [Display(Name = "Địa chỉ")]
+            public string Address { get; set; }
+
+            [Required]
+            [Display(Name = "Ngày sinh")]
+            public DateTime Age { get; set; }
+
+            [Required(ErrorMessage = "Vui lòng chọn giới tính.")]
+            [Display(Name = "Giới tính")]
+            public bool Sex { get; set; }
+
+            [Required(ErrorMessage = "Vui lòng nhập số điện thoại")]
+            [RegularExpression(@"^(0|\+84)[3|5|7|8|9]\d{8}$", ErrorMessage = "Số điện thoại không hợp lệ")]
+            [Display(Name = "Số điện thoại")]
+            public string PhoneNumber { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -85,7 +110,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "Mật Khẩu phải dài ít nhất 6 kí tự.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
@@ -96,14 +121,34 @@ namespace WebBanHang.Areas.Identity.Pages.Account
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "Mật khẩu và mật khẩu xác nhận không khớp.")]
             public string ConfirmPassword { get; set; }
+
+            [Display(Name = "Ảnh đại diện")]
+            public IFormFile? Avatar { get; set; }
 
             public string? Role { get; set; }
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
+
         }
 
+        private async Task<string> SaveImage(IFormFile image)
+        {
+            if (image == null)
+            {
+                // Sử dụng hình ảnh mặc định nếu không có ảnh tải lên
+                return "/images/anonymous.png";
+            }
+
+            var savePath = Path.Combine("wwwroot/images", image.FileName);
+            using (var fileStream = new FileStream(savePath, FileMode.Create))
+            {
+                await image.CopyToAsync(fileStream);
+            }
+
+            return "/images/" + image.FileName; // Trả về đường dẫn tương đối
+        }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -134,14 +179,20 @@ namespace WebBanHang.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
                 user.FullName = Input.FullName;
+                user.Address = Input.Address;
+                user.Age = Input.Age;
+                user.PhoneNumber = Input.PhoneNumber;
+                user.Sex = Input.Sex;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                var imagePath = await SaveImage(Input.Avatar);
+                user.AvatarPath = imagePath;
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
                     if (!string.IsNullOrEmpty(Input.Role))
                     {
                         await _userManager.AddToRoleAsync(user, Input.Role);
@@ -150,6 +201,72 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                     {
                         await _userManager.AddToRoleAsync(user, SD.Role_Customer);
                     }
+                    //Tạo thông tin nhân viên hoặc khách hàng và lưu vào cơ sở dữ liệu
+                    if (Input.Role == "Nhân viên" || Input.Role == "Khách hàng")
+                    {
+                        var roleEmployee = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Nhân viên");
+                        var roleAdmin = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Khách hàng");
+
+                        var roleName = "";
+                        var roleId = "";
+                        var userRoles = await _userManager.GetRolesAsync(user);
+                        if (userRoles.Contains("Nhân viên"))
+                        {
+                            roleName = "Nhân viên";
+                            roleId = roleEmployee.Id;
+                        }
+                        else if (userRoles.Contains("Khách hàng"))
+                        {
+                            roleName = "Khách hàng";
+                            roleId = roleAdmin.Id;
+                        }
+
+                        var staff = new Staff
+                        {
+                            UserId = user.Id,
+                            StaffName = Input.FullName,
+                            Sex = Input.Sex,
+                            Position = roleName,
+                            BirthDay = Input.Age,
+                            Address = Input.Address,
+                            RoleId = roleId,
+                            StaffPhone = Input.PhoneNumber,
+                            Email = Input.Email,
+                            AvatarPath=imagePath
+                        };
+                        _context.Staffs.Add(staff);
+                        if (Input.Role == "Khách hàng")
+                        {
+                            var customer = new Customer
+                            {
+                                UserId = user.Id,
+                                CustomerName = Input.FullName,
+                                Sex = Input.Sex,
+                                BirthDay = Input.Age,
+                                CustomerAddress = Input.Address,
+                                CustomerPhone = Input.PhoneNumber,
+                                Email = Input.Email,
+                                AvatarPath = imagePath
+                            };
+                            _context.Customers.Add(customer);
+                        }
+                    }
+                    /*else if (Input.Role == "Khách hàng")
+                    {
+                        var customer = new Customer
+                        {
+                            UserId = user.Id,
+                            CustomerName = Input.FullName,
+                            Sex = Input.Sex,
+                            BirthDay = Input.Age,
+                            CustomerAddress = Input.Address,
+                            CustomerPhone = Input.PhoneNumber,
+                            Email = Input.Email
+                        };
+                        _context.Customers.Add(customer);
+                    }*/
+
+                    await _context.SaveChangesAsync();
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -161,7 +278,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
+                    
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });

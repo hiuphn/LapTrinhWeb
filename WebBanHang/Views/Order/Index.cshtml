@@ -1,0 +1,85 @@
+﻿@model List<WebBanHang.Models.Order>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+<div style="padding-top: 200px;padding-left:50px">
+    <h1>Lịch Sử Đơn Hàng</h1>
+
+    @* <form method="get">
+        <label for="date">Chọn ngày:</label>
+        <input type="date" id="date" name="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+        <button type="submit" class="btn btn-outline-warning btn-rounded" data-mdb-ripple-init data-mdb-ripple-color="dark"> <i class="bi bi-eye"></i> </i>Xem </button>
+    </form> *@
+    @using (Html.BeginForm("FilterOrders", "Order", FormMethod.Get))
+    {
+        <p>
+            Lọc Theo ngày:
+            <input type="date" name="filterDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+            <button type="submit" class="btn btn-outline-danger btn-rounded" data-mdb-ripple-init data-mdb-ripple-color="dark"> <i class="bi bi-eye">Xem</i> </button>
+        </p>
+    }
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="">
+                <div class="table-responsive">
+                    <table class="table project-list-table table-nowrap align-middle table-borderless">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Tên Khách hàng</th>
+                                <th scope="col">Ngày Đặt Hàng</th>
+                                <th scope="col">Địa Chỉ</th>
+                                <th scope="col">Tổng Tiền</th>
+                                <th scope="col">Trạng Thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>
+
+                                        <p class="text-body">@item.Id</p>
+                                    </td>
+                                    <td><span class="badge badge-soft-success mb-0">@item.CustomerName</span></td>
+                                    <td><span class="badge badge-soft-success mb-0">@item.OrderDate</span></td>
+                                    <td><span class="badge badge-soft-success mb-0">@item.ShippingAddress</span></td>
+                                    <td><span class="badge badge-soft-danger mb-0">@item.TotalPrice</span></td>
+                                    <td><span class="badge badge-soft-danger mb-0">@item.Status</span></td>
+                                    
+                                    <td>
+                                        <ul class="list-inline mb-0" style="align-items:center">
+                                        </ul>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+@* <h2 style="padding-top: 100px">Thông tin đơn hàng</h2>
+
+<p>Mã đơn hàng: @Model.UserId</p>
+<p>Tên khách hàng: @Model.CustomerName</p>
+<p>Tổng giá trị: @Model.TotalPrice</p>
+<p>Trạng thái: @Model.Status</p>
+ *@
+@* <form asp-action="UpdateStatus" method="post">
+    <input type="hidden" name="orderId" value="@Model.Id" />
+    <label>Trạng thái mới:</label>
+    <select name="status">
+        <option value="@OrderStatus.ChuaGiaiQuyet">Chờ xử lý</option>
+        <option value="@OrderStatus.XuLy">Đang xử lý</option>
+        <option value="@OrderStatus.ĐaVanChuyen">Đã gửi</option>
+        <option value="@OrderStatus.DaGiaoHang">Đã giao hàng</option>
+        <option value="@OrderStatus.DaHuy">Đã hủy</option>
+    </select>
+    <button type="submit">Cập nhật trạng thái</button>
+</form> *@

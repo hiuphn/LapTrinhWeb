@@ -21,13 +21,14 @@ namespace WebBanHang.Areas.Admin.Controllers
             _subcategory = subcategory; 
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
+            ViewData["CurrentFilter"] = searchString;
             var products = await _productRespository.GetAllAsync();
-           
-
-
-
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(n => n.Name.ToLower().Contains(searchString.ToLower()));
+            }
             return View(products);
         }
         public async Task<IActionResult> Add()
@@ -160,16 +161,21 @@ namespace WebBanHang.Areas.Admin.Controllers
             }
             return View(product);
         }
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var product = await _productRespository.GetByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
             await _productRespository.DeleteAsync(id);
 
-            return RedirectToAction(nameof(Index));
+            return Ok();
         }
-      
-
-
     }
+
+
 }
     

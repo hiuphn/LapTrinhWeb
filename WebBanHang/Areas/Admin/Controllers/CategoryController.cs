@@ -1,6 +1,7 @@
 ﻿using WebBanHang.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace DoAnCuoiky.Areas.Admin.Controllers
@@ -11,15 +12,22 @@ namespace DoAnCuoiky.Areas.Admin.Controllers
     {
         private readonly IProductRespository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
-        public CategoryController(IProductRespository productRepository, ICategoryRepository categoryRepository)
+        private readonly ApplicationDbContext _context;
+        public CategoryController(IProductRespository productRepository, ICategoryRepository categoryRepository, ApplicationDbContext context)
 
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
+            _context = context;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
+            ViewData["CurrentFilter"] = searchString;
             var categories = await _categoryRepository.GetAllAsync();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                categories = categories.Where(n => n.Name.ToLower().Contains(searchString.ToLower()));
+            }
             return View(categories);
         }
         public async Task<IActionResult> Add()
@@ -100,11 +108,18 @@ namespace DoAnCuoiky.Areas.Admin.Controllers
             return View(category);
         }
         // Xử lý xóa sản phẩm
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var category = await _categoryRepository.GetByIdAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
             await _categoryRepository.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
+
+            return Ok();
         }
     }
 }

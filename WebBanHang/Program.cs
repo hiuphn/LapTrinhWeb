@@ -7,6 +7,7 @@ using WebBanHang.Models;
 using Microsoft.Extensions.Options;
 using System.Configuration;
 using WebBanHang.Models;
+using Microsoft.AspNetCore.Hosting;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,7 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddControllersWithViews();
 
+
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -31,6 +33,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 
 builder.Services.AddRazorPages();
 
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Identity/Account/Login";
@@ -40,7 +43,9 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddScoped<IProductRespository, EFProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, EFCategoryRepository>();
+builder.Services.AddScoped<ISupplierRespository, EFSupplierRepository>();
 builder.Services.AddScoped<ISubcategory, EFSubcategory>();
+builder.Services.AddScoped<OrderRepository>();
 builder.Services.AddAuthentication()
     .AddGoogle(googleOptions =>
     {
