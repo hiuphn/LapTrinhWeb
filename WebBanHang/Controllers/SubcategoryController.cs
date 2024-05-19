@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*using Microsoft.AspNetCore.Mvc;
 using WebBanHang.Models;
+using WebBanHang.ViewModels;
 
 namespace WebBanHang.Areas.Admin.Controllers
 {
@@ -19,34 +20,27 @@ namespace WebBanHang.Areas.Admin.Controllers
         }
 
 
-        private List<Category> _categories = new List<Category>
-    {
-        new Category
-        {
-            Id = 1,
-            Name = "Ô tô",
-            Subcategories = new List<Subcategory>
-            {
-                new Subcategory { Id = 1, Name = "Xe hơi" },
-                new Subcategory { Id = 2, Name = "Xe tải" }
-            }
-        },
-        new Category
-        {
-            Id = 2,
-            Name = "Xe máy",
-            Subcategories = new List<Subcategory>
-            {
-                new Subcategory { Id = 3, Name = "Xe tay ga" },
-                new Subcategory { Id = 4, Name = "Xe số" }
-            }
-        }
-    };
+        private List<Category> _categories = new List<Category>();
+    
 
         public async Task<IActionResult> IndexAsync()
         {
             var categories = await _categoryRepository.GetAllAsync();
-            return View(categories);    
+            var listCategories = new List<CategoryViewModel>();
+
+            foreach (var category in categories)
+            {
+                var categoryViewModel = new CategoryViewModel
+                {
+                    Id = category.Id,
+                    Name = category.Name,
+                    *//*Subcategories = Subcategory.ToList()*//*
+                };
+
+                listCategories.Add(categoryViewModel);
+            }
+
+            return View(listCategories);
         }
 
         public IActionResult CreateSubcategory(int categoryId)
@@ -125,3 +119,4 @@ namespace WebBanHang.Areas.Admin.Controllers
     }
 }
 
+*/

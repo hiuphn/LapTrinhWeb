@@ -1,0 +1,23 @@
+﻿@page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model WebBanHang.Areas.Admin.Pages.UnlockModel
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div style="padding-top: 100px; padding-left:50px">
+<h1>Mở khóa tài khoản</h1>
+
+<!-- Hiển thị thông tin tài khoản cần mở khóa -->
+
+    <p>Email: @Model.Email</p>
+    <p>Số điện thoại: @Model.Phone</p>
+    <p>Địa chỉ: @Model.Address</p>
+    <p>Bạn có chắc chắn muốn mở khóa tài khoản này không?</p>
+
+<!-- Form xác nhận mở khóa tài khoản -->
+<form method="post">
+    <input type="submit" value="Mở khóa" class="btn btn-success" />
+    <a href="./UserModel" class="btn btn-secondary">Hủy</a>
+</form>
+</div>

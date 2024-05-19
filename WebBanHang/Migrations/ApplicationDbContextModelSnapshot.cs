@@ -509,8 +509,12 @@ namespace WebBanHang.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -520,7 +524,7 @@ namespace WebBanHang.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Subcategorys");
+                    b.ToTable("Subcategories");
                 });
 
             modelBuilder.Entity("WebBanHang.Models.Supplier", b =>
@@ -714,9 +718,13 @@ namespace WebBanHang.Migrations
 
             modelBuilder.Entity("WebBanHang.Models.Subcategory", b =>
                 {
-                    b.HasOne("WebBanHang.Models.Category", null)
+                    b.HasOne("WebBanHang.Models.Category", "Category")
                         .WithMany("Subcategories")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("WebBanHang.Models.Category", b =>

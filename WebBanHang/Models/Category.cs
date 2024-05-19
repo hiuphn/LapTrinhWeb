@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebBanHang.Models
@@ -15,7 +16,7 @@ namespace WebBanHang.Models
 
 
         public List<Product>? Products { get; set; }
-        public List<Subcategory> Subcategories { get; set; }
+        public ICollection<Subcategory> Subcategories { get; set; }
 
     }
 }

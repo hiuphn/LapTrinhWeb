@@ -15,7 +15,16 @@ namespace WebBanHang.Areas.Admin.Controllers
         {
             _context = context;
         }
+        private async Task<string> SaveImage(IFormFile image)
+        {
+            var savePath = Path.Combine("wwwroot/images", image.FileName); // Thay
+            using (var fileStream = new FileStream(savePath, FileMode.Create))
+            {
+                await image.CopyToAsync(fileStream);
+            }
 
+            return "/images/" + image.FileName; // Trả về đường dẫn tương đối
+        }
         // GET: Admin/KhachHangs
         public async Task<IActionResult> Index()
         {
@@ -82,20 +91,41 @@ namespace WebBanHang.Areas.Admin.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CustomerID,UserId,CustomerName,Sex,BirthDay,CustomerAddress,CustomerPhone,Email,CustomerImage")] Customer khachHang)
+        /*[ValidateAntiForgeryToken]*/
+        public async Task<IActionResult> Edit(int id,/* [Bind("CustomerID,UserId,CustomerName,Sex,BirthDay,CustomerAddress,CustomerPhone,Email,CustomerImage")]*/ Customer khachHang, IFormFile logo)
         {
+            ModelState.Remove("CustomerImage");
             if (id != khachHang.CustomerID)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+            /*if (ModelState.IsValid)*/
+            /*{*/
                 try
                 {
+                    
+
+                    var ex = await _context.Customers.SingleOrDefaultAsync(x => x.CustomerID == id);
+                    if(logo == null)
+                    {
+                        khachHang.CustomerImage = ex.CustomerImage;
+                    }
+                    else
+                    {
+                        khachHang.CustomerImage = await SaveImage(logo);
+                    }
+                    ex.CustomerName = khachHang.CustomerName;
+                    ex.CustomerPhone = khachHang.CustomerPhone;
+                    ex.CustomerAddress = khachHang.CustomerAddress;
+                    ex.Sex = khachHang.Sex;
+                    ex.BirthDay = khachHang.BirthDay;
+                    
+                    ex.Email = khachHang.Email;
+
                     _context.Update(khachHang);
                     await _context.SaveChangesAsync();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -109,7 +139,7 @@ namespace WebBanHang.Areas.Admin.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
+            /*}*/
             return View(khachHang);
         }
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebBanHang.Migrations
 {
     /// <inheritdoc />
-    public partial class test : Migration
+    public partial class te : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -125,22 +125,24 @@ namespace WebBanHang.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Subcategorys",
+                name: "Subcategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Subcategorys", x => x.Id);
+                    table.PrimaryKey("PK_Subcategories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Subcategorys_Categories_CategoryId",
+                        name: "FK_Subcategories_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -209,9 +211,9 @@ namespace WebBanHang.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Products_Subcategorys_SubcategoryId",
+                        name: "FK_Products_Subcategories_SubcategoryId",
                         column: x => x.SubcategoryId,
-                        principalTable: "Subcategorys",
+                        principalTable: "Subcategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -492,8 +494,8 @@ namespace WebBanHang.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Subcategorys_CategoryId",
-                table: "Subcategorys",
+                name: "IX_Subcategories_CategoryId",
+                table: "Subcategories",
                 column: "CategoryId");
         }
 
@@ -531,7 +533,7 @@ namespace WebBanHang.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Subcategorys");
+                name: "Subcategories");
 
             migrationBuilder.DropTable(
                 name: "Suppliers");

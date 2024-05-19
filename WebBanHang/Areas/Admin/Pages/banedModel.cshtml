@@ -2,15 +2,23 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model WebBanHang.Areas.Admin.Pages.banedModel
 @{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-h1>Xóa tài khoản</h1>
+
+<div style="padding-top:100px; padding-left:50px">
+<h1>Xóa tài khoản</h1>
 
 <!-- Hiển thị thông tin tài khoản cần xóa -->
-<p>Tên người dùng: @Model.UserName</p>
+
 <p>Email: @Model.Email</p>
+<p>Số điện thoại: @Model.Phone</p>
+<p>Địa chỉ: @Model.Address</p>
+<p>Bạn có chắc chắn muốn khóa tài khoản này không?</p>
 
 <!-- Form xác nhận xóa tài khoản -->
 <form method="post">
     <input type="submit" value="Khóa" class="btn btn-danger" />
-    <a asp-page="Home" class="btn btn-secondary">Hủy</a>
+    <a href="./UserModel" class="btn btn-secondary">Hủy</a>
 </form>
+<!-- Form xác nhận mở khóa tài khoản -->
+</div>

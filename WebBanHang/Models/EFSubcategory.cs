@@ -11,29 +11,29 @@ namespace WebBanHang.Models
         }
         public async Task<IEnumerable<Subcategory>> GetAllAsync()
         {
-            return await _context.Subcategorys.ToListAsync();
+            return await _context.Subcategories.ToListAsync();
         }
 
         public async Task<Subcategory> GetByIdAsync(int id)
         {
-            return await _context.Subcategorys.SingleOrDefaultAsync(x => x.Id == id);
+            return await _context.Subcategories.SingleOrDefaultAsync(x => x.Id == id);
         }
         public async Task AddAsync(Subcategory subcategory)
         {
-            _context.Subcategorys.Add(subcategory);
+            _context.Subcategories.Add(subcategory);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(Subcategory subcategory)
         {
-            _context.Subcategorys.Update(subcategory);
+            _context.Subcategories.Update(subcategory);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
-            var subcategory = await _context.Subcategorys.FindAsync(id);
-            _context.Subcategorys.Remove(subcategory);
+            var subcategory = await _context.Subcategories.FindAsync(id);
+            _context.Subcategories.Remove(subcategory);
             await _context.SaveChangesAsync();
         }
     }

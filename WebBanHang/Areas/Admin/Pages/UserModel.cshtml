@@ -3,7 +3,7 @@
 @model WebBanHang.Areas.Admin.Pages.UserModel
 @{
     ViewData["Title"] = "Quản lý tài khoản";
-    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <div style="padding-top:200px;padding-left:50px">
@@ -46,9 +46,9 @@
                         <thead>
                             <tr> 
                                     <th scope="col">Tên</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">UserName</th>
+                                    <th scope="col">Email</th>                                
                                     <th scope="col">Số Điện Thoại</th>
+                                    <th scope="col">Địa chỉ</th>
                                     <th scope="col">Khóa Tài Khoản </th>
                             </tr>
                         </thead>
@@ -61,18 +61,27 @@
                                         
                                         <p class="text-body">@item.FullName</p>
                                     </td>
-                                    <td><span class="badge badge-soft-success mb-0">@item.UserName</span></td>
-                                    <td><span class="badge badge-soft-info mb-0">@item.UserName</span></td>
+                                    <td><span class="badge badge-soft-success mb-0">@item.Email</span></td>   
                                     <td><span class="badge badge-soft-info mb-0">@item.PhoneNumber</span></td>
+                                    <td><span class="badge badge-soft-info mb-0">@item.Address</span></td>
                                     <td>
                                         <ul class="list-inline mb-0" style="align-items:center">
                                             @if (!item.IsLocked)
                                             {
                                                 <li class="list-inline-item">
-                                                    <a asp-page="banedModel" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Khóa Tài khoản" class="px-2 text-warning"><i class="bi bi-file-lock font-size-30"></i>Khóa</a>
+                                                    <a asp-page="banedModel" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Khóa Tài khoản" class="px-2 text-danger">
+                                                        <i class="bi bi-lock"></i>Khóa
+                                                    </a>
                                                 </li>
                                             }
-
+                                            else
+                                            {
+                                                <li class="list-inline-item">
+                                                    <a asp-page="UnlockModel" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Mở Khóa Tài khoản" class="px-2 text-success">
+                                                        <i class="bi bi-unlock"></i> Mở Khóa
+                                                    </a>
+                                                </li>
+                                            }
                                         </ul>
                                     </td>
                                 </tr>

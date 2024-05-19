@@ -1,27 +1,24 @@
-﻿@model List<Category>
+﻿@* @model List<WebBanHang.ViewModels.CategoryViewModel>
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<div>
+<h1>Subcategories</h1>
 
-
-<h1>Danh mục</h1>
-
-@foreach (var category in Model){
-    <h2>@category.Name</h2>
+@foreach (var category in Model)
+{
+    <h3>@category.Name</h3>
     <ul>
         @foreach (var subcategory in category.Subcategories)
         {
             <li>
                 @subcategory.Name
-                <a href="@Url.Action("EditSubcategory", new { categoryId = category.Id, subcategoryId = subcategory.Id })">Sửa</a>
-                <a href="@Url.Action("DeleteSubcategory", new { categoryId = category.Id, subcategoryId = subcategory.Id })">Xóa</a>
+                <a href="@Url.Action("EditSubcategory", "Subcategory", new { categoryId = category.Id, subcategoryId = subcategory.Id })">Edit</a>
+                <a href="@Url.Action("DeleteSubcategory", "Subcategory", new { categoryId = category.Id, subcategoryId = subcategory.Id })">Delete</a>
             </li>
         }
     </ul>
-
-    <p>
-        <a href="@Url.Action("CreateSubcategory", new { categoryId = category.Id })">Thêm mục con mới</a>
-    </p>
 }
+</div> *@

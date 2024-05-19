@@ -1,15 +1,15 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using WebBanHang.Models;
 
-namespace WebBanHang.Areas.Admin.Pages 
+namespace WebBanHang.Areas.Admin.Pages
 {
-    public class banedModel : PageModel
+    public class UnlockModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public banedModel(UserManager<ApplicationUser> userManager)
+        public UnlockModel(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
         }
@@ -19,11 +19,9 @@ namespace WebBanHang.Areas.Admin.Pages
         public string Phone { get; set; }
         public string Address { get; set; }
 
-
-        public IActionResult OnGet(string id)
+        public async Task<IActionResult> OnGetAsync(string id)
         {
-            // Lấy thông tin tài khoản từ cơ sở dữ liệu dựa trên id
-            var user = _userManager.FindByIdAsync(id).Result;
+            var user = await _userManager.FindByIdAsync(id);
 
             if (user == null)
             {
@@ -37,34 +35,28 @@ namespace WebBanHang.Areas.Admin.Pages
 
             return Page();
         }
+
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> OnPostAsync(string id)
         {
-            // Xóa tài khoản từ cơ sở dữ liệu dựa trên id
-            var user = _userManager.FindByIdAsync(id).Result;
+            var user = await _userManager.FindByIdAsync(id);
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            if(user.IsLocked == false)
+            if (user.IsLocked)
             {
-                user.IsLocked = true;
+                user.IsLocked = false;
                 await _userManager.UpdateAsync(user);
-
-                // Xử lý sau khi tài khoản đã được khóa
-
             }
             else
             {
-                return BadRequest();    
+                return BadRequest();
             }
 
-
             return Redirect("/Admin/UserModel");
-        }   
-
-        
+        }
     }
 }
