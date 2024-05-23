@@ -141,8 +141,15 @@
                                                 <h4>@item.Name</h4>
                                                 <p>@item.Description</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="text-dark fs-5 fw-bold mb-0">@item.Price</p>
-                                                    <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                    <p class="text-dark fs-5 fw-bold mb-0">@item.Price VNĐ</p>
+@*                                                         <button data-productId="@item.Id" class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button>
+ *@
+                                                        <a id="addToCartLink" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary">
+
+                                                            @*                 <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                        *@                    <i class="fa fa-shopping-bag me-2 text-primary"> Thêm vào vỏ</i>
+                                                        </a>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -429,13 +436,19 @@
                                 <i class="fas fa-star text-star"></i>
                                     <i class="fas fa-star"></i>
                                 </div>
-                        <h4 class="mb-3">@item.Price</h4>
-                            <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                        <h4 class="mb-3">@item.Price VNĐ</h4>
                     </div>
-                </div>
-                    
-            </div>
-                
+                     </div>
+
+                    <a id="addToCartLink" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary">
+
+                        @*                 <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary">
+                    *@                    <i class="fa fa-shopping-bag me-2 text-primary"> Thêm vào vỏ</i>
+                    </a>
+                 </div>
+
+
+
             }
             
             @* <div class="col-md-6 col-lg-6 col-xl-3">
@@ -620,4 +633,32 @@
         </div>
     </div>
 </div>
+@* <script>
+    $(document).ready(function () {
+        $(".add-to-cart").on("click", function (e) {
+            e.preventDefault();
+
+            var productId = $(this).data("product-id");
+            var quantity = 1;
+
+            $.ajax({
+                url: '/ShoppingCart/AddToCart',
+                type: 'POST',
+                data: { productId: productId, quantity: quantity },
+                success: function (response) {
+                    if (response.success) {
+                        // Update the cart count or display a message
+                        $("#cart-count").text(response.cartCount);
+                        alert(response.message);
+                    } else {
+                        alert("There was an error adding the product to the cart.");
+                    }
+                },
+                error: function () {
+                    alert("An error occurred. Please try again.");
+                }
+            });
+        });
+    });
+</script> *@
 <!-- Tastimonial End -->
