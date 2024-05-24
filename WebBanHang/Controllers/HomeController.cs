@@ -21,9 +21,9 @@ namespace WebBanHang.Controllers
             var products = await _productRespository.GetAllAsync();
             ViewBag.productss = products.Take(8);
             ViewBag.productsss = products.Take(6);
-            List<Product> cars = products.Where(p => p.Category.Name == "Ô Tô").Take(6).ToList();
+            List<Product> cars = products.Where(p => p.Category.Name == "test").Take(6).ToList();
             ViewBag.Cars = cars;
-            List<Product> motors = products.Where(p => p.Category.Name == "Xe Máy").Take(4).ToList();
+            List<Product> motors = products.Where(p => p.Category.Name == "phuc").Take(4).ToList();
             ViewBag.Motors = motors;
             return View(products);
 		}

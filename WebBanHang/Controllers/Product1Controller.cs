@@ -23,7 +23,7 @@ namespace WebBanHang.Controllers
 
         public async Task<IActionResult> Index(int page = 1)
         {
-            int pageSize = 1; // Số sản phẩm trên mỗi trang
+            int pageSize = 3; // Số sản phẩm trên mỗi trang
             var products = await _productRespository.GetAllAsync();
             var pagedProducts = products.ToPagedList(page, pageSize);
 
@@ -183,7 +183,7 @@ namespace WebBanHang.Controllers
 
         public async Task<IActionResult> DisplayProducts(int categoryId, int page = 1)
         {
-            int pageSize = 1; // Số sản phẩm trên mỗi trang
+            int pageSize = 3; // Số sản phẩm trên mỗi trang
             var category = await _categoryRepository.GetByIdAsync(categoryId);
             var products = await _productRespository.GetByCategoryIdAsync(categoryId);
             var pagedProducts = products.ToPagedList(page, pageSize);
