@@ -105,38 +105,38 @@ namespace WebBanHang.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Subcategory subcategory)
-        {
-            if (id != subcategory.Id)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Edit(int id, Subcategory subcategory)
+        //{
+        //    if (id != subcategory.)
+        //    {
+        //        return NotFound();
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    var existing = await _context.Subcategorys.FindAsync(id);
-                    existing.Name=subcategory.Name;
-                    existing.CategoryId=subcategory.CategoryId;
-                    _context.Update(existing);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SubcategoryExists(subcategory.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(subcategory);
-        }
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            var existing = await _context.Subcategorys.FindAsync(id);
+        //            existing.Name= subcategory.Name;
+        //            existing.CategoryId= subcategory.CategoryId;
+        //            _context.Update(existing);
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!SubcategoryExists(subcategory.Id))
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(subcategory);
+        //}
 
         // GET: Admin/Subcategories/Delete/5
         public async Task<IActionResult> Delete(int? id)
