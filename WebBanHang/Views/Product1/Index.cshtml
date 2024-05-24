@@ -1,102 +1,215 @@
-﻿@model IEnumerable<WebBanHang.Models.Product>
+﻿@* @model IEnumerable<WebBanHang.Models.Product> *@
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+
+@model IPagedList<WebBanHang.Models.Product>
 
 @{
     ViewData["Title"] = "Index";
     int numOfQuantity = 1;
 }
+
+<style>
+    .pagination-horizontal {
+        display: flex;
+        flex-direction: row;
+    }
+</style>
+<div>
 <!-- Single Page Header start -->
-<div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">Cửa Hàng</h1>
-    <ol class="breadcrumb justify-content-center mb-0">
-        <li class="breadcrumb-item"><a href="#">Giới Thiệu</a></li>
-        <li class="breadcrumb-item"><a href="#">Trang</a></li>
-        <li class="breadcrumb-item active text-white">Cửa Hàng</li>
-    </ol>
-</div>
-<!-- Single Page Header End -->
-<!-- Fruits Shop Start-->
-<div class="container-fluid fruite py-5">
-    <div class="container py-5">
-        <h1 class="mb-4">Cửa Hàng Honda</h1>
-        <div class="row g-4">
-            <div class="col-lg-12">
-                <div class="row g-4">
-                    <div class="col-xl-3">
-                        <form action="/Product1/Search" method="get">
-                        <div class="input-group w-100 mx-auto d-flex"> 
-                            <input type="text" name="query" class="form-control p-3"  placeholder="Từ Khóa"  aria-describedby="search-icon-1" id="searchInput">
-                                <button type="submit" class="btn btn-primary"><span id="search-icon-1"><i class="fa fa-search"></i></span></button>
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6">Cửa Hàng</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="#">Giới Thiệu</a></li>
+            <li class="breadcrumb-item"><a href="#">Trang</a></li>
+            <li class="breadcrumb-item active text-white">Cửa Hàng</li>
+        </ol>
+    </div>
+    <!-- Single Page Header End -->
+    <!-- Fruits Shop Start-->
+    <div class="container-fluid fruite py-5">
+        <div class="container py-5">
+            <h1 class="mb-4">Cửa Hàng Honda</h1>
+            <div class="row g-4">
+                <div class="col-lg-12">
+                    <div class="row g-4">
+                        <div class="col-xl-3">
+                            <form action="/Product1/Search" method="get">
+                            <div class="input-group w-100 mx-auto d-flex"> 
+                                <input type="text" name="query" class="form-control p-3"  placeholder="Từ Khóa"  aria-describedby="search-icon-1" id="searchInput">
+                                    <button type="submit" class="btn btn-primary"><span id="search-icon-1"><i class="fa fa-search"></i></span></button>
+                            </div>
+                            </form>
                         </div>
-                        </form>
-                    </div>
-                    <div class="col-6"></div>
-                    <div class="col-xl-3">
+                        <div class="col-6"></div>
+                        <div class="col-xl-3">
                         
+                        </div>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-lg-3">
+                            <div class="row g-4">
+                                @await Component.InvokeAsync("MenuLoai")
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-9">
+
+                            <div class="row g-4 justify-content-center">
+                                @if (Model != null && Model.Any())
+                                {
+                                    var i = 1;
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+
+                                                <div class="col-md-6 col-lg-6 col-xl-4">
+                                                    <a href="@Url.Action("Details", "Product1", new { id = item.Id })">
+                                                        <div class="rounded position-relative fruite-item">
+                                                            <div class="fruite-img">
+
+                                                                <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" style="height:23vh; width:30vw ; object-fit:cover" class="img-fluid w-100 rounded-top" alt="">
+
+                                                            </div>
+                                                        
+                                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">@item.Category.Name</div>
+                                                        
+                                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                                <h4>@item.Name</h4>
+                                                                <p>@item.Description</p>
+                                                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                                                    <p class="text-dark fs-5 fw-bold mb-0">@item.Price VNĐ</p>
+                                                                    <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                        }
+                                    </tbody>
+                                }
+                                <div class="col-12" style="padding-top:200px">
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination justify-content-center pagination-horizontal">
+                                            @if (Model != null && Model.PageCount > 1)
+                                            {
+                                                <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+                                                    <a class="page-link" href="@Url.Action("Index", new { page = Model.PageNumber - 1 })" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                </li>
+
+                                                @for (int pageNumber = 1; pageNumber <= Model.PageCount; pageNumber++)
+                                                {
+                                                    <li class="page-item @(Model.PageNumber == pageNumber ? "active" : "")">
+                                                        <a class="page-link" href="@Url.Action("Index", new { page = pageNumber })">@pageNumber</a>
+                                                    </li>
+                                                }
+
+                                                <li class="page-item @(Model.PageNumber == Model.PageCount ? "disabled" : "")">
+                                                    <a class="page-link" href="@Url.Action("Index", new { page = Model.PageNumber + 1 })" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                        </div>
+
                     </div>
                 </div>
-                <div class="row g-4">
-                    <div class="col-lg-3">
-                        <div class="row g-4">
-                            @await Component.InvokeAsync("MenuLoai")
-                            
-                            
-                            <div class="col-lg-12">
-                                
-                                
-                            </div>
-                            
-                        </div>
-                    </div>
-                    
-                    
-                        <div class="col-lg-9">
-                        
-                        <div class="row g-4 justify-content-center">
-                            @foreach (var item in Model)
-                            {
-
-                                <div class="col-md-6 col-lg-6 col-xl-4">
-                                    <a href="@Url.Action("Details", "Product1", new { id = item.Id })">
-                                    <div class="rounded position-relative fruite-item">
-                                        <div class="fruite-img">
-                                            
-                                                <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" style="height:23vh; width:30vw ; object-fit:cover" class="img-fluid w-100 rounded-top" alt="">
-                                            
-                                        </div>
-                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">@item.Category.Name</div>
-                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                            <h4>@item.Name</h4>
-                                            <p>@item.Description</p>
-                                            <div class="d-flex justify-content-between flex-lg-wrap">
-                                                <p class="text-dark fs-5 fw-bold mb-0">@item.Price VNĐ</p>
-                                                <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </a>
-                                </div>
-
-
-                            }
-                               
-                                <div class="col-12">
-                                    <div class="pagination d-flex justify-content-center mt-5">
-                                        <a href="#" class="rounded">&laquo;</a>
-                                        <a href="#" class="active rounded">1</a>
-                                        <a href="#" class="rounded">2</a>
-                                        <a href="#" class="rounded">3</a>
-                                        <a href="#" class="rounded">4</a>
-                                        <a href="#" class="rounded">5</a>
-                                        <a href="#" class="rounded">6</a>
-                                        <a href="#" class="rounded">&raquo;</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    
                 </div>
             </div>
         </div>
+    
     </div>
+    
+
 </div>
-<!-- Fruits Shop End-->
+
+
+@* <div>
+    <!-- Single Page Header start -->
+    <div class="container-fluid page-header py-5">
+        <h1 class="text-center text-white display-6">Cửa Hàng</h1>
+        <ol class="breadcrumb justify-content-center mb-0">
+            <li class="breadcrumb-item"><a href="#">Giới Thiệu</a></li>
+            <li class="breadcrumb-item"><a href="#">Trang</a></li>
+            <li class="breadcrumb-item active text-white">Cửa Hàng</li>
+        </ol>
+    </div>
+    <!-- Single Page Header End -->
+    <!-- Fruits Shop Start-->
+    <div class="container-fluid fruite py-5">
+        <div class="container py-5">
+            <h1 class="mb-4">Cửa Hàng Honda</h1>
+            <div class="row g-4">
+                <div class="col-lg-12">
+                    <div class="row g-4">
+                        <div class="col-xl-3">
+                            <form action="/Product1/Search" method="get">
+                                <div class="input-group w-100 mx-auto d-flex">
+                                    <input type="text" name="query" class="form-control p-3" placeholder="Từ Khóa" aria-describedby="search-icon-1" id="searchInput">
+                                    <button type="submit" class="btn btn-primary"><span id="search-icon-1"><i class="fa fa-search"></i></span></button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-6"></div>
+                        <div class="col-xl-3">
+                        </div>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-lg-3">
+                            <div class="row g-4">
+                                @await Component.InvokeAsync("MenuLoai")
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-9">
+
+                            <div class="row g-4 justify-content-center">
+                                @foreach (var item in Model)
+                                {
+
+                                    <div class="col-md-6 col-lg-6 col-xl-4">
+                                        <a href="@Url.Action("Details", "Product1", new { id = item.Id })">
+                                            <div class="rounded position-relative fruite-item">
+                                                <div class="fruite-img">
+
+                                                    <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" style="height:23vh; width:30vw ; object-fit:cover" class="img-fluid w-100 rounded-top" alt="">
+
+                                                </div>
+                                                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">@item.Category.Name</div>
+                                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                                    <h4>@item.Name</h4>
+                                                    <p>@item.Description</p>
+                                                    <div class="d-flex justify-content-between flex-lg-wrap">
+                                                        <p class="text-dark fs-5 fw-bold mb-0">@item.Price VNĐ</p>
+                                                        <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+
+
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+             *@

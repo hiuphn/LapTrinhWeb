@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 using WebBanHang.Models;
@@ -21,9 +21,9 @@ namespace WebBanHang.Controllers
             var products = await _productRespository.GetAllAsync();
             ViewBag.productss = products.Take(8);
             ViewBag.productsss = products.Take(6);
-            List<Product> cars = products.Where(p => p.Category.Name == "� T�").Take(6).ToList();
+            List<Product> cars = products.Where(p => p.Category.Name == "Quà tặng").Take(6).ToList();
             ViewBag.Cars = cars;
-            List<Product> motors = products.Where(p => p.Category.Name == "Xe M�y").Take(4).ToList();
+            List<Product> motors = products.Where(p => p.Category.Name == "Đồ dùng").Take(4).ToList();
             ViewBag.Motors = motors;
             return View(products);
 		}

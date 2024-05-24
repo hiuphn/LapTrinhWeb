@@ -34,7 +34,12 @@
             @Html.DisplayNameFor(model => model.ImageUrl)
         </dt>
         <dd class="col-sm-10">
-            <img src="@Html.DisplayFor(modelItem => modelItem.ImageUrl)" width="200px" />
+            <div class="tab-content mb-5">
+                @foreach (var item in ViewBag.ProductImages)
+                {
+                    <img src="@item" alt="Product Image" style="width: 350px; height: 200px; object-fit:cover" />
+                }
+            </div>
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Category)

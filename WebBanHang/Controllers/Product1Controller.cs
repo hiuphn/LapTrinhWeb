@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebBanHang.Models;
-
+using X.PagedList;
 namespace WebBanHang.Controllers
 {
     public class Product1Controller : Controller
@@ -20,12 +21,22 @@ namespace WebBanHang.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page, int? pageSize)
         {
-            var products = await _productRespository.GetAllAsync();
-            List<Product> motors = products.Where(p => p.Category.Name == "Xe Máy").Take(4).ToList();
-            ViewBag.Motors = motors;
-            return View(products);
+            if(page == null)
+            {
+                page = 1;
+            }
+            if(pageSize == null)
+            {
+                pageSize = 2;
+            }
+            ViewBag.nameCategory = await _categoryRepository.GetAllAsync();
+            var products = _context.Products.ToList();
+            //var products = await _productRespository.GetAllAsync();
+            /*List<Product> motors = products.Where(p => p.Category.Name == "Quà tặng").Take(4).ToList();
+            ViewBag.Motors = motors;*/
+            return View(products.ToPagedList((int)page, (int) pageSize));
         }
 
         public async Task<IActionResult> Add()

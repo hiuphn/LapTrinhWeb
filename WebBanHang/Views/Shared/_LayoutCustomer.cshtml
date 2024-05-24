@@ -60,10 +60,10 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a asp-controller="Home" asp-action="Index" class="nav-item nav-link active">Giới Thiệu</a>
+                            <a asp-controller="Home" asp-action="Index" class="nav-item nav-link ">Giới Thiệu</a>
 
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Cửa Hàng</a>
+                                <a href="#" class="nav-item nav-link dropdown-toggle " data-bs-toggle="dropdown">Cửa Hàng</a>
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                     <a href="/Product1/DisplayProducts?categoryId=1" class="dropdown-item">Trang Sức</a>
                                     <a href="/Product1/DisplayProducts?categoryId=2" class="dropdown-item">Đồ Lưu Niệm</a>
@@ -73,7 +73,7 @@
                             @if (User.IsInRole(SD.Role_Admin))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="Admin" asp-controller="Product" asp-action="Index">AdminDashboard</a>
+                                    <a class="nav-item nav-link " asp-area="Admin" asp-controller="Product" asp-action="Index">AdminDashboard</a>
                                 </li>
                             }
                             

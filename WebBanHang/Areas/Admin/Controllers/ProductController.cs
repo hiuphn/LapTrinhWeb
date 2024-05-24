@@ -100,7 +100,8 @@ namespace WebBanHang.Areas.Admin.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var product = await _productRespository.GetByIdAsync(id);
-
+            var products = await _productRespository.GetAllAsync();
+            ViewBag.productList_8 = products.Take(8);
             if (product == null)
             {
                 return NotFound();
@@ -120,7 +121,8 @@ namespace WebBanHang.Areas.Admin.Controllers
             }
             var categories = await _categoryRepository.GetAllAsync();
             ViewBag.Categories = new SelectList(categories, "Id", "Name", product.CategoryId);
-
+            var productImages = await _productRespository.GetImagesByProductIdAsync(id);
+            ViewBag.ProductImages = productImages;
             return View(product);
         }
         // Xử lý cập nhật sản phẩm
@@ -168,6 +170,8 @@ namespace WebBanHang.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            var productImages = await _productRespository.GetImagesByProductIdAsync(id);
+            ViewBag.ProductImages = productImages;
             return View(product);
         }
         [HttpPost, ActionName("Delete")]

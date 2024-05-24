@@ -34,7 +34,12 @@
     <div class="form-group">
         <label asp-for="ImageUrl">Product Image</label>
         <input type="file" asp-for="ImageUrl" class="form-control" />
-        <img src="@Model.ImageUrl" alt="Product Image" style="max-width: 200px;" />
+        <div class="tab-content mb-5">
+            @foreach (var item in ViewBag.ProductImages)
+            {
+                <img src="@item" alt="Product Image" style="width: 500px; height: 350px; object-fit:cover" />
+            }
+        </div>
     </div>
     <button type="submit" class="btn btn-primary">Update</button>
 </form>

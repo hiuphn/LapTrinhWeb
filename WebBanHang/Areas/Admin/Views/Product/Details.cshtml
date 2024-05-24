@@ -37,11 +37,13 @@
         </dd>
         <dd>
             <b>Nhiều Ảnh</b>
-            
-                @foreach (var imageUrl in ViewBag.ProductImages)
+
+            <div class="tab-content mb-5">
+                @foreach (var item in ViewBag.ProductImages)
                 {
-                    <img src="@imageUrl" alt="Product Image" style="width: 100px; height: 100px; object-fit:cover" />
+                    <img src="@item" alt="Product Image" style="width: 350px; height: 200px; object-fit:cover" />
                 }
+            </div>
             
           
         </dd>
