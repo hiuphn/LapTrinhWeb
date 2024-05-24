@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebBanHang.Models;
@@ -79,69 +80,63 @@ namespace WebBanHang.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var khachHang = await _context.Customers.FindAsync(id);
-            if (khachHang == null)
+            var nhanVien = await _context.Customers.FindAsync(id);
+            if (nhanVien == null)
             {
                 return NotFound();
             }
-            return View(khachHang);
+            return View(nhanVien);
         }
 
-        // POST: Admin/KhachHangs/Edit/5
+        // POST: Admin/NhanViens/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        /*[ValidateAntiForgeryToken]*/
-        public async Task<IActionResult> Edit(int id,/* [Bind("CustomerID,UserId,CustomerName,Sex,BirthDay,CustomerAddress,CustomerPhone,Email,CustomerImage")]*/ Customer khachHang, IFormFile logo)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Customer nhanVien, string userId, IFormFile logo)
         {
             ModelState.Remove("CustomerImage");
-            if (id != khachHang.CustomerID)
+            if (id != nhanVien.CustomerID)
             {
                 return NotFound();
             }
 
-            /*if (ModelState.IsValid)*/
-            /*{*/
-                try
-                {
-                    
+            // Lấy thông tin nhân viên từ cơ sở dữ liệu
+            var existingNhanVien = await _context.Customers.FindAsync(nhanVien.CustomerID);
 
-                    var ex = await _context.Customers.SingleOrDefaultAsync(x => x.CustomerID == id);
-                    if(logo == null)
-                    {
-                        khachHang.CustomerImage = ex.CustomerImage;
-                    }
-                    else
-                    {
-                        khachHang.CustomerImage = await SaveImage(logo);
-                    }
-                    ex.CustomerName = khachHang.CustomerName;
-                    ex.CustomerPhone = khachHang.CustomerPhone;
-                    ex.CustomerAddress = khachHang.CustomerAddress;
-                    ex.Sex = khachHang.Sex;
-                    ex.BirthDay = khachHang.BirthDay;
-                    
-                    ex.Email = khachHang.Email;
+            if (existingNhanVien == null)
+            {
+                return NotFound();
+            }
+            if (logo == null)
+            {
+                nhanVien.CustomerImage = existingNhanVien.CustomerImage;
+            }
+            else
+            {
+                // Lưu hình ảnh mới
+                nhanVien.CustomerImage = await SaveImage(logo);
+            }
 
-                    _context.Update(khachHang);
-                    await _context.SaveChangesAsync();
+            // Cập nhật thông tin của nhân viên từ dữ liệu nhập vào
+            existingNhanVien.CustomerName = nhanVien.CustomerName;
+            existingNhanVien.Sex = nhanVien.Sex;
+            existingNhanVien.BirthDay = nhanVien.BirthDay;
+            existingNhanVien.CustomerAddress = nhanVien.CustomerAddress;
+            existingNhanVien.CustomerImage = nhanVien.CustomerImage;
+            existingNhanVien.CustomerPhone = nhanVien.CustomerPhone;
+            existingNhanVien.Email = nhanVien.Email;
 
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!KhachHangExists(khachHang.CustomerID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            /*}*/
-            return View(khachHang);
+            // Lưu các thay đổi vào cơ sở dữ liệu
+            _context.Update(existingNhanVien);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+
+
+            return View(nhanVien);
         }
+        
 
         // GET: Admin/KhachHangs/Delete/5
         public async Task<IActionResult> Delete(int? id)

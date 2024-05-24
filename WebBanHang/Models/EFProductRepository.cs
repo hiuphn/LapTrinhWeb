@@ -33,7 +33,7 @@ namespace WebBanHang.Models
         public async Task AddAsync(Product product)
         {
             _context.Products.Add(product);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();  
         }
 
         public async Task UpdateAsync(Product product)

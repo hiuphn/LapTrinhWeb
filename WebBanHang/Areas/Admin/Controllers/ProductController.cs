@@ -30,19 +30,22 @@ namespace WebBanHang.Areas.Admin.Controllers
 
             return View(products);
         }
-        public async Task<IActionResult> Add()
+        public async Task<IActionResult> Add(int cata )
         {
-            var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.categories = new SelectList(categories, "Id", "Name");
-            var Subcategory = await _subcategory.GetAllAsync();
-            ViewBag.Subcategory = new SelectList(Subcategory, "Id", "Name");
+            ViewBag.Categories = new SelectList(await _categoryRepository.GetAllAsync(), "Id", "Name");
+            /*var categories = await _categoryRepository.GetAllAsync();
+            ViewBag.categories = new SelectList(categories, "Id", "Name");*/
+            /*var subcategories = await _subcategory.GetSubcategoriesByCategoryIdAsync(cata);
+            ViewBag.Subcategory = new SelectList(subcategories, "Id", "Name");*/
+            ViewBag.Subcategory = new SelectList(Enumerable.Empty<Subcategory>(), "Id", "Name");
+            
 
 
 
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Add(Product product, IFormFile imageUrl, List<IFormFile> images)
+        public async Task<IActionResult> Add(Product product, IFormFile imageUrl, List<IFormFile> images, int categoryId)
         {
             if (ModelState.IsValid)
             {
@@ -69,13 +72,20 @@ namespace WebBanHang.Areas.Admin.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            var categories = await _categoryRepository.GetAllAsync();
+            /*var categories = await _categoryRepository.GetAllAsync();
             ViewBag.Categories = new SelectList(categories, "Id", "Name");
-            var Subcategory = await _subcategory.GetAllAsync();
-            ViewBag.Subcategory = new SelectList(Subcategory, "Id", "Name");
+            var subcategories = await _subcategory.GetSubcategoriesByCategoryIdAsync(categoryId);
+            ViewBag.Subcategory = new SelectList(subcategories, "Id", "Name");*/
+            ViewBag.Categories = new SelectList(await _categoryRepository.GetAllAsync(), "Id", "Name", product.CategoryId);
+            ViewBag.Subcategory = new SelectList(await _subcategory.GetSubcategoriesByCategoryIdAsync(product.CategoryId), "Id", "Name", product.SubcategoryId);
 
 
             return View(product);
+        }
+        public async Task<JsonResult> GetSubcategories(int categoryId)
+        {
+            var subcategories = await _subcategory.GetSubcategoriesByCategoryIdAsync(categoryId);
+            return Json(new SelectList(subcategories, "Id", "Name"));
         }
         private async Task<string> SaveImage(IFormFile image)
         {

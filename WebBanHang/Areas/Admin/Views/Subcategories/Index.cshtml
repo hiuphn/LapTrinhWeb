@@ -5,24 +5,17 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Subcategories</h1>
+<div style="padding-top:100px">
+<h1>Danh mục phụ</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<a asp-action="Create" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="bi bi-plus-square-fill"></i> Tạo mới</a>
 
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category.Name)
-            </th>
+            <th scope="col">Tên danh mục phụ</th>
+            <th scope="col">Mô tả</th>
+            <th scope="col">Tên danh mục</th>
         </tr>
     </thead>
     <tbody>
@@ -42,3 +35,4 @@
         }
     </tbody>
 </table>
+</div>

@@ -133,6 +133,12 @@ namespace WebBanHang.Areas.Identity.Pages.Account
             {
 
                 var userExisted = await _userManager.FindByLoginAsync(info.LoginProvider, info.ProviderKey);
+                // Kiểm tra tài khoản có bị khóa không và khóa nếu cần
+                if (userExisted != null && userExisted.IsLocked)
+                {
+                    ModelState.AddModelError(string.Empty, "Your account has been locked. Please contact support.");
+                    return Page();
+                }
                 if (userExisted != null)
                 {
                     // Đã có Acount, đã liên kết với tài khoản ngoài - nhưng không đăng nhập được
@@ -154,8 +160,11 @@ namespace WebBanHang.Areas.Identity.Pages.Account
 
                     };
                 }
+                
 
-                return Page();
+                
+            
+                    return Page();
             }
         }
 

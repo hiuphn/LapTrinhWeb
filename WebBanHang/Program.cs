@@ -7,6 +7,8 @@ using WebBanHang.Models;
 using Microsoft.Extensions.Options;
 using System.Configuration;
 using WebBanHang.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using WebBanHang.ServicesPay;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,18 +20,20 @@ builder.Services.AddSession(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
-builder.Services.AddControllersWithViews();
+
 
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("connectionString"));
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddDefaultTokenProviders()
     .AddDefaultUI()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddRazorPages();
+
+builder.Services.AddControllersWithViews();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -43,6 +47,21 @@ builder.Services.AddScoped<ICategoryRepository, EFCategoryRepository>();
 builder.Services.AddScoped<ISupplierRespository, EFSupplierRepository>();
 builder.Services.AddScoped<ISubcategory, EFSubcategory>();
 builder.Services.AddScoped<OrderRepository>();
+builder.Services.AddSingleton<IVnPayService, VnPayService>();
+builder.Services.AddScoped<EmailService>();
+/*var smtpSettings = builder.Configuration.GetSection("SmtpSettings").Get<SmtpSettings>();
+builder.Services.AddSingleton(smtpSettings);*/
+
+
+builder.Services.AddTransient<IEmailSender1, EmailSender>();
+
+// Register identity services
+/*builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders()
+    .AddDefaultUI();*/
+
+
 builder.Services.AddAuthentication()
     .AddGoogle(googleOptions =>
     {

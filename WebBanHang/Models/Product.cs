@@ -40,7 +40,7 @@ namespace WebBanHang.Models
         [ForeignKey("Subcategory")]
         public int SubcategoryId { get; set; }
 
-        [DisplayName("Danh mục")]
+        
         public Subcategory? subcategory { get; set; }
 
         public int SupplierID { get; set; }

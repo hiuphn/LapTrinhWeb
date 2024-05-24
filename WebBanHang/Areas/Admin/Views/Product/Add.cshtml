@@ -41,28 +41,76 @@
             </div>
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" asp-items="ViewBag.categories" class="form-control"></select>
+                <select id="CategoryId" asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control"></select>
             </div>
             <div class="form-group">
                 <label asp-for="SubcategoryId" class="control-label"></label>
-                <select asp-for="SubcategoryId" asp-items="ViewBag.Subcategory" class="form-control"></select>
+                <select id="SubcategoryId" asp-for="SubcategoryId" asp-items="ViewBag.Subcategory" class="form-control"></select>
             </div>
             <div class="form-group">
                 <label asp-for="SupplierID" class="control-label"></label>
                 <input asp-for="SupplierID" class="form-control" />
-                <span asp-validation-for="SupplierID" class="text-danger"></span> 
+                <span asp-validation-for="SupplierID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div> 
+</div>
 
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    @* <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#CategoryId').change(function () {
+                var categoryId = $(this).val();
+                $.getJSON('@Url.Action("GetSubcategories", "Product")', { categoryId: categoryId }, function (subcategories) {
+                    var subcategorySelect = $('#SubcategoryId');
+                    subcategorySelect.empty();
+                    $.each(subcategories, function (index, subcategory) {
+                        subcategorySelect.append($('<option/>', {
+                            value: subcategory.value,
+                            text: subcategory.text
+                        }));
+                    });
+                });
+            });
+        });
+    </script> *@
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var categoryId = $('#CategoryId').val();
+            if (categoryId) {
+                updateSubcategories(categoryId);
+            }
+
+            $('#CategoryId').change(function () {
+                var categoryId = $(this).val();
+                updateSubcategories(categoryId);
+            });
+
+            function updateSubcategories(categoryId) {
+                $.getJSON('@Url.Action("GetSubcategories", "Product")', { categoryId: categoryId }, function (subcategories) {
+                    var subcategorySelect = $('#SubcategoryId');
+                    subcategorySelect.empty();
+                    $.each(subcategories, function (index, subcategory) {
+                        subcategorySelect.append($('<option/>', {
+                            value: subcategory.value,
+                            text: subcategory.text
+                        }));
+                    });
+                });
+            }
+        });
+    </script>
 }

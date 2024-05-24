@@ -5,16 +5,16 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Create Subcategory</h1>
+<div style="padding-top:50px">
+<h1>Thêm Danh mục phụ</h1>
 
-<h4>Subcategory</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label"> Tên danh mục phụ</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
@@ -37,4 +37,5 @@
 
 <div>
     <a asp-action="Index">Back to List</a>
+</div>
 </div>

@@ -37,11 +37,12 @@ namespace WebBanHang.Models
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Staff> Staffs { get; set; }
 
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=WINDOWS-11;Database=test;Trusted_Connection=True;TrustServerCertificate=True;");
         }
-        
+
 
     }
 }

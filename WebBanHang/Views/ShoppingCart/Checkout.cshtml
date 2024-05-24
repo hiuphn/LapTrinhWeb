@@ -1,9 +1,10 @@
 ﻿@model Order
 
-@* @{
+@{
     ViewData["Title"] = "Checkout";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-} *@
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+    decimal sum = 0;
+}
 
 @* <h2>Checkout</h2>
 <form action="/Checkout/Checkout1" method="post">
@@ -24,7 +25,7 @@
                 <h1 class="mb-4">Chi Tiết Thanh Toán</h1>
         <form asp-action="Checkout" method="post">
                     <div class="row g-5">
-                        <div class="col-md-12 col-lg-6 col-xl-7">
+                        <div class="col-md-12 col-lg-6 col-xl-7" style="padding-right:200px">
                             <div class="row">
                                 
                             </div>
@@ -52,15 +53,16 @@
                                     <th scope="col">Tên</th>
                                     <th scope="col">Giá</th>
                                     <th scope="col">Số Lượng</th>
-                                    <th scope="col">Tổng</th>
+                                    <th scope="col">Tổng tiền</th>
                                 </tr>
                             </thead>
                             <tbody>
+
                                 @foreach (var item in ViewBag.Cart)
                                 {
                                     decimal totalPrice = item.Price * item.Quantity;
-                                    
-                                    
+                                        
+
                                     <tr>
                                         <th scope="row">
                                             <div class="d-flex align-items-center mt-2">
@@ -71,13 +73,15 @@
                                         <td class="py-5">@item.Price</td>
                                         <td class="py-5" style="text-align:center">@item.Quantity</td>
                                         <td class="py-5">@totalPrice</td>
-                                    </tr>
-                                }
+                                        
+                                        </tr>
+                                        sum +=totalPrice;
+                                    }
                                 <tr>
                                     <th scope="row">
                                     </th>
-                                    <td class="py-5">
-                                        <p class="mb-0 text-dark text-uppercase py-3">TOTAL</p>
+                                    <td class="py-6">
+                                            <p class="mb-0 text-dark text-uppercase py-3">Tổng tiền: @sum </p>
                                     </td>
                                     <td class="py-5"></td>
                                     <td class="py-5"></td>
@@ -90,7 +94,13 @@
                         </table>
                     </div>
                             <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                                <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Đặt Hàng</button>
+                                @* <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Đặt Hàng</button> *@
+                            <div class="form-group">
+                                <input name="payment" type="submit" value="Thanh toán" class="btn btn-primary" />
+                            </div>
+                            <div class="form-group">
+                                <input name="payment" type="submit" value="VN-PAY" class="btn btn-primary" />
+                            </div>
                             </div>
                 
                     

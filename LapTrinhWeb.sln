@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuan2", "Tuan2\Tuan2.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuan3", "Tuan3\Tuan3.csproj", "{BA02F612-AB92-4002-B837-F28152B263E8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebBanHang", "WebBanHang\WebBanHang.csproj", "{0B84DCEA-63CE-4CC6-A3EC-DDE9A537AC9A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
