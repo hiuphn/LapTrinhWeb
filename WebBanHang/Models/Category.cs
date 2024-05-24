@@ -15,7 +15,7 @@ namespace WebBanHang.Models
 
 
         public List<Product>? Products { get; set; }
-        public List<Subcategory> Subcategories { get; set; }
+        public ICollection<Subcategory> Subcategories { get; set; }
 
     }
 }

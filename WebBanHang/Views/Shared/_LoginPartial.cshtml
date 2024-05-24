@@ -27,28 +27,33 @@ else
 </ul>
  *@
 
-<div class="nav-item dropdown">
-    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-user fa-2x"></i></a>
-    <div class="dropdown-menu m-0 bg-secondary rounded-0">
-        @if (SignInManager.IsSignedIn(User))
-        {
-            <li class="nav-item">
-                <a id="manage"  class="dropdown-item"class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-            </li>
-            <li class="nav-item">
+    <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-user fa-2x"></i></a>
+    <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <li class="dropdown-item">
+                <a id="manage" class="dropdown-item" class="nav-link text-dark" @* asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" *@>Hello @UserManager.GetUserName(User)!</a>
+                </li>
+            <li class="dropdown-item">
+                    <a class="dropdown-item nav-link text-dark" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                </li>
+
+            <li class="dropdown-item">
                 <form id="logoutForm" class="dropdown-item" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                    <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Logout</button>
-                </form>
-            </li>
-        }
-        else
-        {
-            <li class="nav-item">
-                <a class="nav-link text-dark" class="dropdown-item" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-dark" class="dropdown-item" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-            </li>
-        }
+                        <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0">Đăng xuất</button>
+                    </form>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" class="dropdown-item" id="register" asp-area="Identity" asp-page="/Account/Register">Đăng kí</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" class="dropdown-item" id="login" asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a>
+                </li>
+            }
+        </div>
     </div>
-</div>
+

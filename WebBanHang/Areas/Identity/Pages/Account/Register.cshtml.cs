@@ -202,7 +202,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, SD.Role_Customer);
                     }
                     //Tạo thông tin nhân viên hoặc khách hàng và lưu vào cơ sở dữ liệu
-                    if (Input.Role == "Nhân viên" || Input.Role == "Khách hàng")
+                    if (Input.Role == "Nhân viên" || Input.Role == "Admin")
                     {
                         var roleEmployee = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Nhân viên");
                         var roleAdmin = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Khách hàng");
@@ -215,9 +215,9 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                             roleName = "Nhân viên";
                             roleId = roleEmployee.Id;
                         }
-                        else if (userRoles.Contains("Khách hàng"))
+                        else if (userRoles.Contains("Admin"))
                         {
-                            roleName = "Khách hàng";
+                            roleName = "Admin";
                             roleId = roleAdmin.Id;
                         }
 

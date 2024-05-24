@@ -17,7 +17,7 @@ namespace WebBanHang.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.3")
+                .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -314,6 +314,30 @@ namespace WebBanHang.Migrations
                     b.ToTable("Customers");
                 });
 
+            modelBuilder.Entity("WebBanHang.Models.Discount", b =>
+                {
+                    b.Property<int>("DiscountId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DiscountId"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Value")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("DiscountId");
+
+                    b.ToTable("Discount");
+                });
+
             modelBuilder.Entity("WebBanHang.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -328,6 +352,9 @@ namespace WebBanHang.Migrations
                     b.Property<string>("CustomerName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("DiscountId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Notes")
                         .IsRequired()
@@ -356,6 +383,8 @@ namespace WebBanHang.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerID");
+
+                    b.HasIndex("DiscountId");
 
                     b.HasIndex("StaffId");
 
@@ -416,10 +445,13 @@ namespace WebBanHang.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int>("Number")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("SubcategoryId")
+                    b.Property<int?>("SubcategoryId")
                         .HasColumnType("int");
 
                     b.Property<int>("SupplierID")
@@ -428,8 +460,6 @@ namespace WebBanHang.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("SubcategoryId");
 
                     b.HasIndex("SupplierID");
 
@@ -518,12 +548,13 @@ namespace WebBanHang.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -554,6 +585,7 @@ namespace WebBanHang.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SuplierPhone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SupplierAddress")
@@ -636,6 +668,10 @@ namespace WebBanHang.Migrations
                         .WithMany()
                         .HasForeignKey("CustomerID");
 
+                    b.HasOne("WebBanHang.Models.Discount", "Discount")
+                        .WithMany()
+                        .HasForeignKey("DiscountId");
+
                     b.HasOne("WebBanHang.Models.Staff", "Staff")
                         .WithMany()
                         .HasForeignKey("StaffId");
@@ -649,6 +685,8 @@ namespace WebBanHang.Migrations
                     b.Navigation("ApplicationUser");
 
                     b.Navigation("Customer");
+
+                    b.Navigation("Discount");
 
                     b.Navigation("Staff");
                 });
@@ -680,12 +718,6 @@ namespace WebBanHang.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebBanHang.Models.Subcategory", "subcategory")
-                        .WithMany()
-                        .HasForeignKey("SubcategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("WebBanHang.Models.Supplier", "Supplier")
                         .WithMany()
                         .HasForeignKey("SupplierID")
@@ -695,8 +727,6 @@ namespace WebBanHang.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Supplier");
-
-                    b.Navigation("subcategory");
                 });
 
             modelBuilder.Entity("WebBanHang.Models.ProductImage", b =>
@@ -723,9 +753,13 @@ namespace WebBanHang.Migrations
 
             modelBuilder.Entity("WebBanHang.Models.Subcategory", b =>
                 {
-                    b.HasOne("WebBanHang.Models.Category", null)
+                    b.HasOne("WebBanHang.Models.Category", "Category")
                         .WithMany("Subcategories")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("WebBanHang.Models.Category", b =>

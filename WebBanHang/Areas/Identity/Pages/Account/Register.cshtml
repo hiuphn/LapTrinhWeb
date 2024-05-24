@@ -35,12 +35,12 @@
                 </div>
                 
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Age" class="form-control" autocomplete="date" aria-required="true" placeholder="Ngày Sinh" type="date" />
+                    <input type="date" asp-for="Input.Age" class="form-control" autocomplete="date" aria-required="true" placeholder="Ngày Sinh" type="date" />
                     <label asp-for="Input.Age">Ngày Sinh</label>
                     <span asp-validation-for="Input.Age" class="text-danger"></span>
                 </div>
                 <div style="padding-bottom: 10px">
-                    <label asp-for="Input.Age">Giới TÍnh</label>
+                    <label asp-for="Input.Sex">Giới Tính</label>
 
                     <div style="display: flex;">
                         <div>
@@ -52,7 +52,7 @@
                             <span>Nam</span>
                         </div>
                     </div>
-                    <span asp-validation-for="Input.Age" class="text-danger"></span>
+                    <span asp-validation-for="Input.Sex" class="text-danger"></span>
                 </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />

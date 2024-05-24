@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuan2", "Tuan2\Tuan2.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tuan3", "Tuan3\Tuan3.csproj", "{BA02F612-AB92-4002-B837-F28152B263E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBanHang", "WebBanHang\WebBanHang.csproj", "{0B84DCEA-63CE-4CC6-A3EC-DDE9A537AC9A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +19,14 @@ Global
 		{0B84DCEA-63CE-4CC6-A3EC-DDE9A537AC9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B84DCEA-63CE-4CC6-A3EC-DDE9A537AC9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B84DCEA-63CE-4CC6-A3EC-DDE9A537AC9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9FA4B90-4719-4F09-BD60-38D24682AE4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9FA4B90-4719-4F09-BD60-38D24682AE4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9FA4B90-4719-4F09-BD60-38D24682AE4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9FA4B90-4719-4F09-BD60-38D24682AE4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA02F612-AB92-4002-B837-F28152B263E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA02F612-AB92-4002-B837-F28152B263E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA02F612-AB92-4002-B837-F28152B263E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA02F612-AB92-4002-B837-F28152B263E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

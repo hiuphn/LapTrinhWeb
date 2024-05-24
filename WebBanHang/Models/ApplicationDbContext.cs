@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using WebBanHang.Models;
 
 namespace WebBanHang.Models
 {
@@ -32,6 +33,7 @@ namespace WebBanHang.Models
         {
             optionsBuilder.UseSqlServer("Server=RON\\SQLEXPRESS;Database=QLBanHang_CoSoMoi;Trusted_Connection=True;TrustServerCertificate=True;");
         }
+        public DbSet<WebBanHang.Models.Discount> Discount { get; set; } = default!;
         
     }
 }
