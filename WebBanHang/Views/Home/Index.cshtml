@@ -144,10 +144,10 @@
                                                     <p class="text-dark fs-5 fw-bold mb-0">@item.Price VNĐ</p>
 @*                                                         <button data-productId="@item.Id" class="btn border border-secondary rounded-pill px-3 text-primary add-to-cart"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</button>
  *@
-                                                        <a id="addToCartLink" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                        <a id="addToCartLink" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary fa fa-shopping-bag me-2" >
 
                                                             @*                 <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary">
-                                                        *@                    <i class="fa fa-shopping-bag me-2 text-primary"> Thêm vào vỏ</i>
+                                                        *@                   
                                                         </a>
 
                                                 </div>

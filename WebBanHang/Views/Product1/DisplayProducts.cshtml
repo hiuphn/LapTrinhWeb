@@ -1,7 +1,10 @@
-﻿@model DisplayProductsViewModel
+﻿@model WebBanHang.Models.DisplayProductsViewModel
+@using X.PagedList.Mvc.Core;
+
 @{
     ViewData["Title"] = "DisplayProducts";
-   
+    int numOfQuantity = 1;
+
 }
 
 <h1>DisplayProducts</h1>
@@ -68,7 +71,7 @@
                                             <p>@item.Description</p>
                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                 <p class="text-dark fs-5 fw-bold mb-0">@item.Price VNĐ</p>
-                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Thêm vào vỏ</a>
+                                                        <a id="addToCartLink" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary fa fa-shopping-bag me-2" > </a>
                                             </div>
                                         </div>
                                     </div>
@@ -206,7 +209,30 @@
                             </div>
                             </div> *@
                             <div class="col-12">
-                                <div class="pagination d-flex justify-content-center mt-5">
+                                <div class="col-12">
+                                    <div class="pagination d-flex justify-content-center mt-5">
+                                        @Html.PagedListPager(Model.Products, page => Url.Action("DisplayProducts", new { categoryId = Model.Category.Id, page }),
+                                                 new PagedListRenderOptions
+                                        {
+                                            DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+                                            DisplayLinkToLastPage = PagedListDisplayMode.Always,
+                                            DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                                            DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                                            DisplayLinkToIndividualPages = true,
+                                            LinkToFirstPageFormat = "&laquo;",
+                                            LinkToPreviousPageFormat = "&lsaquo;",
+                                            LinkToNextPageFormat = "&rsaquo;",
+                                            LinkToLastPageFormat = "&raquo;",
+                                            MaximumPageNumbersToDisplay = 5,
+                                            ContainerDivClasses = new[] { "pagination" },
+                                            UlElementClasses = new[] { "pagination" },
+                                            LiElementClasses = new[] { "page-item" },
+                                            PageClasses = new[] { "page-link" },
+
+                                        })
+                                    </div>
+
+@*                                 <div class="pagination d-flex justify-content-center mt-5">
                                     <a href="#" class="rounded">&laquo;</a>
                                     <a href="#" class="active rounded">1</a>
                                     <a href="#" class="rounded">2</a>
@@ -214,7 +240,7 @@
                                     <a href="#" class="rounded">4</a>
                                     <a href="#" class="rounded">5</a>
                                     <a href="#" class="rounded">6</a>
-                                    <a href="#" class="rounded">&raquo;</a>
+                                    <a href="#" class="rounded">&raquo;</a> *@
                                 </div>
                             </div>
                         </div>
@@ -224,5 +250,5 @@
             </div>
         </div>
     </div>
-</div>
+
 <!-- Fruits Shop End-->

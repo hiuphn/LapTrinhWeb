@@ -1,9 +1,11 @@
 ﻿@model Order
+ 
+@{
 
-@* @{
-    ViewData["Title"] = "Checkout";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-} *@
+    decimal cartTotalPrice = 0;
+
+
+} 
 
 @* <h2>Checkout</h2>
 <form action="/Checkout/Checkout1" method="post">
@@ -52,10 +54,11 @@
                                 </tr>
                             </thead>
                             <tbody>
+
                                 @foreach (var item in ViewBag.Cart)
                                 {
                                     decimal totalPrice = item.Price * item.Quantity;
-                                    
+
                                     
                                     <tr>
                                         <th scope="row">
@@ -69,21 +72,26 @@
                                         <td class="py-5">@totalPrice</td>
                                     </tr>
                                 }
+                               
+                               
+
                                 <tr>
-                                    <th scope="row">
-                                    </th>
-                                    <td class="py-5">
-                                        <p class="mb-0 text-dark text-uppercase py-3">TOTAL</p>
-                                    </td>
+                          @*           <th scope="row">
+                                    </th> *@
+
+@*
+                                     <td class="py-5"></td>
                                     <td class="py-5"></td>
-                                    <td class="py-5"></td>
-                                    <td class="py-5">
+                                    <td class="py-5">  *@
                                         
-                                    </td>
+                                 @*    </td> *@
                                 </tr>
                                 
                             </tbody>
+
                         </table>
+                            <h1 class="mb-0 text-dark py-3">Tổng giá: @foreach (var item in ViewBag.Cart) { cartTotalPrice += item.Price * item.Quantity; } @cartTotalPrice VNĐ</h1>
+
                     </div>
                             <div class="row g-4 text-center align-items-center justify-content-center pt-4">
                                 <button type="submit" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Đặt Hàng</button>
