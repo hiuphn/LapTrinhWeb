@@ -8,11 +8,11 @@ namespace WebBanHang.Controllers
 {
     public class Product1Controller : Controller
     {
-
         private readonly IProductRespository _productRespository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly ISubcategory _subcategory;
         private readonly ApplicationDbContext _context;
+
         public Product1Controller(IProductRespository productRespository, ICategoryRepository categoryRepository, ISubcategory subcategory, ApplicationDbContext context)
         {
             _productRespository = productRespository;
@@ -43,9 +43,10 @@ namespace WebBanHang.Controllers
         {
             var categories = await _categoryRepository.GetAllAsync();
             ViewBag.categories = new SelectList(categories, "Id", "Name");
-           
+
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Add(Product product, IFormFile imageUrl, List<IFormFile> images)
         {
@@ -53,7 +54,6 @@ namespace WebBanHang.Controllers
             {
                 if (imageUrl != null)
                 {
-                    // Lưu hình ảnh đại diện
                     product.ImageUrl = await SaveImage(imageUrl);
                 }
                 if (images != null)
@@ -76,19 +76,21 @@ namespace WebBanHang.Controllers
             }
             var categories = await _categoryRepository.GetAllAsync();
             ViewBag.Categories = new SelectList(categories, "Id", "Name");
-            
+
             return View(product);
         }
+
         private async Task<string> SaveImage(IFormFile image)
         {
-            var savePath = Path.Combine("wwwroot/images", image.FileName); // Thay
+            var savePath = Path.Combine("wwwroot/images", image.FileName);
             using (var fileStream = new FileStream(savePath, FileMode.Create))
             {
                 await image.CopyToAsync(fileStream);
             }
 
-            return "/images/" + image.FileName; // Trả về đường dẫn tương đối
+            return "/images/" + image.FileName;
         }
+
         public async Task<IActionResult> Details(int id)
         {
             var product = await _productRespository.GetByIdAsync(id);
@@ -97,7 +99,6 @@ namespace WebBanHang.Controllers
             if (product == null)
             {
                 return NotFound();
-
             }
             var productImages = await _productRespository.GetImagesByProductIdAsync(id);
             ViewBag.ProductImages = productImages;
@@ -116,12 +117,11 @@ namespace WebBanHang.Controllers
 
             return View(product);
         }
-        // Xử lý cập nhật sản phẩm
+
         [HttpPost]
         public async Task<IActionResult> Update(int id, Product product, IFormFile imageUrl)
-
         {
-            ModelState.Remove("ImageUrl"); // Loại bỏ xác thực ModelState cho ImageUrl
+            ModelState.Remove("ImageUrl");
 
             if (id != product.Id)
             {
@@ -129,8 +129,7 @@ namespace WebBanHang.Controllers
             }
             if (ModelState.IsValid)
             {
-                var existingProduct = await _productRespository.GetByIdAsync(id); // Giả định có phương thức GetByIdAsync
-                                                                                  // Giữ nguyên thông tin hình ảnh nếu không có hình mới được tải lên
+                var existingProduct = await _productRespository.GetByIdAsync(id);
 
                 if (imageUrl == null)
                 {
@@ -138,10 +137,9 @@ namespace WebBanHang.Controllers
                 }
                 else
                 {
-                    // Lưu hình ảnh mới
                     product.ImageUrl = await SaveImage(imageUrl);
                 }
-                // Cập nhật các thông tin khác của sản phẩm
+
                 existingProduct.Name = product.Name;
                 existingProduct.Price = product.Price;
                 existingProduct.Description = product.Description;
@@ -154,6 +152,7 @@ namespace WebBanHang.Controllers
             ViewBag.Categories = new SelectList(categories, "Id", "Name");
             return View(product);
         }
+
         public async Task<IActionResult> Delete(int id)
         {
             var product = await _productRespository.GetByIdAsync(id);
@@ -163,6 +162,7 @@ namespace WebBanHang.Controllers
             }
             return View(product);
         }
+
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -170,9 +170,9 @@ namespace WebBanHang.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
         public IActionResult Search(string query)
         {
-
             using (var context = new ApplicationDbContext(new DbContextOptions<ApplicationDbContext>()))
             {
                 List<Product> searchResults = context.Products
@@ -182,64 +182,38 @@ namespace WebBanHang.Controllers
 
                 if (searchResults.Count == 0)
                 {
-
                     return View("NoResults");
                 }
                 return View(searchResults);
             }
         }
-        /*public IActionResult Search(string query, string imagePath)
-        {
-            
-            using (var context = new ApplicationDbContext(new DbContextOptions<ApplicationDbContext>()))
-            {
-                List<Product> searchResults = context.Products
-                    .Include(p => p.Category)
-                    .Where(p => p.Name.Contains(query))
-                    .ToList();
 
-                if (searchResults.Count == 0)
-                {
-                    imagePath = "/img/404NotFound.jpg";
-                    return View("NoResults", imagePath);
-                }
-                return View(searchResults);
-            }
-        }
-        public IActionResult SearchAction(string query)
+        public async Task<IActionResult> DisplayProducts(int categoryId, int page = 1)
         {
-            string imagePath = "/images/no_results.jpg"; // Đường dẫn đến hình ảnh khi không tìm thấy kết quả
-            return Search(query, imagePath);
-        }*/
-        public async Task<IActionResult> DisplayProducts(int categoryId)
-        {
+            int pageSize = 3; // Số sản phẩm trên mỗi trang
             var category = await _categoryRepository.GetByIdAsync(categoryId);
             var products = await _productRespository.GetByCategoryIdAsync(categoryId);
-          
-            // Truy vấn các sản phẩm theo danh mục categoryId
+            var pagedProducts = products.ToPagedList(page, pageSize);
+
             var viewModel = new DisplayProductsViewModel
             {
                 Category = category,
-                Products = products
+                Products = pagedProducts
             };
-            return View( viewModel);
+            return View(viewModel);
         }
+
         public async Task<IActionResult> DisplayProductsDetail(int subcategoryId)
         {
             var subcategory = await _subcategory.GetByIdAsync(subcategoryId);
             var products = await _productRespository.GetBySubCategoryIdAsync(subcategoryId);
 
-            // Truy vấn các sản phẩm theo danh mục categoryId
             var viewModel = new DisplayProductdetail
             {
                 subcategory = subcategory,
                 Products = products
-
             };
             return View(viewModel);
         }
-        
     }
-    
 }
-

@@ -671,6 +671,49 @@ img, svg {
 .bg-soft-primary {
     background-color: rgba(59,118,225,.25) !important;
 }
+.pagination {
+    display: flex; /* Use flexbox to align items horizontally */
+    justify-content: center; /* Center the pagination items */
+    list-style: none; /* Remove default list styling */
+    padding: 0; /* Remove default padding */
+    margin-top: 1rem; /* Add space above the pagination */
+}
+
+    .pagination .page-item {
+        margin: 0 5px; /* Add space between items */
+    }
+
+    .pagination .page-link {
+        display: block; /* Ensure links are block elements */
+        padding: 10px 16px; /* Add padding for clickable area */
+        margin-left: -1px; /* Ensure there is no extra space */
+        line-height: 1.25; /* Adjust line height */
+        color: var(--bs-dark); /* Link color */
+        background-color: var(--bs-white); /* Background color */
+        border: 1px solid var(--bs-secondary); /* Border color */
+        text-decoration: none; /* Remove text decoration */
+        transition: 0.5s; /* Add transition for hover effect */
+    }
+
+        .pagination .page-link:hover {
+            background-color: var(--bs-secondary); /* Change background on hover */
+            color: var(--bs-white); /* Change text color on hover */
+        }
+
+    .pagination .active .page-link {
+        background-color: var(--bs-danger); /* Active page background */
+        color: var(--bs-light); /* Active page text color */
+        border-color: var(--bs-secondary); /* Active page border color */
+    }
+
+    .pagination .disabled .page-link {
+        color: #6c757d; /* Disabled link color */
+        pointer-events: none; /* Disable pointer events */
+        cursor: not-allowed; /* Change cursor */
+        background-color: var(--bs-white); /* Disabled link background */
+        border-color: var(--bs-secondary); /* Disabled link border color */
+    }
+
 /*** table ***/
 select {
     -webkit-appearance: none;
