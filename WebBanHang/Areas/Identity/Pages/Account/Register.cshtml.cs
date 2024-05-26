@@ -232,10 +232,11 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                             RoleId = roleId,
                             StaffPhone = Input.PhoneNumber,
                             Email = Input.Email,
-                            AvatarPath=imagePath
+                            AvatarPath = imagePath
                         };
                         _context.Staffs.Add(staff);
-                        if (Input.Role == "Khách hàng")
+                    }
+                        else
                         {
                             var customer = new Customer
                             {
@@ -250,7 +251,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                             };
                             _context.Customers.Add(customer);
                         }
-                    }
+                    
                     /*else if (Input.Role == "Khách hàng")
                     {
                         var customer = new Customer

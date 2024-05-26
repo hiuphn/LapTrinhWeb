@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebBanHang.Models;
+using X.PagedList;
 
 namespace WebBanHang.Areas.Admin.Controllers
 {
@@ -24,19 +25,26 @@ namespace WebBanHang.Areas.Admin.Controllers
         }
 
         // GET: Admin/Subcategories
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string searchString, int? page, int? pageSize)
         {
             ViewData["CurrentFilter"] = searchString;
-            var sub = from n in _context.Subcategorys
-                            select n;
+
+            var subcategoryQuery = _context.Subcategorys.AsQueryable();
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                sub = sub.Where(n => n.Name.ToLower().Contains(searchString.ToLower()));
+                subcategoryQuery = subcategoryQuery.Where(n => n.Name.ToLower().Contains(searchString.ToLower()));
             }
-            var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.categories = new SelectList(categories, "Id", "Name");
-            return View(await sub.ToListAsync());
+
+            int defaultPageSize = pageSize ?? 10; // Default page size is 10 if not provided
+            int pageNumber = page ?? 1; // Default page number is 1 if not provided
+
+            var pagedSubcategory = await subcategoryQuery.ToPagedListAsync(pageNumber, defaultPageSize);
+
+            ViewBag.PageSize = new SelectList(new List<int> { 10, 20, 50 }, defaultPageSize);
+            ViewBag.CurrentPageSize = defaultPageSize; // Update the value of ViewBag.CurrentPageSize
+
+            return View(pagedSubcategory);
         }
 
         // GET: Admin/Subcategories/Details/5

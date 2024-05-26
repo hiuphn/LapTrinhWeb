@@ -22,6 +22,12 @@
     <!-- Libraries Stylesheet -->
     <link href="~/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
     <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="~/Test/vendors/styles/core.css">
+    <link rel="stylesheet" type="text/css" href="~/Test/vendors/styles/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Test/src/plugins/jvectormap/jquery-jvectormap-2.0.3.css">
+    <link rel="stylesheet" type="text/css" href="~/Test/vendors/styles/style.css">
 
 
     <!-- Customized Bootstrap Stylesheet -->
@@ -94,9 +100,18 @@
                                 <span class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                                 
                             </a>
-                            <a href="#" class="my-auto">
-                                <partial name="_LoginPartial"></partial>
-                            </a>
+
+                            <div class="user-info-dropdown">
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                        <span class="user-icon">
+                                            <img src="~/Test/vendors/images/login-img.png" alt="">
+                                        </span>
+                                    </a>
+                                    <partial name="_LoginPartial" />
+                                </div>
+                            </div>
+                          
                         </div>
                     </div>
                 </nav>
@@ -151,6 +166,17 @@
     <script src="~/lib/waypoints/waypoints.min.js"></script>
     <script src="~/lib/lightbox/js/lightbox.min.js"></script>
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/Test/vendors/scripts/core.js"></script>
+    <script src="~/Test/vendors/scripts/script.min.js"></script>
+    <script src="~/Test/vendors/scripts/process.js"></script>
+    <script src="~/Test/vendors/scripts/layout-settings.js"></script>
+    <script src="~/Test/src/plugins/jQuery-Knob-master/jquery.knob.min.js"></script>
+    <script src="~/Test/src/plugins/highcharts-6.0.7/code/highcharts.js"></script>
+    <script src="~/Test/src/plugins/highcharts-6.0.7/code/highcharts-more.js"></script>
+    <script src="~/Test/src/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="~/Test/src/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="~/Test/vendors/scripts/dashboard2.js"></script>
+    <script src="~/Test/gulpfile.js"></script>
     @RenderSection("Scripts", required: false)
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>

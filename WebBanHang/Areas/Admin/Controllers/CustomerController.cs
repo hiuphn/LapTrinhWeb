@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebBanHang.Models;
+using X.PagedList;
 
 namespace WebBanHang.Areas.Admin.Controllers
 {
@@ -18,18 +20,26 @@ namespace WebBanHang.Areas.Admin.Controllers
 
         // GET: Admin/KhachHangs
 
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string searchString, int? page, int? pageSize)
         {
             ViewData["CurrentFilter"] = searchString;
-            var customers = from n in _context.Customers
-                            select n;
+
+            var customersQuery = _context.Customers.AsQueryable();
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                customers = customers.Where(n => n.CustomerName.ToLower().Contains(searchString.ToLower()));
+                customersQuery = customersQuery.Where(n => n.CustomerName.ToLower().Contains(searchString.ToLower()));
             }
 
-            return View(await customers.ToListAsync());
+            int defaultPageSize = pageSize ?? 10; // Default page size is 10 if not provided
+            int pageNumber = page ?? 1; // Default page number is 1 if not provided
+
+            var pagedCustomers = await customersQuery.ToPagedListAsync(pageNumber, defaultPageSize);
+
+            ViewBag.PageSize = new SelectList(new List<int> { 10, 20, 50 }, defaultPageSize);
+            ViewBag.CurrentPageSize = defaultPageSize; // Update the value of ViewBag.CurrentPageSize
+
+            return View(pagedCustomers);
         }
             // GET: Admin/KhachHangs/Details/5
             public async Task<IActionResult> Details(int? id)

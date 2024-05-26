@@ -235,58 +235,110 @@
     });
 </script>
 <!-- Sidebar Start -->
-<div class="sidebar pe-4 pb-3">
-    <nav class="navbar bg-light navbar-light">
-        <a asp-action="Index" asp-controller="Home" asp-area="Admin" class="navbar-brand mx-4 mb-3">
-            <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>SHOP</h3>
-        </a>
-        <div class="d-flex align-items-center ms-4 mb-4">
-            <div class="ms-3">
-                <h6 class="mb-0">ADMIN</h6>
-            </div>
-        </div>
-        <div class="navbar-nav w-100">
-            @* fa fa-tachometer-alt me-2 *@
-            <a asp-action="Index" asp-controller="Staff" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Quản lý nhân viên</a>
-            <a asp-action="Index" asp-controller="Customer" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Quản lý khách hàng</a>
-            <a asp-action="Index" asp-controller="Discounts" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Quản lý mã giảm giá</a>
-            <a asp-action="Index" asp-controller="Category" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Quản lý danh mục</a>
-            <a asp-action="Index" asp-controller="Subcategories" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Quản lý danh mục con</a>
-            <a asp-action="Index" asp-controller="Order" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Cập nhật trạng thái đơn hàng</a>
-            <a asp-action="Index" asp-controller="Supplier" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Quản lý các nhà cung cấp</a>
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Hàng hóa</a>
-                <div class="dropdown-menu bg-transparent border-0">
-                    <a asp-action="Add" asp-controller="Product" class="dropdown-item">Nhập thêm hàng vô kho</a>
-                    <a asp-action="Index" asp-controller="Product" class="dropdown-item ">Xem kho</a>
-                </div>
-            </div>
-            <a asp-action="Index" asp-controller="Statics" class="nav-item nav-link active"><i class="fa fa-keyboard me-2"></i>Thống kê</a>
+<div class="left-side-bar">
+    <div class="brand-logo">
 
+        <div class="close-sidebar" data-toggle="left-sidebar-close">
+            <i class="ion-close-round"></i>
         </div>
-    </nav>
-</div>
-<form asp-controller="Statics" asp-action="Index" method="post">
-    <input name="year" type="number" id="inputYear" min="1900" max="2100" placeholder="Nhập năm..." required>
-    <button type="submit">Xem doanh thu</button>
-</form>
-@if (year.HasValue)
-{
-<div class="container-fluid pt-4 px-4 ">
-    <div class="col-sm-6 col-xl-3">
-        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-            <i class="fa fa-chart-bar fa-3x text-primary"></i>
-            <div class="ms-3">
-                <p class="mb-2">Tổng doanh thu của năm @(year.Value)</p>
-                <h6 class="mb-0">@totalRevenue.Value.ToString("C", cultureInfo)</h6>
-            </div>
+    </div>
+    <div class="menu-block customscroll">
+        <div class="sidebar-menu">
+            <ul id="accordion-menu">
+                <li>
+                    <a asp-action="Index" asp-controller="Statics" class="dropdown-toggle no-arrow active">
+                        <span class="micon fa fa-dashboard"></span><span class="mtext">Thống kê</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Customer" class="dropdown-toggle no-arrow ">
+                        <span class="micon fa fa-users"></span><span class="mtext">Khách hàng</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Staff" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-users"></span><span class="mtext">Nhân viên</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Supplier" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-handshake-o"></span><span class="mtext">Nhà cung cấp</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Discounts" class="dropdown-toggle no-arrow ">
+                        <span class="micon fa fa-keyboard me-2"></span><span class="mtext">Mã giảm giá</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-action="Index" asp-controller="Category" class="dropdown-toggle no-arrow ">
+                        <span class="micon fa fa-th me-2" "></span><span class="mtext">Danh mục</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Subcategories" class="dropdown-toggle no-arrow ">
+                        <span class="micon fa fa-th me-2" "></span><span class="mtext">Danh mục con</span>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-cubes"></span><span class="mtext">Hàng hóa</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a asp-action="Add" asp-controller="Product">Nhập hàng</a></li>
+                        <li><a asp-action="Index" asp-controller="Product">Kho</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Order" class="dropdown-toggle no-arrow">
+                        <span class="micon dw dw-invoice"></span><span class="mtext">Hóa đơn</span>
+                    </a>
+                </li>
+
+            </ul>
         </div>
     </div>
 </div>
-<div>
-    <canvas id="myChart"></canvas>
+<div class="mobile-menu-overlay"></div>
+
+
+<div class="main-container">
+    <div class="xs-pd-20-10 pd-ltr-20">
+        <div class="row clearfix progress-box">
+            <div class="col-lg-12">
+                <div class="card-box mb-30">
+                  
+                    <div class="pb-20">
+                        <form asp-controller="Statics" asp-action="Index" method="post">
+                            <input name="year" type="number" id="inputYear" min="1900" max="2100" placeholder="Nhập năm..." required>
+                            <button type="submit">Xem doanh thu</button>
+                        </form>
+                        @if (year.HasValue)
+                        {
+                            <div class="container-fluid pt-4 px-4 ">
+                                <div class="col-sm-6 col-xl-3">
+                                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                        <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                                        <div class="ms-3">
+                                            <p class="mb-2">Tổng doanh thu của năm @(year.Value)</p>
+                                            <h6 class="mb-0">@totalRevenue.Value.ToString("C", cultureInfo)</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <canvas id="myChart"></canvas>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
-}
+
 @section Scripts {
 
 

@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using X.PagedList;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 
 namespace DoAnCuoiky.Areas.Admin.Controllers
@@ -20,15 +22,26 @@ namespace DoAnCuoiky.Areas.Admin.Controllers
             _categoryRepository = categoryRepository;
             _context = context;
         }
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string searchString, int? page, int? pageSize)
         {
             ViewData["CurrentFilter"] = searchString;
-            var categories = await _categoryRepository.GetAllAsync();
+
+            var categoryQuery = _context.Categories.AsQueryable();
+
             if (!String.IsNullOrEmpty(searchString))
             {
-                categories = categories.Where(n => n.Name.ToLower().Contains(searchString.ToLower()));
+                categoryQuery = categoryQuery.Where(n => n.Name.ToLower().Contains(searchString.ToLower()));
             }
-            return View(categories);
+
+            int defaultPageSize = pageSize ?? 10; // Default page size is 10 if not provided
+            int pageNumber = page ?? 1; // Default page number is 1 if not provided
+
+            var pagedCategory= await categoryQuery.ToPagedListAsync(pageNumber, defaultPageSize);
+
+            ViewBag.PageSize = new SelectList(new List<int> { 10, 20, 50 }, defaultPageSize);
+            ViewBag.CurrentPageSize = defaultPageSize; // Update the value of ViewBag.CurrentPageSize
+
+            return View(pagedCategory);
         }
         public async Task<IActionResult> Add()
         {
