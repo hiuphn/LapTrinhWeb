@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebBanHang.Models;
+using X.PagedList;
 
 namespace WebBanHang.Areas.Admin.Controllers
 {
@@ -26,33 +27,33 @@ namespace WebBanHang.Areas.Admin.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string searchString, int? page, int? pageSize)
         {
             ViewData["CurrentFilter"] = searchString;
-            var products = await _productRespository.GetAllAsync();
+
+            var productQuery = _context.Products.AsQueryable();
+
             if (!String.IsNullOrEmpty(searchString))
             {
-                products = products.Where(n => n.Name.ToLower().Contains(searchString.ToLower()));
+                productQuery = productQuery.Where(n => n.Name.ToLower().Contains(searchString.ToLower()));
             }
-            return View(products);
-        }
-        [HttpGet("GetByCategory/{categoryId}")]
-        public async Task<IActionResult> GetByCategory(int categoryId)
-        {
-            var subcategories = await _context.Subcategorys
-                .Where(sc => sc.CategoryId == categoryId)
-                .ToListAsync();
 
-            return Ok(subcategories);
+            int defaultPageSize = pageSize ?? 10; // Default page size is 10 if not provided
+            int pageNumber = page ?? 1; // Default page number is 1 if not provided
+
+            var pagedProduct = await productQuery.ToPagedListAsync(pageNumber, defaultPageSize);
+
+            ViewBag.PageSize = new SelectList(new List<int> { 10, 20, 50 }, defaultPageSize);
+            ViewBag.CurrentPageSize = defaultPageSize; // Update the value of ViewBag.CurrentPageSize
+
+            return View(pagedProduct);
         }
+     
         public async Task<IActionResult> Add()
         {
             var categories = await _categoryRepository.GetAllAsync();
             ViewBag.categories = new SelectList(categories, "Id", "Name");
-            var Subcategory = await _subcategory.GetAllAsync();
-            //var subItem = _context.Categories.Where(k => k == "Thuốc").ToList();
-            //ViewData["IddungCu"] = new SelectList(medicineItems, "IddungCu", "TenDungCu");
-            ViewBag.Subcategory = new SelectList(Subcategory, "Id", "Name");
+            ViewBag.Subcategory = new SelectList(Enumerable.Empty<Subcategory>(), "Id", "Name");
             var Supplier = await _supplierRespository.GetAllAsync();
             ViewBag.Supplier = new SelectList(Supplier, "SupplierID", "CompanyName");
 
@@ -95,6 +96,12 @@ namespace WebBanHang.Areas.Admin.Controllers
             ViewBag.Supplier = new SelectList(Supplier, "SupplierID", "CompanyName");
 
             return View(product);
+        }
+
+        public async Task<JsonResult> GetSubcategories(int categoryId)
+        {
+            var subcategories = await _subcategory.GetSubcategoriesByCategoryIdAsync(categoryId);
+            return Json(new SelectList(subcategories, "Id", "Name"));
         }
         private async Task<string> SaveImage(IFormFile image)
         {

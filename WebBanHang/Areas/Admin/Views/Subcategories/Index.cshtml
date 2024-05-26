@@ -287,12 +287,12 @@
 
                 <li>
                     <a asp-action="Index" asp-controller="Category" class="dropdown-toggle no-arrow ">
-                        <span class="micon fa fa-th me-2" "></span><span class="mtext">Danh mục</span>
+                        <span class="micon fa fa-th me-2" ></span><span class="mtext">Danh mục</span>
                     </a>
                 </li>
                 <li>
                     <a asp-action="Index" asp-controller="Subcategories" class="dropdown-toggle no-arrow active">
-                        <span class="micon fa fa-th me-2" "></span><span class="mtext">Danh mục con</span>
+                        <span class="micon fa fa-th me-2" ></span><span class="mtext">Danh mục con</span>
                     </a>
                 </li>
                 <li class="dropdown">
@@ -320,13 +320,13 @@
 <div class="main-container">
     <div class="xs-pd-20-10 pd-ltr-20">
         <p>
-            <a asp-action="Add" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="bi bi-plus-square-fill"></i> Tạo mới</a>
+            <a asp-action="Create" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="bi bi-plus-square-fill"></i> Tạo mới</a>
         </p>
         <div class="row clearfix progress-box">
             <div class="col-lg-12">
                 <div class="card-box mb-30">
                     <div class="pd-20">
-                        <h4 class="text-blue h4">Thông tin danh mục</h4>
+                        <h4 class="text-blue h4">Thông tin danh mục con</h4>
 
                     </div>
                     <div class="pb-20">
@@ -348,24 +348,37 @@
 
                                     <th scope="col">Danh mục con</th>
                                     <th scope="col">Danh mục </th>
-
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model)
+                                @if (Model != null)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td><span>@item?.Name</span></td>
+                                            <td><span>@item?.Category?.Name</span></td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a asp-action="Edit" asp-route-id="@item.Id" class="dropdown-item"><i class="dw dw-edit2"></i> Cập nhật</a>
+                                                        <a asp-action="Details" asp-route-id="@item.Id" class="dropdown-item"><i class="dw dw-eye"></i> Chi tiết</a>
+                                                        <a onclick="confirmDelete(@item.Id)" class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Xóa</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
                                 {
                                     <tr>
-
-                                        <td><span @* class="badge badge-soft-danger mb-0" *@>@item.Name</span></td>
-                                        <td><span @* class="badge badge-soft-danger mb-0" *@>@item.Category.Name</span></td>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                            <a asp-action="Edit" asp-route-id="@item.Id" class="dropdown-item"><i class="dw dw-edit2"></i> Cập nhật</a>
-                                            <a asp-action="Details" asp-route-id="@item.Id" class="dropdown-item"><i class="dw dw-eye"></i> Chi tiết</a>
-                                            <a onclick="confirmDelete(@item.Id)" class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Xóa</a>
-                                        </div>
+                                        <td colspan="3">Không tồn tại.</td>
                                     </tr>
                                 }
-
                             </tbody>
                            
                         </table>
@@ -406,38 +419,3 @@
         }
     </script>
 }
-
-<div style="padding-top:100px; padding-left:50px">
-    <form asp-action="Index" method="get" class="d-none d-md-flex ms-4 ">
-        <input class="search" type="text" name="searchString" placeholder="Tìm kiếm" value="@ViewData["CurrentFilter"]" />
-
-        <input class="btn border border-secondary rounded-pill px-3 text-primary button" type="submit" value="Tìm kiếm" />
-    </form>
-
-    <p>
-        <a asp-action="Create" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="bi bi-plus-square-fill"></i> Tạo mới</a>
-    </p>
-    @* <table class="table">
-    <thead>
-    <tr>
-    <th>
-    @Html.DisplayNameFor(model => model.Name)
-    </th>
-    <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model) {
-    <tr>
-    <td>
-    @Html.DisplayFor(modelItem => item.Name)
-    </td>
-    <td>
-    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning btn-rounded" data-mdb-ripple-init data-mdb-ripple-color="dark"><i class="bi bi-pencil-square"></i>Sửa</a>
-    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info btn-rounded" data-mdb-ripple-init data-mdb-ripple-color="dark"><i class="bi bi-list-task"></i>ChiTiết</a>
-    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger btn-rounded" data-mdb-ripple-init data-mdb-ripple-color="dark"><i class="bi bi-trash"></i>Xóa</a>
-    </td>
-    </tr>
-    }
-    </tbody>
-    </table> *@

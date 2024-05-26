@@ -216,150 +216,185 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
 </script>
-<!-- Sidebar Start -->
-<div class="sidebar pe-4 pb-3">
-    <nav class="navbar bg-light navbar-light">
-        <a asp-action="Index" asp-controller="Home" asp-area="Admin" class="navbar-brand mx-4 mb-3">
-            <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>SHOP</h3>
-        </a>
-        <div class="d-flex align-items-center ms-4 mb-4">
-            <div class="ms-3">
-                <h6 class="mb-0">ADMIN</h6>
-            </div>
+<div class="left-side-bar">
+    <div class="brand-logo">
+
+        <div class="close-sidebar" data-toggle="left-sidebar-close">
+            <i class="ion-close-round"></i>
         </div>
-        <div class="navbar-nav w-100">
-            @* fa fa-tachometer-alt me-2 *@
-            <a asp-action="Index" asp-controller="Staff" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Quản lý nhân viên</a>
-            <a asp-action="Index" asp-controller="Customer" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Quản lý khách hàng</a>
-            <a asp-action="Index" asp-controller="Discounts" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Quản lý mã giảm giá</a>
-            <a asp-action="Index" asp-controller="Category" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Quản lý danh mục</a>
-            <a asp-action="Index" asp-controller="Subcategories" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Quản lý danh mục con</a>
-            <a asp-action="Index" asp-controller="Order" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Cập nhật trạng thái đơn hàng</a>
-            <a asp-action="Index" asp-controller="Supplier" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Quản lý các nhà cung cấp</a>
-            <div class="nav-item dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Hàng hóa</a>
-                <div class="dropdown-menu bg-transparent border-0">
-                    <a asp-action="Add" asp-controller="Product" class="dropdown-item active">Nhập thêm hàng vô kho</a>
-                    <a asp-action="Index" asp-controller="Product" class="dropdown-item">Xem kho</a>
-                </div>
-            </div>
-            <a asp-action="Index" asp-controller="Statics" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Thống kê</a>
+    </div>
+    <div class="menu-block customscroll">
+        <div class="sidebar-menu">
+            <ul id="accordion-menu">
+                <li>
+                    <a asp-action="Index" asp-controller="Statics" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-dashboard"></span><span class="mtext">Thống kê</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Customer" class="dropdown-toggle no-arrow ">
+                        <span class="micon fa fa-users"></span><span class="mtext">Khách hàng</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Staff" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-users"></span><span class="mtext">Nhân viên</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Supplier" class="dropdown-toggle no-arrow ">
+                        <span class="micon fa fa-handshake-o"></span><span class="mtext">Nhà cung cấp</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Discounts" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-keyboard me-2"></span><span class="mtext">Mã giảm giá</span>
+                    </a>
+                </li>
 
-        </div>
-    </nav>
-</div>
-<!-- Sidebar End -->
+                <li>
+                    <a asp-action="Index" asp-controller="Category" class="dropdown-toggle no-arrow ">
+                        <span class="micon fa fa-th me-2"></span><span class="mtext">Danh mục</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Subcategories" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-th me-2"></span><span class="mtext">Danh mục con</span>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle active">
+                        <span class="micon fa fa-cubes"></span><span class="mtext">Hàng hóa</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a asp-action="Add" asp-controller="Product">Nhập hàng</a></li>
+                        <li><a asp-action="Index" asp-controller="Product">Kho</a></li>
+                    </ul>
 
-<a asp-action="Index">
-    <button class="rounded-lg px-4 py-2 border-2 border-black-500 text-black-500 hover:bg-blue-600 hover:text-blue-100 duration-300">
-        ← Quay về lại danh sách
-    </button>
-</a>
-<div class="flex justify-center items-center h-screen">
-    <div class="container p-[20px] max-w-[700px] max-h-[500px] bg-white rounded-xl">
-        <div class="relative">
-            <h1 class="text-[32px] font-bold">Nhập thêm hàng</h1>
-            <span class="absolute inline-block w-[70px] h-[4px] bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-xl"></span>
-            <br />
-        </div>
-        <div class="col-12">
-            <div class="card">
-                
-                <div class="card-body">
-                      <form asp-action="Add" method="post" class="flex-wrap flex justify-around items-center" enctype="multipart/form-data">
-                        <input type="hidden" asp-for="Id" />
-                        <div class="col-md-6">
-                            <label asp-for="Name" class="control-label" ></label>
-                            <input asp-for="Name" class="form-control" />
-                            <span asp-validation-for="Name" class="text-danger"></span>
-                        </div>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Order" class="dropdown-toggle no-arrow">
+                        <span class="micon dw dw-invoice"></span><span class="mtext">Hóa đơn</span>
+                    </a>
+                </li>
 
-
-                        <div class="col-md-6">
-                            <label asp-for="Price" class="control-label" ></label>
-                            <input asp-for="Price" class="form-control" />
-                            <span asp-validation-for="Price" class="text-danger"></span>
-                        </div>
-                        <div class="col-md-6">
-                            <label asp-for="Number" class="control-label" ></label>
-                            <input asp-for="Number" class="form-control" />
-                            <span asp-validation-for="Number" class="text-danger"></span>
-                        </div>
-                        <div class="col-md-6">
-                            <label asp-for="Description" class="control-label" ></label>
-                            <input asp-for="Description" class="form-control" />
-                            <span asp-validation-for="Description" class="text-danger"></span>
-                        </div>
-                        <div class="col-md-6">
-                            <label asp-for="ImageUrl" class="control-label"></label>
-                            <input type="file" asp-for="ImageUrl" class="form-control" />
-                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
-                        </div>
-                        <div class="col-md-6">
-                            <label asp-for="Images" class="control-label"></label>
-                            <input type="file" asp-for="Images" class="form-control" multiple />
-                            <span asp-validation-for="Images" class="text-danger"></span>
-                        </div>
-                        <div class="col-md-6">
-                            <label asp-for="CategoryId" class="control-label"></label>
-                            <select asp-for="CategoryId" onchange=""  asp-items="ViewBag.categories" class="form-control"></select>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="subcategory">Danh mục con</label>
-
-                            <select id="subcategory" name="SubcategoryId" class="form-control">
-                                <option value="">Chọn danh mục con</option>
-                                @* Subcategories will be populated here *@
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label asp-for="SupplierID" class="control-label"></label>
-                            <select asp-for="SupplierID" asp-items="ViewBag.Supplier" class="form-control"></select>
-                        </div>
-                        <div class="col-md-12">
-                            <button value="Add" type="submit" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-violet dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
-                                <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                                    Thêm
-                                </span>
-                            </button>
-
-                        </div>
-                    </form>
-                </div>
-            </div>
+            </ul>
         </div>
     </div>
 </div>
+<div class="mobile-menu-overlay"></div>
 
+
+<div class="main-container">
+    <div class="xs-pd-20-10 pd-ltr-20">
+
+        <div class="row clearfix progress-box">
+            <div class="col-lg-12">
+                <a asp-action="Index">
+                    <button class="rounded-lg px-4 py-2 border-2 border-black-500 text-black-500 hover:bg-blue-600 hover:text-blue-100 duration-300">
+                        ← Quay về lại danh sách
+                    </button>
+                </a>
+
+
+                <div class="flex justify-center items-center h-screen ">
+                    <div class="container p-[20px] max-w-[700px] max-h-[500px] bg-white rounded-xl">
+                        <div class="relative">
+                            <h1 class="text-[32px] font-bold">Tạo mới danh mục</h1>
+                            <span class="absolute inline-block w-[70px] h-[4px] bg-gradient-to-r from-blue-500 to-fuchsia-500 rounded-xl"></span>
+                        </div>
+                        <div class="flex justify-center gap-10 mt-[10px]">
+                            <form asp-action="Add" method="post" class="flex-wrap flex justify-around items-center" enctype="multipart/form-data">
+                                <input type="hidden" asp-for="Id" />
+                                <div class="col-md-6">
+                                    <label asp-for="Name" class="control-label"></label>
+                                    <input asp-for="Name" class="form-control" />
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <label asp-for="Price" class="control-label"></label>
+                                    <input asp-for="Price" class="form-control" />
+                                    <span asp-validation-for="Price" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="Number" class="control-label"></label>
+                                    <input asp-for="Number" class="form-control" />
+                                    <span asp-validation-for="Number" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="Description" class="control-label"></label>
+                                    <input asp-for="Description" class="form-control" />
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="ImageUrl" class="control-label"></label>
+                                    <input type="file" asp-for="ImageUrl" class="form-control" />
+                                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="Images" class="control-label"></label>
+                                    <input type="file" asp-for="Images" class="form-control" multiple />
+                                    <span asp-validation-for="Images" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="CategoryId" class="control-label"></label>
+                                    <select id="CategoryId" asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-control"></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="SubcategoryId" class="control-label"></label>
+                                    <select id="SubcategoryId" asp-for="SubcategoryId" asp-items="ViewBag.Subcategory" class="form-control"></select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="SupplierID" class="control-label"></label>
+                                    <select asp-for="SupplierID" asp-items="ViewBag.Supplier" class="form-control"></select>
+                                </div>
+                                <div class="col-md-12">
+                                    <button value="Add" type="submit" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-violet dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
+                                        <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                                            Thêm
+                                        </span>
+                                    </button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
         $(document).ready(function () {
-            $('#category').change(function () {
+            var categoryId = $('#CategoryId').val();
+            if (categoryId) {
+                updateSubcategories(categoryId);
+            }
+
+            $('#CategoryId').change(function () {
                 var categoryId = $(this).val();
-                if (categoryId) {
-                    $.ajax({
-                        url: '~/api/Subcategorys/GetByCategory/' + categoryId,
-                        type: 'GET',
-                        success: function (data) {
-                            var subcategoryDropdown = $('#subcategory');
-                            subcategoryDropdown.empty();
-                            subcategoryDropdown.append('<option value="">Chọn danh mục con</option>');
-                            $.each(data, function (index, item) {
-                                subcategoryDropdown.append('<option value="' + item.id + '">' + item.name + '</option>');
-                            });
-                        },
-                        error: function (xhr, status, error) {
-                            console.error(error);
-                        }
-                    });
-                } else {
-                    $('#subcategory').empty();
-                    $('#subcategory').append('<option value="">Chọn danh mục con</option>');
-                }
+                updateSubcategories(categoryId);
             });
+
+            function updateSubcategories(categoryId) {
+                $.getJSON('@Url.Action("GetSubcategories", "Product")', { categoryId: categoryId }, function (subcategories) {
+                    var subcategorySelect = $('#SubcategoryId');
+                    subcategorySelect.empty();
+                    $.each(subcategories, function (index, subcategory) {
+                        subcategorySelect.append($('<option/>', {
+                            value: subcategory.value,
+                            text: subcategory.text
+                        }));
+                    });
+                });
+            }
         });
-        
     </script>
 
    @*  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");} *@

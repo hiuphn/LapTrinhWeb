@@ -242,22 +242,23 @@
 
                 <li>
                     <a asp-action="Index" asp-controller="Category" class="dropdown-toggle no-arrow active">
-                        <span class="micon fa fa-th me-2" "></span><span class="mtext">Danh mục</span>
+                        <span class="micon fa fa-th me-2" ></span><span class="mtext">Danh mục</span>
                     </a>
                 </li>
                 <li>
                     <a asp-action="Index" asp-controller="Subcategories" class="dropdown-toggle no-arrow">
-                        <span class="micon fa fa-th me-2" "></span><span class="mtext">Danh mục con</span>
+                        <span class="micon fa fa-th me-2" ></span><span class="mtext">Danh mục con</span>
                     </a>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle no-arrow">
+                    <a href="javascript:;" class="dropdown-toggle">
                         <span class="micon fa fa-cubes"></span><span class="mtext">Hàng hóa</span>
                     </a>
                     <ul class="submenu">
                         <li><a asp-action="Add" asp-controller="Product">Nhập hàng</a></li>
                         <li><a asp-action="Index" asp-controller="Product">Kho</a></li>
                     </ul>
+
                 </li>
                 <li>
                     <a asp-action="Index" asp-controller="Order" class="dropdown-toggle no-arrow">
