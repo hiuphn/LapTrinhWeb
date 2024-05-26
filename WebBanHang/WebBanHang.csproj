@@ -14,14 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\js\core.js" />
-    <Content Remove="wwwroot\js\core.min.js" />
-    <Content Remove="wwwroot\js\process.js" />
-    <Content Remove="wwwroot\js\script.js" />
-    <Content Remove="wwwroot\js\script.min.js" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\AdminLayout\js\main.js" />
     <None Include="wwwroot\AdminLayout\lib\chart\chart.min.js" />
     <None Include="wwwroot\AdminLayout\lib\easing\easing.js" />
@@ -477,11 +469,6 @@
     <None Include="wwwroot\deskapp2-master\deskapp2-master\vendors\scripts\script.js" />
     <None Include="wwwroot\deskapp2-master\deskapp2-master\vendors\scripts\script.min.js" />
     <None Include="wwwroot\deskapp2-master\deskapp2-master\vendors\scripts\steps-setting.js" />
-    <None Include="wwwroot\js\core.js" />
-    <None Include="wwwroot\js\core.min.js" />
-    <None Include="wwwroot\js\process.js" />
-    <None Include="wwwroot\js\script.js" />
-    <None Include="wwwroot\js\script.min.js" />
     <None Include="wwwroot\layout\.github\workflows\npm-publish.yml" />
     <None Include="wwwroot\layout\.gitignore" />
     <None Include="wwwroot\layout\gulpfile.js" />

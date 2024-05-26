@@ -31,7 +31,9 @@ namespace WebBanHang.Areas.Admin.Controllers
         {
             ViewData["CurrentFilter"] = searchString;
 
-            var productQuery = _context.Products.AsQueryable();
+            var productQuery = _context.Products.Include(p=>p.Category)
+                                                .Include(c=>c.Supplier)
+                                                .Include(d=>d.Subcategory).AsQueryable();
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -56,8 +58,6 @@ namespace WebBanHang.Areas.Admin.Controllers
             ViewBag.Subcategory = new SelectList(Enumerable.Empty<Subcategory>(), "Id", "Name");
             var Supplier = await _supplierRespository.GetAllAsync();
             ViewBag.Supplier = new SelectList(Supplier, "SupplierID", "CompanyName");
-
-
             return View();
         }
         [HttpPost]

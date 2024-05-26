@@ -29,7 +29,7 @@ namespace WebBanHang.Areas.Admin.Controllers
         {
             ViewData["CurrentFilter"] = searchString;
 
-            var subcategoryQuery = _context.Subcategorys.AsQueryable();
+            var subcategoryQuery = _context.Subcategorys.Include(p => p.Category).AsQueryable();
 
             if (!String.IsNullOrEmpty(searchString))
             {

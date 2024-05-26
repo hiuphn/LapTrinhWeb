@@ -461,6 +461,8 @@ namespace WebBanHang.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("SubcategoryId");
+
                     b.HasIndex("SupplierID");
 
                     b.ToTable("Products");
@@ -718,6 +720,10 @@ namespace WebBanHang.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("WebBanHang.Models.Subcategory", "Subcategory")
+                        .WithMany()
+                        .HasForeignKey("SubcategoryId");
+
                     b.HasOne("WebBanHang.Models.Supplier", "Supplier")
                         .WithMany()
                         .HasForeignKey("SupplierID")
@@ -725,6 +731,8 @@ namespace WebBanHang.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("Subcategory");
 
                     b.Navigation("Supplier");
                 });
