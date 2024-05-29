@@ -38,7 +38,7 @@ namespace WebBanHang.Controllers
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action("ResetPassword", "Account1", new { token, email = user.Email }, protocol: HttpContext.Request.Scheme);
 
-                await _emailSender.SendEmailAsync(model.Email, "Reset Password", $"Please reset your password by clicking <a href='{callbackUrl}'>here</a>.");
+                await _emailSender.SendEmailAsync(model.Email, "Reset Password", $"Vui lòng nhấn vào liên kết phía dưới để thay đổi mật khẩu <a href='{callbackUrl}'>Tại đây</a>.");
 
                 return RedirectToAction("ForgotPasswordConfirmation");
             }

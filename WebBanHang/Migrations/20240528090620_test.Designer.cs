@@ -12,7 +12,7 @@ using WebBanHang.Models;
 namespace WebBanHang.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240523163933_test")]
+    [Migration("20240528090620_test")]
     partial class test
     {
         /// <inheritdoc />
@@ -171,6 +171,10 @@ namespace WebBanHang.Migrations
 
                     b.Property<DateTime?>("Age")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("ChucVu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()

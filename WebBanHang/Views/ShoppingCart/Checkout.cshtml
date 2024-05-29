@@ -71,9 +71,9 @@
                                             </div>
                                         </th>
                                         <td class="py-5">@item.Name</td>
-                                        <td class="py-5">@item.Price</td>
+                                            <td class="py-5">@item.Price.ToString("N0")₫</td>
                                         <td class="py-5" style="text-align:center">@item.Quantity</td>
-                                        <td class="py-5">@totalPrice</td>
+                                            <td class="py-5">@totalPrice.ToString("N0")₫</td>
                                     </tr>
                                 }
                                
@@ -94,7 +94,7 @@
                             </tbody>
 
                         </table>
-                            <h1 class="mb-0 text-dark py-3">Tổng giá: @foreach (var item in ViewBag.Cart) { cartTotalPrice += item.Price * item.Quantity; } @cartTotalPrice VNĐ</h1>
+                            <h1 class="mb-0 text-dark py-3">Tổng giá: @foreach (var item in ViewBag.Cart) { cartTotalPrice += item.Price * item.Quantity; } @cartTotalPrice.ToString("N0")₫</h1>
 
                     </div>
                             <div class="row g-4 text-center align-items-center justify-content-center pt-4">

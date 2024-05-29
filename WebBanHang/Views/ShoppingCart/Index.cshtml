@@ -93,7 +93,7 @@
                                 <p class="mb-0 mt-4">@item.Name</p>
                             </td>
                             <td>
-                                <p class="mb-0 mt-4" >@item.Price</p>
+                                        <p class="mb-0 mt-4">@item.Price.ToString("N0")₫</p>
                             </td>
                             <td>
                                     <div class="form-group">
@@ -143,7 +143,7 @@
                                 
                             </td>
                             <td>
-                                    <p class="item-total" style="padding-top: 30px">@totalPrice</p>
+                                        <p class="item-total" style="padding-top: 30px">@totalPrice.ToString("N0")₫</p>
                                     
                                     
                             </td>
@@ -173,7 +173,7 @@
                         <h1 class="display-6 mb-4">Giỏ hàng <span class="fw-normal">tổng giá</span></h1>
                         <div class="d-flex justify-content-between mb-4">
                             <h5 class="mb-0 me-4">Tổng phụ:</h5>
-                            <p id="cart-total">@Model.Items.Sum(item => item.Price * item.Quantity)</p>
+                                    <p id="cart-total">@Model.Items.Sum(item => item.Price * item.Quantity).ToString("N0")₫</p>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h5 class="mb-0 me-4">Phí vận chuyển</h5>
@@ -185,7 +185,7 @@
                     </div>
                     <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                         <h5 class="mb-0 ps-4 me-4">Tổng</h5>
-                        <p class="mb-0 pe-4">@Model.Items.Sum(item => item.Price * item.Quantity)</p>
+                                <p class="mb-0 pe-4">@Model.Items.Sum(item => item.Price * item.Quantity).ToString("N0")₫</p>
                     </div>
                       <a asp-controller="ShoppingCart" asp-action="Checkout" class="position-relative me-4 my-auto">
                     <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button" >Thanh Toán</button>

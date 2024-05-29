@@ -127,6 +127,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
             public string? Role { get; set; }
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
+            public string ChucVu { get; set; }
 
         }
 
@@ -164,6 +165,31 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                 user.Age = Input.Age;
                 user.PhoneNumber = Input.PhoneNumber;
                 user.Sex = Input.Sex;
+                /*if (Input.Role == "Nhân viên" || Input.Role == "Admin"|| Input.Role == "Khách hàng")
+                {
+                    var roleEmployee = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Nhân viên");
+                    var roleAdmin = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Admin");
+                    var roleCustomer = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Khách hàng");
+                    var roleName = "";
+                    
+                    var userRoles = await _userManager.GetRolesAsync(user);
+                    if (userRoles.Contains("Nhân viên"))
+                    {
+                        roleName = "Nhân viên";
+                        user.ChucVu = roleName;
+                    }
+                    if (userRoles.Contains("Admin"))
+                    {
+                        roleName = "Admin";
+                        user.ChucVu = roleName;
+                    }
+                    if (userRoles.Contains("Khách hàng"))
+                    {
+                        roleName = "Khách hàng";
+                        user.ChucVu = roleName;
+                    }
+                }*/
+                user.ChucVu = Input.Role;
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);

@@ -17,9 +17,11 @@ namespace WebBanHang.Areas.Admin.Pages
         public UserModel(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
+
         }
 
         public IList<ApplicationUser> Users { get; set; }
+
 
         public async Task OnGetAsync()
         {

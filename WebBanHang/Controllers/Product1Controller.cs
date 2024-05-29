@@ -29,7 +29,7 @@ namespace WebBanHang.Controllers
             }
             if(pageSize == null)
             {
-                pageSize = 2;
+                pageSize = 9;
             }
             ViewBag.nameCategory = await _categoryRepository.GetAllAsync();
             var products = _context.Products.ToList();
@@ -190,7 +190,7 @@ namespace WebBanHang.Controllers
 
         public async Task<IActionResult> DisplayProducts(int categoryId, int page = 1)
         {
-            int pageSize = 3; // Số sản phẩm trên mỗi trang
+            int pageSize = 10; // Số sản phẩm trên mỗi trang
             var category = await _categoryRepository.GetByIdAsync(categoryId);
             var products = await _productRespository.GetByCategoryIdAsync(categoryId);
             var pagedProducts = products.ToPagedList(page, pageSize);

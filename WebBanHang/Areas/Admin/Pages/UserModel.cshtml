@@ -49,6 +49,7 @@
                                     <th scope="col">Email</th>                                
                                     <th scope="col">Số Điện Thoại</th>
                                     <th scope="col">Địa chỉ</th>
+                                    <th scope="col">Chức vụ</th>
                                     <th scope="col">Khóa Tài Khoản </th>
                             </tr>
                         </thead>
@@ -64,6 +65,7 @@
                                     <td><span class="badge badge-soft-success mb-0">@item.Email</span></td>   
                                     <td><span class="badge badge-soft-info mb-0">@item.PhoneNumber</span></td>
                                     <td><span class="badge badge-soft-info mb-0">@item.Address</span></td>
+                                    <td><span class="badge badge-soft-danger mb-0">@item.ChucVu</span></td>
                                     <td>
                                         <ul class="list-inline mb-0" style="align-items:center">
                                             @if (!item.IsLocked)
