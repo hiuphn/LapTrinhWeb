@@ -212,12 +212,12 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                     {
                         // Thực hiện login    
                         await _signInManager.SignInAsync(userWithexternalMail, isPersistent: false);
-                        /*return ViewComponent("MessageComponent", new MessagePage.Message()
+                        return ViewComponent("MessageComponent", new MessagePage.Message()
                         {
                             title = "LIÊN KẾT TÀI KHOẢN",
                             urlredirect = returnUrl,
                             htmlcontent = $"Liên kết tài khoản {userWithexternalMail.UserName} với {info.ProviderDisplayName} thành công"
-                        });*/
+                        });
                     }
                     else
                     {
@@ -248,12 +248,12 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                             var codeactive = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                             await _userManager.ConfirmEmailAsync(user, codeactive);
                             await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
-                            return ViewComponent("MessageComponent", new MessagePage.Message()
+                            /*return ViewComponent("MessageComponent", new MessagePage.Message()
                             {
                                 title = "TẠO VÀ LIÊN KẾT TÀI KHOẢN",
                                 urlredirect = returnUrl,
                                 htmlcontent = $"Đã tạo và liên kết tài khoản, kích hoạt email thành công"
-                            });
+                            });*/
                         }
 
                         // Trường hợp này Email tạo User khác với Email từ info (hoặc info không có email)

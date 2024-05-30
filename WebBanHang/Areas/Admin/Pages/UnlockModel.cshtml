@@ -33,16 +33,17 @@
                     <div class="panel-body">
                         <div class="text-center">
                             <h3><i class="fa fa-lock fa-4x"></i></h3>
-                            <h2 class="text-center">Khóa tài khoản?</h2>
+                            <h2 class="text-center">Mở khóa tài khoản?</h2>
                             <p>Bạn có chắc muốn mở khóa tài khoản này không?</p>
                             <div class="panel-body">
-
+                                <form method="post">
                                 <div class="form-group" style="padding-top:15px">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
                                         <input asp-for="Email" placeholder="Email" value="@Model.Email" class="form-control" type="email">
                                     </div>
                                 </div>
+                                </form>
                                 <div class="form-group" style="padding-top:5px">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-earphone color-blue"></i></span>
@@ -55,12 +56,16 @@
                                         <input asp-for="Address" placeholder="Email" value="@Model.Address" class="form-control" type="email">
                                     </div>
                                 </div>
-                                <div class="button-container" style="padding-top:30px">
-                                    <form method="post">
+                                <form method="post">
+                                    <div class="button-container" style="padding-top:30px">
+
                                         <input type="submit" value="Mở khóa" class="btn btn-success" />
-                                        <a href="./UserModel" class="btn btn-secondary">Hủy</a>
-                                    </form>
-                                </div>
+                                        <a href="./UserModel" class="btn btn-warning">Hủy</a>
+
+                                    </div>
+                                </form>
+                                    
+                                
 
                             </div>
                         </div>

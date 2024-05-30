@@ -129,7 +129,7 @@
 
 
 </head>
-<body class="img js-fullheight" style="background-image: url(/images/img-1.png);">
+<body class="img js-fullheight" style="background-image: url(/images/login.jpg);">
     <section class="ftco-section">
         <div class="container">
             <div class="row justify-content-center">
@@ -143,33 +143,36 @@
                         <h3 class="mb-4 text-center">Bạn đã có tài khoản?</h3>
                         <form id="account" class="signin-form" method="post">
                             <div class="form-group">
-                                <input asp-for="Input.Email" class="form-control" placeholder="Tên đăng nhập" autocomplete="username" aria-required="true">
+                                <input asp-for="Input.Email" class="form-control" placeholder="Tên đăng nhập" required>
                                 <span asp-validation-for="Input.Email" class="text-danger"></span>
                             </div>
+                            
                             <div class="form-group">
                                 <input asp-for="Input.Password" type="password" class="form-control" placeholder="Mật khẩu" required>
                                 <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
                             </div>
                             
                             <div class="form-group d-md-flex">
-                                <div class="w-50">
-                                    <label class="checkbox-wrap checkbox-primary">
-                                        Remember Me
-                                        <label asp-for="Input.RememberMe" class="form-label">
-                                            <input class="form-check-input" asp-for="Input.RememberMe" />
-                                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                                        </label>
+                                <div class="checkbox mb-3">
+                                    <label asp-for="Input.RememberMe" class="form-label">
+                                        Nhớ tài khoản
+                                        <span style="margin-left:27px">
+                                        <input class="form-check-input" asp-for="Input.RememberMe " />
+                                        </span>
                                     </label>
                                 </div>
                                 
-                                <div class="w-50 text-md-right">
-                                    <a asp-area="" asp-controller="Account1" asp-action="ForgotPassword" style="color: #fff">Forgot Password</a>
+                                
+                                <div class="w-50 text-md-right" style="margin-left:35px">
+                                    <a asp-area="" asp-controller="Account1" asp-action="ForgotPassword" style="color: #fff">Quên mật khẩu?</a>
                                 </div>
                                 
                             </div>
                             <div class="form-group">
                                 <button id="login-submit" type="submit" class="form-control btn btn-primary submit px-3">Đăng nhập</button>
                             </div>
+                            <div asp-validation-summary="All" class="text-danger"></div>
                             <div style="display:flex; " class=" text-md-left" >
                                 <p > Bạn chưa có tài khoản? </p>
                                 <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" style="padding-left:4px"> Đăng kí</a>
@@ -233,6 +236,7 @@
     <script src="~/js/main1.js"></script>
     
 </body>
+
 </html>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
