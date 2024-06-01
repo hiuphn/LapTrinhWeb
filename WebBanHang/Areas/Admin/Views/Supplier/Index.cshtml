@@ -248,12 +248,17 @@
                     </a>
                 </li>
                 <li>
-                    <a asp-action="Index" asp-controller="Customer" class="dropdown-toggle no-arrow ">
+                    <a href="/Admin/UserModel" class="dropdown-toggle no-arrow ">
+                        <span class="micon fa fa-users"></span><span class="mtext">Quản lí tài khoản</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Customer" class="dropdown-toggle no-arrow  ">
                         <span class="micon fa fa-users"></span><span class="mtext">Khách hàng</span>
                     </a>
                 </li>
                 <li>
-                    <a asp-action="Index" asp-controller="Staff" class="dropdown-toggle no-arrow">
+                    <a asp-action="Index" asp-controller="Staff" class="dropdown-toggle no-arrow ">
                         <span class="micon fa fa-users"></span><span class="mtext">Nhân viên</span>
                     </a>
                 </li>
@@ -263,29 +268,30 @@
                     </a>
                 </li>
                 <li>
-                    <a asp-action="Index" asp-controller="Discounts" class="dropdown-toggle no-arrow">
+                    <a asp-action="Index" asp-controller="Discounts" class="dropdown-toggle no-arrow ">
                         <span class="micon fa fa-keyboard me-2"></span><span class="mtext">Mã giảm giá</span>
                     </a>
                 </li>
 
                 <li>
-                    <a asp-action="Index" asp-controller="Category" class="dropdown-toggle no-arrow">
-                        <span class="micon fa fa-th me-2" ></span><span class="mtext">Danh mục</span>
+                    <a asp-action="Index" asp-controller="Category" class="dropdown-toggle no-arrow ">
+                        <span class="micon fa fa-th me-2"></span><span class="mtext">Danh mục</span>
                     </a>
                 </li>
                 <li>
-                    <a asp-action="Index" asp-controller="Subcategories" class="dropdown-toggle no-arrow">
+                    <a asp-action="Index" asp-controller="Subcategories" class="dropdown-toggle no-arrow ">
                         <span class="micon fa fa-th me-2"></span><span class="mtext">Danh mục con</span>
                     </a>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle no-arrow">
-                        <span class="micon fa fa-cubes"></span><span class="mtext">Hàng hóa</span>
+                <li>
+                    <a asp-action="Add" asp-controller="Product" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-cubes"></span><span class="mtext">Nhập hàng</span>
                     </a>
-                    <ul class="submenu">
-                        <li><a asp-action="Add" asp-controller="Product">Nhập hàng</a></li>
-                        <li><a asp-action="Index" asp-controller="Product">Kho</a></li>
-                    </ul>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Product" class="dropdown-toggle no-arrow ">
+                        <span class="micon fa fa-cubes"></span><span class="mtext">Kho</span>
+                    </a>
                 </li>
                 <li>
                     <a asp-action="Index" asp-controller="Order" class="dropdown-toggle no-arrow">
@@ -302,7 +308,10 @@
 
 <div class="main-container">
     <div class="xs-pd-20-10 pd-ltr-20">
-        <a asp-action="Create" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="bi bi-plus-square-fill"></i> Thêm mới</a>
+        <p>
+            <a asp-action="Create" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="bi bi-plus-square-fill"></i> Tạo mới</a>
+        </p>
+       
         <div class="row clearfix progress-box">
             <div class="col-lg-12">
                 <div class="card-box mb-30">

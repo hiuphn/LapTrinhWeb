@@ -234,7 +234,12 @@
                     </a>
                 </li>
                 <li>
-                    <a asp-action="Index" asp-controller="Customer" class="dropdown-toggle no-arrow active">
+                    <a href="/Admin/UserModel" class="dropdown-toggle no-arrow ">
+                        <span class="micon fa fa-users"></span><span class="mtext">Quản lí tài khoản</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Customer" class="dropdown-toggle no-arrow active ">
                         <span class="micon fa fa-users"></span><span class="mtext">Khách hàng</span>
                     </a>
                 </li>
@@ -244,7 +249,7 @@
                     </a>
                 </li>
                 <li>
-                    <a asp-action="Index" asp-controller="Supplier" class="dropdown-toggle no-arrow">
+                    <a asp-action="Index" asp-controller="Supplier" class="dropdown-toggle no-arrow ">
                         <span class="micon fa fa-handshake-o"></span><span class="mtext">Nhà cung cấp</span>
                     </a>
                 </li>
@@ -255,23 +260,24 @@
                 </li>
 
                 <li>
-                    <a asp-action="Index" asp-controller="Category" class="dropdown-toggle no-arrow">
-                        <span class="micon fa fa-th me-2" ></span><span class="mtext">Danh mục</span>
+                    <a asp-action="Index" asp-controller="Category" class="dropdown-toggle no-arrow ">
+                        <span class="micon fa fa-th me-2"></span><span class="mtext">Danh mục</span>
                     </a>
                 </li>
                 <li>
                     <a asp-action="Index" asp-controller="Subcategories" class="dropdown-toggle no-arrow">
-                        <span class="micon fa fa-th me-2" ></span><span class="mtext">Danh mục con</span>
+                        <span class="micon fa fa-th me-2"></span><span class="mtext">Danh mục con</span>
                     </a>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle no-arrow">
-                        <span class="micon fa fa-cubes"></span><span class="mtext">Hàng hóa</span>
+                <li>
+                    <a asp-action="Add" asp-controller="Product" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-cubes"></span><span class="mtext">Nhập hàng</span>
                     </a>
-                    <ul class="submenu">
-                        <li><a asp-action="Add" asp-controller="Product">Nhập hàng</a></li>
-                        <li><a asp-action="Index" asp-controller="Product">Kho</a></li>
-                    </ul>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Product" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-cubes"></span><span class="mtext">Kho</span>
+                    </a>
                 </li>
                 <li>
                     <a asp-action="Index" asp-controller="Order" class="dropdown-toggle no-arrow">
@@ -352,7 +358,7 @@
                                     <span asp-validation-for="Sex" class="text-danger"></span>
                                 </div>
                                 <div class="col-12">
-                                    <button type="submit" name="submitButton" class="btn btn-primary text-white button"><a asp-action="Index"> Quay về danh sách</a></button>
+                                    <button type="submit" name="submitButton" class="btn btn-primary text-white button"><a asp-action="Index" class=" text-white button"> Quay về danh sách</a></button>
                                 </div>
 
                             </form>

@@ -248,7 +248,12 @@
                     </a>
                 </li>
                 <li>
-                    <a asp-action="Index" asp-controller="Customer" class="dropdown-toggle no-arrow ">
+                    <a href="/Admin/UserModel" class="dropdown-toggle no-arrow ">
+                        <span class="micon fa fa-users"></span><span class="mtext">Quản lí tài khoản</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Customer" class="dropdown-toggle no-arrow  ">
                         <span class="micon fa fa-users"></span><span class="mtext">Khách hàng</span>
                     </a>
                 </li>
@@ -258,12 +263,12 @@
                     </a>
                 </li>
                 <li>
-                    <a asp-action="Index" asp-controller="Supplier" class="dropdown-toggle no-arrow">
+                    <a asp-action="Index" asp-controller="Supplier" class="dropdown-toggle no-arrow ">
                         <span class="micon fa fa-handshake-o"></span><span class="mtext">Nhà cung cấp</span>
                     </a>
                 </li>
                 <li>
-                    <a asp-action="Index" asp-controller="Discounts" class="dropdown-toggle no-arrow">
+                    <a asp-action="Index" asp-controller="Discounts" class="dropdown-toggle no-arrow ">
                         <span class="micon fa fa-keyboard me-2"></span><span class="mtext">Mã giảm giá</span>
                     </a>
                 </li>
@@ -278,15 +283,15 @@
                         <span class="micon fa fa-th me-2"></span><span class="mtext">Danh mục con</span>
                     </a>
                 </li>
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle active">
-                        <span class="micon fa fa-cubes"></span><span class="mtext">Hàng hóa</span>
+                <li>
+                    <a asp-action="Add" asp-controller="Product" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-cubes"></span><span class="mtext">Nhập hàng</span>
                     </a>
-                    <ul class="submenu">
-                        <li><a asp-action="Add" asp-controller="Product">Nhập hàng</a></li>
-                        <li><a asp-action="Index" asp-controller="Product">Kho</a></li>
-                    </ul>
-
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Product" class="dropdown-toggle no-arrow active">
+                        <span class="micon fa fa-cubes"></span><span class="mtext">Kho</span>
+                    </a>
                 </li>
                 <li>
                     <a asp-action="Index" asp-controller="Order" class="dropdown-toggle no-arrow">
@@ -354,19 +359,16 @@
                                             <td><span class="badge badge-soft-info mb-0">@item.Number</span></td>
                                             <td><span class="badge badge-soft-danger mb-0">@item.Description</span></td>
                                             <td>
-                                                <ul class="list-inline mb-0" style="align-items:center">
-
-                                                    <li class="list-inline-item">
-                                                        <a asp-action="Update" asp-route-id="@item.Id" class="settings" title="Chỉnh sửa" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <a asp-action="Details" asp-route-id="@item.Id" data-toggle="tooltip" title="Chi tiết"><i class="material-icons detail">edit</i></a>
-                                                    </li>
-                                                    <li class="list-inline-item">
-                                                        <a onclick="confirmDelete(@item.Id)" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-                                                    </li>
-
-                                                </ul>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a asp-action="Update" asp-route-id="@item.Id" class="dropdown-item"><i class="dw dw-edit2"></i> Cập nhật</a>
+                                                        <a asp-action="Details" asp-route-id="@item.Id" class="dropdown-item"><i class="dw dw-eye"></i> Chi tiết</a>
+                                                        <a onclick="confirmDelete(@item.Id)" class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Xóa</a>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     }

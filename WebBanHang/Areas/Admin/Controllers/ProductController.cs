@@ -142,18 +142,21 @@ namespace WebBanHang.Areas.Admin.Controllers
                 return NotFound();
             }
             var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name", product.CategoryId);
+            ViewBag.categories = new SelectList(categories, "Id", "Name");
+            ViewBag.Subcategory = new SelectList(Enumerable.Empty<Subcategory>(), "Id", "Name");
+            var Supplier = await _supplierRespository.GetAllAsync();
+            ViewBag.Supplier = new SelectList(Supplier, "SupplierID", "CompanyName");
             var productImages = await _productRespository.GetImagesByProductIdAsync(id);
             ViewBag.ProductImages = productImages;
             return View(product);
         }
         // Xử lý cập nhật sản phẩm
         [HttpPost]
-        public async Task<IActionResult> Update(int id, Product product, IFormFile imageUrl)
+        public async Task<IActionResult> Update(int id, Product product, IFormFile imageUrl, List<IFormFile> images)
 
         {
             ModelState.Remove("ImageUrl"); // Loại bỏ xác thực ModelState cho ImageUrl
-
+            ModelState.Remove("Images");
             if (id != product.Id)
             {
                 return NotFound();
@@ -172,17 +175,42 @@ namespace WebBanHang.Areas.Admin.Controllers
                     // Lưu hình ảnh mới
                     product.ImageUrl = await SaveImage(imageUrl);
                 }
+                if (images != null)
+                {
+                    product.Images = new List<ProductImage>();
+                    foreach (var item in images)
+                    {
+                        ProductImage image = new ProductImage()
+                        {
+                            ProductId = product.Id,
+                            Url = await SaveImage(item)
+                        };
+                        product.Images.Add(image);
+                    }
+                }
+                else
+                {
+                    product.Images=existingProduct.Images;
+                }
                 // Cập nhật các thông tin khác của sản phẩm
                 existingProduct.Name = product.Name;
                 existingProduct.Price = product.Price;
                 existingProduct.Description = product.Description;
                 existingProduct.CategoryId = product.CategoryId;
+                existingProduct.SubcategoryId= product.SubcategoryId;
+                existingProduct.SupplierID = product.SupplierID;
                 existingProduct.ImageUrl = product.ImageUrl;
+                existingProduct.Images = product.Images;
                 await _productRespository.UpdateAsync(existingProduct);
                 return RedirectToAction(nameof(Index));
             }
             var categories = await _categoryRepository.GetAllAsync();
-            ViewBag.Categories = new SelectList(categories, "Id", "Name");
+            ViewBag.categories = new SelectList(categories, "Id", "Name");
+            ViewBag.Subcategory = new SelectList(Enumerable.Empty<Subcategory>(), "Id", "Name");
+            var Supplier = await _supplierRespository.GetAllAsync();
+            ViewBag.Supplier = new SelectList(Supplier, "SupplierID", "CompanyName");
+            var productImages = await _productRespository.GetImagesByProductIdAsync(id);
+            ViewBag.ProductImages = productImages;
             return View(product);
         }
         public async Task<IActionResult> Delete(int id)
