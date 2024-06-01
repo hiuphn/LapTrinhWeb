@@ -1,4 +1,4 @@
-﻿@* @page
+﻿@page
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model WebBanHang.Areas.Admin.Pages.UserModel
 @{
@@ -350,32 +350,29 @@
                                 @foreach (var item in Model.User){
                                     <tr>
 
-                                        <td>
-
-                                            <span>@item.FullName</span>
-                                        </td>
-                                        <td><span >@item.UserName</span></td>
-                                        <td><span >@item.UserName</span></td>
-                                        <td><span >@item.PhoneNumber</span></td>
-                                        <td><span >@item.ChucVu</span></td>
+                                       
+                                        <td><span>@item.UserName</span></td>
+                                        <td><span>@item.Email</span></td>
+                                        <td><span>@item.PhoneNumber</span></td>
+                                        <td><span>@item.ChucVu</span></td>
                                         <td>
                                             <ul class="list-inline mb-0" style="align-items:center">
-                                            @if (!item.IsLocked)
-                                            {
+                                                @if (!item.IsLocked)
+                                                {
                                                     <li class="list-inline-item">
                                                         <a asp-page="banedModel" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Khóa Tài khoản" class="px-2 text-danger">
                                                             <i class="bi bi-lock"></i>Khóa
                                                         </a>
                                                     </li>
-                                            }
-                                            else
-                                            {
+                                                }
+                                                else
+                                                {
                                                     <li class="list-inline-item">
                                                         <a asp-page="UnlockModel" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Mở Khóa Tài khoản" class="px-2 text-success">
                                                             <i class="bi bi-unlock"></i> Mở Khóa
                                                         </a>
                                                     </li>
-                                            }
+                                                }
                                             </ul>
                                         </td>
                                     </tr>
@@ -389,4 +386,4 @@
         </div>
 
     </div>
-</div> *@
+</div>

@@ -1,4 +1,4 @@
-﻿@* @page
+﻿@page
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model WebBanHang.Areas.Admin.Pages.banedModel
 @{
@@ -29,7 +29,7 @@
                                 <div class="form-group" style="padding-top:5px">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-earphone color-blue"></i></span>
-                                        <input asp-for="Phone" placeholder="Email" value="@Model.Phone" class="form-control" type="email">
+                                        <input asp-for="PhoneNumber" placeholder="Email" value="@Model.Phone" class="form-control" type="email">
                                     </div>
                                 </div>
                                 <div class="form-group" style="padding-top:5px">
@@ -58,13 +58,13 @@
 <style>
     .button-container {
         display: flex;
-        gap: 10px; 
-        justify-content: center; 
+        gap: 10px;
+        justify-content: center;
     }
 
         .button-container .btn {
-            flex: 1; 
-            text-align: center; 
+            flex: 1;
+            text-align: center;
             display: inline-block;
         }
-</style> *@
+</style>
