@@ -48,7 +48,7 @@ namespace WebBanHang.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult ResetPassword(string token = null)
+        public IActionResult ResetPassword(string token /*= null*/)
         {
             if (token == null)
             {

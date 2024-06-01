@@ -3,7 +3,7 @@
 @model WebBanHang.Areas.Admin.Pages.banedModel
 @{
 }
-h1>Xóa tài khoản</h1>
+@* h1>Xóa tài khoản</h1>
 
 <!-- Hiển thị thông tin tài khoản cần xóa -->
 <p>Tên người dùng: @Model.UserName</p>
@@ -14,3 +14,68 @@ h1>Xóa tài khoản</h1>
     <input type="submit" value="Khóa" class="btn btn-danger" />
     <a asp-page="Home" class="btn btn-secondary">Hủy</a>
 </form>
+ *@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<div class="form-gap" style="padding-top:100px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="text-center">
+                            <h3><i class="fa fa-lock fa-4x"></i></h3>
+                            <h2 class="text-center">Khóa tài khoản?</h2>
+                            <p>Bạn có chắc muốn khóa tài khoản này không?</p>
+                            <div class="panel-body">
+                                <form method="post">
+                                    <div class="form-group" style="padding-top:15px">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
+                                            <input asp-for="Email" placeholder="Email" value="@Model.Email" class="form-control" type="email">
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="form-group" style="padding-top:5px">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone color-blue"></i></span>
+                                        <input asp-for="Phone" placeholder="Email" value="@Model.Phone" class="form-control" type="email">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="padding-top:5px">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-map-marker color-blue"></i></span>
+                                        <input asp-for="Address" placeholder="Email" value="@Model.Address" class="form-control" type="email">
+                                    </div>
+                                </div>
+                                <form method="post">
+                                    <div class="button-container" style="padding-top:30px">
+
+                                        <input type="submit" value="Khóa" class="btn btn-danger" />
+                                        <a href="./UserModel" class="btn btn-warning">Hủy</a>
+
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .button-container {
+        display: flex;
+        gap: 10px; /* Khoảng cách giữa các nút, bạn có thể thay đổi giá trị này */
+        justify-content: center; /* Canh giữa các nút trong container */
+    }
+
+        .button-container .btn {
+            flex: 1; /* Để các nút có kích thước bằng nhau, nếu muốn */
+            text-align: center; /* Canh giữa nội dung nút */
+            display: inline-block; /* Đảm bảo các nút được hiển thị inline-block */
+        }
+</style>

@@ -347,17 +347,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model.Users)
-                                {
+                                @foreach (var item in Model){
                                     <tr>
 
                                         <td>
 
-                                            <p class="text-body">@item.FullName</p>
+                                            <span>@item.FullName</span>
                                         </td>
                                         <td><span @* class="badge badge-soft-success mb-0 *@">@item.UserName</span></td>
                                         <td><span @* class="badge badge-soft-info mb-0" *@>@item.UserName</span></td>
-                                        <td><span>@item.</span></td>
                                         <td><span @* class="badge badge-soft-info mb-0" *@>@item.PhoneNumber</span></td>
                                         <td><span @* class="badge badge-soft-danger mb-0" *@>@item.ChucVu</span></td>
                                         <td>
@@ -385,11 +383,6 @@
 
                             </tbody>
                         </table>
-
-                        <div class="page">
-                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = ViewBag.PageSize.SelectedValue, searchString = ViewData["CurrentFilter"] }))
-
-                        </div>
                     </div>
                 </div>
             </div>
