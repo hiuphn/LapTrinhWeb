@@ -451,6 +451,22 @@
 
 		gtag('config', 'UA-119386393-1');
 	</script>
+	<style>
+		.form-group {
+			display: flex;
+			align-items: center;
+			gap: 10px; /* Khoảng cách giữa các phần tử */
+		}
+
+		.search-input {
+			flex-grow: 1; /* Để input chiếm toàn bộ không gian còn lại */
+		}
+
+		.ml-auto {
+			margin-left: auto; /* Đẩy nút tìm kiếm về phía bên phải */
+		}
+
+	</style>
 </head>
 <body>
 	<div class="pre-loader">
@@ -472,11 +488,12 @@
 			<div class="search-toggle-icon dw dw-search2" data-toggle="header_search"></div>
 			<div class="header-search">
 				<form>
-					<div class="form-group mb-0">
+					<div class="form-group mb-0 d-flex align-items-center">
 						<i class="dw dw-search2 search-icon"></i>
 						<input type="text" class="form-control search-input" name="searchString" placeholder="Tìm kiếm" value="@ViewData["CurrentFilter"]">
-						<input class="btn btn-primary text-white button" type="submit" value="Tìm kiếm" />
+						<input class="btn btn-primary text-white button ml-auto" type="submit" value="Tìm kiếm" />
 					</div>
+
 				</form>
 			</div>
 		</div>

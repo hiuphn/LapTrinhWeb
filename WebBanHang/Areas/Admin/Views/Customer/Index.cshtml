@@ -241,20 +241,10 @@
         display: flex;
         justify-content: center;
     }
-    .page li{
-        background-color: #007bff;
-        color: white;
-        text-decoration: none;
-        padding: 5px 10px;
-        border: 1px solid #007bff;
-        border-radius: 3px;
-        margin: 0 2px;
-        display: flex;
-        justify-content: center;
-    }
-        /* Liên kết trong phân trang */
-        .pagination a {
-            color: #007bff;
+
+        .page li {
+            background-color: #007bff;
+            color: white;
             text-decoration: none;
             padding: 5px 10px;
             border: 1px solid #007bff;
@@ -263,13 +253,24 @@
             display: flex;
             justify-content: center;
         }
+    /* Liên kết trong phân trang */
+    .pagination a {
+        color: #007bff;
+        text-decoration: none;
+        padding: 5px 10px;
+        border: 1px solid #007bff;
+        border-radius: 3px;
+        margin: 0 2px;
+        display: flex;
+        justify-content: center;
+    }
 
-        .pagination .active {
-            background-color: #007bff;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-        }
+    .pagination .active {
+        background-color: #007bff;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+    }
 
     .page {
         color: #007bff;
@@ -306,10 +307,10 @@
             <i class="ion-close-round"></i>
         </div>
     </div>
-     <div class="menu-block customscroll">
+    <div class="menu-block customscroll">
         <div class="sidebar-menu">
             <ul id="accordion-menu">
-                 <li>
+                <li>
                     <a asp-action="Index" asp-controller="Statics" class="dropdown-toggle no-arrow">
                         <span class="micon fa fa-dashboard"></span><span class="mtext">Thống kê</span>
                     </a>
@@ -362,9 +363,9 @@
 
             </ul>
         </div>
-    </div> 
-</div> 
- <div class="mobile-menu-overlay"></div>
+    </div>
+</div>
+<div class="mobile-menu-overlay"></div>
 
 
 <div class="main-container">
@@ -375,11 +376,11 @@
                 <div class="card-box mb-30">
                     <div class="pd-20">
                         <h4 class="text-blue h4">Thông tin các khách hàng</h4>
-                      
+
                     </div>
                     <div class="pb-20">
                         <form method="get" asp-action="Index" id="pageSizeForm">
-   
+
                             <div class="form-group">
                                 <label for="pageSize">Trình bày</label>
                                 <select id="pageSize" name="pageSize" onchange="submitPageSize();">
@@ -437,11 +438,10 @@
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
                                                     <a asp-action="Details" asp-route-id="@item.CustomerID" class="dropdown-item"><i class="dw dw-eye"></i> Chi tiết</a>
-                                                    <a class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Khóa</a>
                                                 </div>
                                             </div>
                                         </td>
-                                    
+
                                     </tr>
                                 }
                             </tbody>
@@ -450,7 +450,7 @@
                             @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = ViewBag.PageSize.SelectedValue, searchString = ViewData["CurrentFilter"] }))
 
                         </div>
-                     </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -463,8 +463,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-      function submitPageSize() {
-        document.getElementById("pageSizeForm").submit();
-    }
+        function submitPageSize() {
+            document.getElementById("pageSizeForm").submit();
+        }
     </script>
 }
