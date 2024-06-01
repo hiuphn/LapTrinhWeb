@@ -1,4 +1,4 @@
-﻿@page
+﻿@* @page
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model WebBanHang.Areas.Admin.Pages.UserModel
 @{
@@ -347,17 +347,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model){
+                                @foreach (var item in Model.User){
                                     <tr>
 
                                         <td>
 
                                             <span>@item.FullName</span>
                                         </td>
-                                        <td><span @* class="badge badge-soft-success mb-0 *@">@item.UserName</span></td>
-                                        <td><span @* class="badge badge-soft-info mb-0" *@>@item.UserName</span></td>
-                                        <td><span @* class="badge badge-soft-info mb-0" *@>@item.PhoneNumber</span></td>
-                                        <td><span @* class="badge badge-soft-danger mb-0" *@>@item.ChucVu</span></td>
+                                        <td><span >@item.UserName</span></td>
+                                        <td><span >@item.UserName</span></td>
+                                        <td><span >@item.PhoneNumber</span></td>
+                                        <td><span >@item.ChucVu</span></td>
                                         <td>
                                             <ul class="list-inline mb-0" style="align-items:center">
                                             @if (!item.IsLocked)
@@ -389,4 +389,4 @@
         </div>
 
     </div>
-</div>
+</div> *@

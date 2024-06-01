@@ -12,7 +12,7 @@ using WebBanHang.Models;
 namespace WebBanHang.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240526082159_connect")]
+    [Migration("20240601124741_connect")]
     partial class connect
     {
         /// <inheritdoc />
@@ -173,6 +173,10 @@ namespace WebBanHang.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("AvatarPath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ChucVu")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")

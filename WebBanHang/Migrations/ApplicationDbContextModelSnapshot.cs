@@ -172,6 +172,10 @@ namespace WebBanHang.Migrations
                     b.Property<string>("AvatarPath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ChucVu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
