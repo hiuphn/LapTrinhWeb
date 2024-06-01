@@ -263,7 +263,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/Admin/UserModel" class="dropdown-toggle no-arrow ">
+                    <a href="/Admin/UserModel" class="dropdown-toggle no-arrow active">
                         <span class="micon fa fa-users"></span><span class="mtext">Quản lí tài khoản</span>
                     </a>
                 </li>
@@ -289,7 +289,7 @@
                 </li>
 
                 <li>
-                    <a asp-action="Index" asp-controller="Category" class="dropdown-toggle no-arrow active">
+                    <a asp-action="Index" asp-controller="Category" class="dropdown-toggle no-arrow ">
                         <span class="micon fa fa-th me-2"></span><span class="mtext">Danh mục</span>
                     </a>
                 </li>
@@ -340,8 +340,8 @@
 
                                     <th scope="col">Tên</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Chức vụ</th>
                                     <th scope="col">Số Điện Thoại</th>
+                                    <th scope="col">Chức vụ</th>
                                     <th scope="col">Khóa Tài Khoản </th>
 
                                 </tr>
@@ -359,24 +359,25 @@
                                         <td><span @* class="badge badge-soft-info mb-0" *@>@item.UserName</span></td>
                                         <td><span>@item.</span></td>
                                         <td><span @* class="badge badge-soft-info mb-0" *@>@item.PhoneNumber</span></td>
+                                        <td><span @* class="badge badge-soft-danger mb-0" *@>@item.ChucVu</span></td>
                                         <td>
                                             <ul class="list-inline mb-0" style="align-items:center">
-                                                @if (!item.IsLocked)
-                                                {
+                                            @if (!item.IsLocked)
+                                            {
                                                     <li class="list-inline-item">
                                                         <a asp-page="banedModel" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Khóa Tài khoản" class="px-2 text-danger">
                                                             <i class="bi bi-lock"></i>Khóa
                                                         </a>
                                                     </li>
-                                                }
-                                                else
-                                                {
+                                            }
+                                            else
+                                            {
                                                     <li class="list-inline-item">
                                                         <a asp-page="UnlockModel" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Mở Khóa Tài khoản" class="px-2 text-success">
                                                             <i class="bi bi-unlock"></i> Mở Khóa
                                                         </a>
                                                     </li>
-                                                }
+                                            }
                                             </ul>
                                         </td>
                                     </tr>
