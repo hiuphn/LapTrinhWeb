@@ -183,6 +183,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                 user.Age = Input.Age;
                 user.PhoneNumber = Input.PhoneNumber;
                 user.Sex = Input.Sex;
+
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var imagePath = await SaveImage(Input.Avatar);
