@@ -252,21 +252,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                             _context.Customers.Add(customer);
                         }
                     
-                    /*else if (Input.Role == "Khách hàng")
-                    {
-                        var customer = new Customer
-                        {
-                            UserId = user.Id,
-                            CustomerName = Input.FullName,
-                            Sex = Input.Sex,
-                            BirthDay = Input.Age,
-                            CustomerAddress = Input.Address,
-                            CustomerPhone = Input.PhoneNumber,
-                            Email = Input.Email
-                        };
-                        _context.Customers.Add(customer);
-                    }*/
-
+                    
                     await _context.SaveChangesAsync();
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
