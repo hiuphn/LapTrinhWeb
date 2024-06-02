@@ -44,6 +44,13 @@
                             <label asp-for="Notes">Ghi Chú</label><br />
                         <textarea asp-for="Notes" class="form-control"  placeholder="Ghi chú cho đơn hàng"></textarea>
                             </div>
+                            <div class="form-item">
+                            <form method="post" action="@Url.Action("ApplyDiscount", "ShoppingCart")">
+                                @Html.AntiForgeryToken()
+                                <select asp-items="ViewBag.DiscountCodes" class="form-control" name="discountCode" id="discount"></select>
+                               @*  <button class="btn btn-primary" type="submit">Apply Discount</button> *@
+                            </form>
+                        </div>
                         </div>
                 <div class="col-md-12 col-lg-6 col-xl-5">
                     <div class="table-responsive">
@@ -73,7 +80,7 @@
                                         <td class="py-5">@item.Name</td>
                                             <td class="py-5">@item.Price.ToString("N0")₫</td>
                                         <td class="py-5" style="text-align:center">@item.Quantity</td>
-                                            <td class="py-5">@totalPrice.ToString("N0")₫</td>
+                                            <td id="originalPrice" class="py-5">@totalPrice.ToString("N0")₫</td>
                                     </tr>
                                 }
                                
@@ -94,7 +101,7 @@
                             </tbody>
 
                         </table>
-                            <h1 class="mb-0 text-dark py-3">Tổng giá: @foreach (var item in ViewBag.Cart) { cartTotalPrice += item.Price * item.Quantity; } @cartTotalPrice.ToString("N0")₫</h1>
+                            <h1 class="mb-0 text-dark py-3 " id="priceDisplay" >Tổng giá: @foreach (var item in ViewBag.Cart) { cartTotalPrice += item.Price * item.Quantity; } @cartTotalPrice.ToString("N0")₫</h1>
 
                     </div>
                             <div class="row g-4 text-center align-items-center justify-content-center pt-4">
@@ -106,13 +113,7 @@
                                 <input name="payment" type="submit" value="VN-PAY" class="btn btn-primary" />
                             </div>
                             </div>
-                        <div class="mt-5">
-                            <form method="post" action="@Url.Action("ApplyDiscount", "ShoppingCart")">
-                                @Html.AntiForgeryToken()
-                                <select asp-items="ViewBag.DiscountCodes" class="form-control" name="discountCode"></select>
-                                <button class="btn btn-primary" type="submit">Apply Discount</button>
-                            </form>
-                        </div>
+                        
                     
 
                     </div>
@@ -124,3 +125,28 @@
         </div>
         <!-- Checkout Page End -->
         </div>
+ <script>
+        document.getElementById("discountType").addEventListener("change", applyDiscount);
+        document.getElementById("discountValue").addEventListener("input", applyDiscount);
+
+        function applyDiscount() {
+            var discountType = document.getElementById("discountType").value;
+            var discountValue = parseFloat(document.getElementById("discountValue").value);
+            var originalPrice = parseFloat(document.getElementById("originalPrice").dataset.price); // Lấy giá gốc từ thuộc tính data
+
+            if (isNaN(discountValue)) {
+                discountValue = 0;
+            }
+
+            var discountedPrice = originalPrice; // Khởi tạo giá sau khi giảm là giá gốc
+
+            if (discountType === "Percentage") {
+                discountedPrice = originalPrice - (originalPrice * (discountValue / 100));
+            } else if (discountType === "Amount") {
+                discountedPrice = originalPrice - discountValue;
+            }
+
+            document.getElementById("priceDisplay").textContent = "Giá sau khi giảm: $" + discountedPrice.toFixed(2);
+}
+
+</script>
