@@ -161,13 +161,13 @@
             </table>
                     <button class="btn border-secondary rounded-pill px-4 py-3 text-dark" type="button"><a asp-controller="ShoppingCart" asp-action="RemoveAll">Xóa Tất Cả</a></button>
         </div>
-                <div class="mt-5">
+                @* <div class="mt-5">
                     <form method="post" action="@Url.Action("ApplyDiscount", "ShoppingCart")">
-                        @Html.AntiForgeryToken() <!-- Add anti-forgery token -->
+                        @Html.AntiForgeryToken()
                         <select asp-items="ViewBag.DiscountCodes" class="form-control" name="discountCode"></select>
-                        <button class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="submit">Áp Dụng</button>
+                        <button class="btn btn-primary" type="submit">Apply Discount</button>
                     </form>
-                </div>
+                </div> *@
         <div class="row g-4 justify-content-end">
             <div class="col-8"></div>
             <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">

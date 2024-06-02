@@ -339,7 +339,7 @@ namespace WebBanHang.Migrations
 
                     b.HasKey("DiscountId");
 
-                    b.ToTable("Discount");
+                    b.ToTable("Discounts");
                 });
 
             modelBuilder.Entity("WebBanHang.Models.Order", b =>

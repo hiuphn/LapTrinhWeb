@@ -25,7 +25,7 @@ namespace WebBanHang.Areas.Admin.Controllers
         {
             ViewData["CurrentFilter"] = searchString;
 
-            var discountsQuery = _context.Discount.AsQueryable();
+            var discountsQuery = _context.Discounts.AsQueryable();
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -50,7 +50,7 @@ namespace WebBanHang.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var discount = await  _context.Discount.SingleOrDefaultAsync(x => x.DiscountId == id);
+            var discount = await  _context.Discounts.SingleOrDefaultAsync(x => x.DiscountId == id);
             if (discount == null)
             {
                 return NotFound();
@@ -89,7 +89,7 @@ namespace WebBanHang.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var discount = await _context.Discount.FindAsync(id);
+            var discount = await _context.Discounts.FindAsync(id);
             if (discount == null)
             {
                 return NotFound();
@@ -114,7 +114,7 @@ namespace WebBanHang.Areas.Admin.Controllers
                
                 try
                 {
-                    var discounts = await _context.Discount.FindAsync(id);
+                    var discounts = await _context.Discounts.FindAsync(id);
 
                     discounts.Code = discount.Code;
                     discounts.Type = discount.Type;
@@ -146,7 +146,7 @@ namespace WebBanHang.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var discount = await _context.Discount
+            var discount = await _context.Discounts
                 .FirstOrDefaultAsync(m => m.DiscountId == id);
             if (discount == null)
             {
@@ -160,13 +160,13 @@ namespace WebBanHang.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var discounts = await _context.Discount.FindAsync(id);
+            var discounts = await _context.Discounts.FindAsync(id);
             if (discounts == null)
             {
                 return NotFound();
             }
 
-            _context.Discount.Remove(discounts);
+            _context.Discounts.Remove(discounts);
             await _context.SaveChangesAsync();
 
             return Ok();
@@ -174,7 +174,7 @@ namespace WebBanHang.Areas.Admin.Controllers
 
         private bool DiscountExists(int id)
         {
-            return _context.Discount.Any(e => e.DiscountId == id);
+            return _context.Discounts.Any(e => e.DiscountId == id);
         }
     }
 }

@@ -12,7 +12,7 @@ using WebBanHang.Models;
 namespace WebBanHang.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240602100409_test")]
+    [Migration("20240602142806_test")]
     partial class test
     {
         /// <inheritdoc />
@@ -342,7 +342,7 @@ namespace WebBanHang.Migrations
 
                     b.HasKey("DiscountId");
 
-                    b.ToTable("Discount");
+                    b.ToTable("Discounts");
                 });
 
             modelBuilder.Entity("WebBanHang.Models.Order", b =>

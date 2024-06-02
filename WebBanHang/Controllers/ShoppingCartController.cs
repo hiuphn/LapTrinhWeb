@@ -62,7 +62,7 @@ namespace WebBanHang.Controllers
             var cart = HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart") ?? new
     ShoppingCart();
             ViewBag.Cart = cart;
-            var discountCodes = _context.Discount.ToList();
+            var discountCodes = _context.Discounts.ToList();
             ViewBag.DiscountCodes = new SelectList(discountCodes, "DiscountId", "Code");
             return View(cart);
         }
@@ -73,7 +73,7 @@ namespace WebBanHang.Controllers
             _logger.LogInformation("ApplyDiscount method hit. DiscountCode: {DiscountCode}", discountCode); // Add logging
 
             var cart = HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart") ?? new ShoppingCart();
-            var discount = await _context.Discount.FirstOrDefaultAsync(d => d.DiscountId == discountCode);
+            var discount = await _context.Discounts.FirstOrDefaultAsync(d => d.DiscountId == discountCode);
 
             if (discount != null)
             {
@@ -132,6 +132,8 @@ namespace WebBanHang.Controllers
         }
         public IActionResult Checkout()
         {
+            var discountCodes = _context.Discounts.ToList();
+            ViewBag.DiscountCodes = new SelectList(discountCodes, "DiscountId", "Code");
             var cart = HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart");
             if (cart == null || cart.Items.Count == 0)
             {
@@ -172,7 +174,7 @@ namespace WebBanHang.Controllers
         [HttpPost]
         public async Task<IActionResult> Checkout(Order hoadon, string payment)
         {
-
+            
             var cart =
             HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart");
             if (cart == null || !cart.Items.Any())
