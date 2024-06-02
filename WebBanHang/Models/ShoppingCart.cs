@@ -3,6 +3,7 @@
     public class ShoppingCart
     {
         public List<CartItem> Items { get; set; } = new List<CartItem>();
+        public decimal DiscountAmount { get; set; } = 0;
         public void AddItem(CartItem item)
         {
             var existingItem = Items.FirstOrDefault(i => i.ProductId ==

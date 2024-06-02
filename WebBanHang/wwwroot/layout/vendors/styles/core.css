@@ -171,7 +171,7 @@ caption {
   caption-side: bottom; }
 
 th {
-  text-align: center; }
+  text-align: inherit; }
 
 label {
   display: inline-block;

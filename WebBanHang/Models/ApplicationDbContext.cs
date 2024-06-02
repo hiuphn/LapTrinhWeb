@@ -42,7 +42,7 @@ namespace WebBanHang.Models
         {
             optionsBuilder.UseSqlServer("Server=WINDOWS-11;Database=test3;Trusted_Connection=True;TrustServerCertificate=True;");
         }
-        public DbSet<WebBanHang.Models.Discount> Discount { get; set; } = default!;
+        public DbSet<Discount> Discounts { get; set; }
 
     }
 }
