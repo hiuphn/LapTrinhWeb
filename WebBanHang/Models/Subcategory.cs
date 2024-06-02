@@ -9,19 +9,13 @@ namespace WebBanHang.Models
         
 
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Tên danh mục con là bắt buộc")]
+        [StringLength(50, ErrorMessage = "Tên danh mục con không được vượt quá 50 kí tự ")]
         public string Name { get; set; }
-
-        public string Description { get; set; }
-
-        [Required]
-        [ForeignKey("Category")]
+        [DisplayName("Mã danh mục")]
         public int CategoryId { get; set; }
 
-        public Category Category { get; set; }
-
-
-
+        public Category? Category { get; set; }
     }
 
 }

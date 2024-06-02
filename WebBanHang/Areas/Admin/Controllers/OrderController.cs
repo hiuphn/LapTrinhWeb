@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebBanHang.Models;
+using X.PagedList;
+
 namespace WebBanHang.Areas.Admin.Controllers
 {
     [Area("Admin")]
@@ -16,9 +18,26 @@ namespace WebBanHang.Areas.Admin.Controllers
             _context = context;
 
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, int? page, int? pageSize)
         {
-            return View(await _context.Orders.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+
+            var ordersQuery = _context.Orders.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                ordersQuery = ordersQuery.Where(n => n.Id.ToString().Contains(searchString.ToLower()));
+            }
+
+            int defaultPageSize = pageSize ?? 10; // Default page size is 10 if not provided
+            int pageNumber = page ?? 1; // Default page number is 1 if not provided
+
+            var pagedOrders = await ordersQuery.ToPagedListAsync(pageNumber, defaultPageSize);
+
+            ViewBag.PageSize = new SelectList(new List<int> { 10, 20, 50 }, defaultPageSize);
+            ViewBag.CurrentPageSize = defaultPageSize; // Update the value of ViewBag.CurrentPageSize
+
+            return View(pagedOrders);
         }
 
         public IActionResult Track(int orderId)
@@ -65,18 +84,19 @@ namespace WebBanHang.Areas.Admin.Controllers
         }
 
         // POST: Admin/HoaDons/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var hoaDon = await _context.Orders.FindAsync(id);
-            if (hoaDon != null)
+            var discounts = await _context.Discount.FindAsync(id);
+            if (discounts == null)
             {
-                _context.Orders.Remove(hoaDon);
+                return NotFound();
             }
 
+            _context.Discount.Remove(discounts);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return Ok();
         }
 
         private bool HoaDonExists(int id)

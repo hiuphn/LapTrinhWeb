@@ -7,6 +7,7 @@ using WebBanHang.Models;
 using Microsoft.Extensions.Options;
 using System.Configuration;
 using WebBanHang.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using WebBanHang.ServicesPay;
 

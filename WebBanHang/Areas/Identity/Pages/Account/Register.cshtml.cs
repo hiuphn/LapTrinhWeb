@@ -29,7 +29,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-
+        private readonly IWebHostEnvironment _webHostEnvironment;
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager,
@@ -37,7 +37,8 @@ namespace WebBanHang.Areas.Identity.Pages.Account
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            ApplicationDbContext context)
+            ApplicationDbContext context,
+            IWebHostEnvironment webHostEnvironment)
         {
             _roleManager = roleManager;
             _userManager = userManager;
@@ -47,6 +48,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         /// <summary>
@@ -93,9 +95,8 @@ namespace WebBanHang.Areas.Identity.Pages.Account
             [Display(Name = "Giới tính")]
             public bool Sex { get; set; }
 
-            [Required]
-            [StringLength(10, ErrorMessage = "Số Điện Thoại phải có 10 số", MinimumLength = 10)]
-            [DataType(DataType.PhoneNumber)]
+            [Required(ErrorMessage = "Vui lòng nhập số điện thoại")]
+            [RegularExpression(@"^(0|\+84)[3|5|7|8|9]\d{8}$", ErrorMessage = "Số điện thoại không hợp lệ")]
             [Display(Name = "Số điện thoại")]
             public string PhoneNumber { get; set; }
 
@@ -123,14 +124,31 @@ namespace WebBanHang.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "Mật khẩu và mật khẩu xác nhận không khớp.")]
             public string ConfirmPassword { get; set; }
 
-            
+            [Display(Name = "Ảnh đại diện")]
+            public IFormFile? Avatar { get; set; }
+
             public string? Role { get; set; }
             [ValidateNever]
             public IEnumerable<SelectListItem> RoleList { get; set; }
-            public string? ChucVu { get; set; }
-
+            public string ChucVu { get; set; }
         }
 
+        private async Task<string> SaveImage(IFormFile image)
+        {
+            if (image == null)
+            {
+                // Sử dụng hình ảnh mặc định nếu không có ảnh tải lên
+                return "/images/anonymous.png";
+            }
+
+            var savePath = Path.Combine("wwwroot/images", image.FileName);
+            using (var fileStream = new FileStream(savePath, FileMode.Create))
+            {
+                await image.CopyToAsync(fileStream);
+            }
+
+            return "/images/" + image.FileName; // Trả về đường dẫn tương đối
+        }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -165,10 +183,20 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                 user.Age = Input.Age;
                 user.PhoneNumber = Input.PhoneNumber;
                 user.Sex = Input.Sex;
+                if (!string.IsNullOrEmpty(Input.Role))
+                {
+                    user.ChucVu=Input.Role;
+                }
+                else
+                {
 
-                user.ChucVu = Input.Role;
+                    user.ChucVu = "Khách hàng";
+                }
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                var imagePath = await SaveImage(Input.Avatar);
+                user.AvatarPath = imagePath;
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -220,25 +248,28 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                             Address = Input.Address,
                             RoleId = roleId,
                             StaffPhone = Input.PhoneNumber,
-                            Email = Input.Email
+                            Email = Input.Email,
+                            AvatarPath = imagePath
                         };
-                        _context.Staffs.Add(nhanVien);
+                        _context.Staffs.Add(staff);
                     }
-                    else if (Input.Role == "Khách hàng")
-                    {
-                        var khachHang = new Customer
+                        else
                         {
-                            UserId = user.Id,
-                            CustomerName = Input.FullName,
-                            Sex = Input.Sex,
-                            BirthDay = Input.Age,
-                            CustomerAddress = Input.Address,
-                            CustomerPhone = Input.PhoneNumber,
-                            Email = Input.Email
-                        };
-                        _context.Customers.Add(khachHang);
-                    }
-
+                            var customer = new Customer
+                            {
+                                UserId = user.Id,
+                                CustomerName = Input.FullName,
+                                Sex = Input.Sex,
+                                BirthDay = Input.Age,
+                                CustomerAddress = Input.Address,
+                                CustomerPhone = Input.PhoneNumber,
+                                Email = Input.Email,
+                                AvatarPath = imagePath
+                            };
+                            _context.Customers.Add(customer);
+                        }
+                    
+                    
                     await _context.SaveChangesAsync();
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

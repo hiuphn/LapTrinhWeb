@@ -21,6 +21,10 @@ namespace WebBanHang.Models
         [DisplayName("Giá Bán")]
         public decimal Price {  get; set; }
 
+        [DisplayName("Số lượng")]
+        [Range(0, int.MaxValue, ErrorMessage = "Số lượng phải lớn hơn hoặc bằng 0.")]
+        public int Number { get; set; }
+
         [DisplayName("Mô tả")]
         public string Description {  get; set; }
 
@@ -34,15 +38,15 @@ namespace WebBanHang.Models
         [DisplayName("Mã danh mục")]
         public int CategoryId { get; set; }
 
-        [DisplayName("Danh mục")]
         public Category? Category { get; set; }
 
-        [ForeignKey("Subcategory")]
-        public int SubcategoryId { get; set; }
+        [DisplayName("Danh mục con")]
+        public int? SubcategoryId { get; set; }
+        public Subcategory? Subcategory { get; set; }
 
-        
-        public Subcategory? subcategory { get; set; }
 
+        [ForeignKey("Supplier")]
+        [DisplayName("Nhà cung cấp")]
         public int SupplierID { get; set; }
         public Supplier? Supplier { get; set; }
 

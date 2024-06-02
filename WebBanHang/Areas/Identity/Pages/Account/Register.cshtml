@@ -11,8 +11,8 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
+            <h2>Tạo tài khoản mới.</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
@@ -32,12 +32,12 @@
                 </div>
                 
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Age" class="form-control" autocomplete="date" aria-required="true" placeholder="Ngày Sinh" />
+                    <input type="date" asp-for="Input.Age" class="form-control" autocomplete="date" aria-required="true" placeholder="Ngày Sinh" type="date" />
                     <label asp-for="Input.Age">Ngày Sinh</label>
                     <span asp-validation-for="Input.Age" class="text-danger"></span>
                 </div>
                 <div style="padding-bottom: 10px">
-                    <label asp-for="Input.Age">Giới TÍnh</label>
+                    <label asp-for="Input.Sex">Giới Tính</label>
 
                     <div style="display: flex;">
                         <div>
@@ -49,13 +49,18 @@
                             <span>Nam</span>
                         </div>
                     </div>
-                    <span asp-validation-for="Input.Age" class="text-danger"></span>
+                    <span asp-validation-for="Input.Sex" class="text-danger"></span>
                 </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                 <label asp-for="Input.Email">Email</label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
+                <div class="form-group">
+                    <label asp-for="Input.Avatar"></label>
+                    <input asp-for="Input.Avatar" class="form-control-file" type="file" />
+                    <span asp-validation-for="Input.Avatar" class="text-danger"></span>
+                </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Mật Khẩu" />
                 <label asp-for="Input.Password">Mật Khẩu</label>

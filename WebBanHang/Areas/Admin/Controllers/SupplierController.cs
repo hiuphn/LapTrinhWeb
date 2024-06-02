@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebBanHang.Models;
+using X.PagedList;
 
 namespace WebBanHang.Areas.Admin.Controllers
 {
@@ -22,9 +23,26 @@ namespace WebBanHang.Areas.Admin.Controllers
         }
 
         // GET: Admin/NhaCungCaps
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, int? page, int? pageSize)
         {
-            return View(await _context.Suppliers.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+
+            var supplierQuery = _context.Suppliers.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                supplierQuery = supplierQuery.Where(n => n.CompanyName.ToLower().Contains(searchString.ToLower()));
+            }
+
+            int defaultPageSize = pageSize ?? 10; // Default page size is 10 if not provided
+            int pageNumber = page ?? 1; // Default page number is 1 if not provided
+
+            var pagedSupplier = await supplierQuery.ToPagedListAsync(pageNumber, defaultPageSize);
+
+            ViewBag.PageSize = new SelectList(new List<int> { 10, 20, 50 }, defaultPageSize);
+            ViewBag.CurrentPageSize = defaultPageSize; // Update the value of ViewBag.CurrentPageSize
+
+            return View(pagedSupplier);
         }
 
         // GET: Admin/NhaCungCaps/Details/5
@@ -124,6 +142,7 @@ namespace WebBanHang.Areas.Admin.Controllers
                 }
                 // Cập nhật các thông tin khác của sản phẩm
                 existingProduct.CompanyName = nhacungcap.CompanyName;
+                existingProduct.Logo= nhacungcap.Logo;
                 existingProduct.Email = nhacungcap.Email;
                 existingProduct.SuplierPhone = nhacungcap.SuplierPhone;
                 existingProduct.SupplierAddress = nhacungcap.SupplierAddress;

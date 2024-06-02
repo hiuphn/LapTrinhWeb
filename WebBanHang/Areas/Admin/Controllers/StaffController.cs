@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebBanHang.Models;
+using X.PagedList;
 
 namespace WebBanHang.Areas.Admin.Controllers
 {
@@ -14,6 +16,7 @@ namespace WebBanHang.Areas.Admin.Controllers
         private readonly ApplicationDbContext _context;
         private readonly RoleManager<IdentityRole> _roleManager;
 
+
         public StaffController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
@@ -22,9 +25,26 @@ namespace WebBanHang.Areas.Admin.Controllers
         }
 
         // GET: Admin/NhanViens
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, int? page, int? pageSize)
         {
-            return View(await _context.Staffs.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+
+            var staffsQuery = _context.Staffs.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                staffsQuery = staffsQuery.Where(n => n.StaffName.ToString().Contains(searchString.ToLower()));
+            }
+
+            int defaultPageSize = pageSize ?? 10; // Default page size is 10 if not provided
+            int pageNumber = page ?? 1; // Default page number is 1 if not provided
+
+            var pagedStaffs = await staffsQuery.ToPagedListAsync(pageNumber, defaultPageSize);
+
+            ViewBag.PageSize = new SelectList(new List<int> { 10, 20, 50 }, defaultPageSize);
+            ViewBag.CurrentPageSize = defaultPageSize; // Update the value of ViewBag.CurrentPageSize
+
+            return View(pagedStaffs);
         }
 
         // GET: Admin/NhanViens/Details/5
@@ -47,26 +67,87 @@ namespace WebBanHang.Areas.Admin.Controllers
 
         // GET: Admin/NhanViens/Create
         public IActionResult Create()
+        
         {
             return View();
         }
+        private async Task<string> SaveImage(IFormFile image)
+        {
+            if (image == null)
+            {
+                // Sử dụng hình ảnh mặc định nếu không có ảnh tải lên
+                return "/images/anonymous.png";
+            }
 
+            var savePath = Path.Combine("wwwroot/images", image.FileName);
+            using (var fileStream = new FileStream(savePath, FileMode.Create))
+            {
+                await image.CopyToAsync(fileStream);
+            }
+
+            return "/images/" + image.FileName; // Trả về đường dẫn tương đối
+        }
         // POST: Admin/NhanViens/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("StaffId,StaffName,Sex,Position,BirthDay,Address,StaffPhone,Email,UserId")] Staff nhanVien)
+        public async Task<IActionResult> Create(StaffViewModel staff, IFormFile AvatarPath)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(nhanVien);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(nhanVien);
-        }
+            
+         
+                var imagePath = await SaveImage(AvatarPath);
+                var user = new ApplicationUser {
+                    UserName = staff.Email,
+                    FullName = staff.StaffName,
+                    Email = staff.Email,
+                    Age = staff.BirthDay,
+                    Sex = staff.Sex,
+                    ChucVu= staff.Position,
+                    PhoneNumber = staff.StaffPhone,
+                    AvatarPath = imagePath,
+                    Address = staff.Address};
+                var result = await _userManager.CreateAsync(user, staff.Password);
+                if (result.Succeeded)
+                {
+                    var role = await _roleManager.FindByNameAsync(staff.Position);
+                    if (role == null)
+                    {
+                        role = new IdentityRole(staff.Position);
+                        await _roleManager.CreateAsync(role);
+                    }
 
+                    await _userManager.AddToRoleAsync(user, role.Name);
+
+                    var Staff = new Staff
+                    {
+                        StaffName = staff.StaffName,
+                        Sex = staff.Sex,
+                        Position = staff.Position,
+                        BirthDay = staff.BirthDay,
+                        Address = staff.Address,
+                        StaffPhone = staff.StaffPhone,
+                        Email = staff.Email,
+                        UserId = user.Id,
+                        RoleId = role.Id,
+                        AvatarPath=imagePath
+                    };
+
+                    _context.Add(Staff);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                AddErrors(result);
+            
+            return View(staff);
+        }
+        private void AddErrors(IdentityResult result)
+        {
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+        }
         // GET: Admin/NhanViens/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -88,12 +169,14 @@ namespace WebBanHang.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("StaffId,StaffName,Sex,Position,BirthDay,Address,StaffPhone,Email,UserId")] Staff nhanVien, string userId)
+        public async Task<IActionResult> Edit(int id, Staff nhanVien, string userId, IFormFile logo)
         {
+            ModelState.Remove("AvatarPath");
             if (id != nhanVien.StaffId)
             {
                 return NotFound();
             }
+
             // Lấy thông tin nhân viên từ cơ sở dữ liệu
             var existingNhanVien = await _context.Staffs.FindAsync(nhanVien.StaffId);
 
@@ -101,28 +184,27 @@ namespace WebBanHang.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            if (logo == null)
+            {
+                nhanVien.AvatarPath = existingNhanVien.AvatarPath;
+            }
+            else
+            {
+                // Lưu hình ảnh mới
+                nhanVien.AvatarPath = await SaveImage(logo);
+            }
 
             // Cập nhật thông tin của nhân viên từ dữ liệu nhập vào
             existingNhanVien.StaffName = nhanVien.StaffName;
             existingNhanVien.Sex = nhanVien.Sex;
             existingNhanVien.BirthDay = nhanVien.BirthDay;
             existingNhanVien.Address = nhanVien.Address;
+            existingNhanVien.AvatarPath = nhanVien.AvatarPath;
             existingNhanVien.StaffPhone = nhanVien.StaffPhone;
             existingNhanVien.Email = nhanVien.Email;
 
 
-            //// Tìm RoleId mới của admin
-            //var adminRole = await _roleManager.FindByNameAsync("Admin");
-            //var adminRoleId = adminRole.Id;
-
-            //// Tìm và cập nhật bản ghi trong bảng AspNetUserRoles
-            //var userRole = await _context.UserRoles.FirstOrDefaultAsync(ur => ur.UserId == Id);
-            //if (userRole != null)
-            //{
-            //    userRole.RoleId = adminRoleId;
-            //    await _context.SaveChangesAsync();
-            //}
-            // Kiểm tra xem có thay đổi vai trò không
+          
             if (nhanVien.Position != existingNhanVien.Position)
             {
                 // Lấy RoleId mới từ cơ sở dữ liệu dựa trên tên vai trò mới

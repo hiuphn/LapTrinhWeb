@@ -12,6 +12,8 @@ namespace WebBanHang.Models
         public string CustomerName {  get; set; }
 		public string ShippingAddress { get; set; }
 		public string Notes { get; set; }
+        public int? DiscountId { get; set; }
+        public Discount Discount { get; set; }
         public string? PhuongThucThanhToan { get; set; }
         public OrderStatus Status { get; set; }
         [ForeignKey("UserId")]

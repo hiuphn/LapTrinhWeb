@@ -1,66 +1,445 @@
-﻿@model IEnumerable<WebBanHang.Models.Product>
-
+﻿
+@model X.PagedList.IPagedList<WebBanHang.Models.Product>
+@using X.PagedList.Mvc.Core
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-<div style="padding-top:100px;padding-left:50px;padding-right:50px">
-<h1 style=" text-align:center">Thêm Sản Phẩm Mới</h1>
-<a  asp-action="Add" class="btn border border-secondary rounded-pill  text-primary"> <i class="bi bi-plus-square-fill"></i> Create New</a>
+<style>
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="">
-                <div class="table-responsive">
-                    <table class="table project-list-table table-nowrap align-middle table-borderless">
-                        <thead>
-                            <tr>
-                                <th scope ="col">Hình ảnh</th>
-                                <th scope="col" >Tên</th>
-                                <th scope="col">Danh Mục</th>
-                                <th scope="col">Giá</th>
-                                <th scope="col">Chú thích</th>
-                                <th scope="col" style="width: 200px;height:100px">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    
-                                    <td>
-                                        <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" width="500px" alt="" class="avatar-sm rounded-circle me-2" />
-                                    <td><span class="badge badge-soft-danger mb-0">@item.Name</span></td>
-                                        <td><span class="badge badge-soft-success mb-0">@item.Category.Name</span></td>
-                                        <td><span class="badge badge-soft-info mb-0">@item.Price</span></td>
-                                    <td><span class="badge badge-soft-danger mb-0">@item.Description</span></td>
-                                    <td>
-                                        <ul class="list-inline mb-0" style="align-items:center">
-                                            <li class="list-inline-item">
-                                                <span class="badge badge-soft-warning mb-0">
-                                                    <a asp-action="Update" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Sửa" class="px-2 text-warning" ><i class="bi bi-pencil-square font-size-200"></i></a>
-                                                </span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <span class="badge badge-soft-success mb-0">
-                                                    <a asp-action="Details" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Chi Tiết" class="px-2 text-success"><i class="bi bi-list-task font-size-200"></i></a>
-                                                </span>
-                                            </li>
-                                            <li class="list-inline-item">
-                                                <span class="badge badge-soft-danger mb-0">
-                                                    <a asp-action="Delete" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Xóa" class="px-2 text-danger"><i class="bi bi-trash font-size-200"></i></a>
-                                                </span>
-                                            </li>
-                                            
-                                        </ul>
-                                    </td>
-                                </tr>
-                            }
+    .detail {
+        color: rgb(255, 220, 0);
+    }
 
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    body {
+        color: #566787;
+        background: #f5f5f5;
+        font-family: 'Varela Round', sans-serif;
+        font-size: 13px;
+    }
+
+    .table-responsive {
+        margin: 30px 0;
+    }
+
+    .table-wrapper {
+        min-width: 1000px;
+        background: #fff;
+        padding: 20px 25px;
+        border-radius: 3px;
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    }
+
+    .table-title {
+        padding-bottom: 15px;
+        background: #299be4;
+        color: black;
+        padding: 16px 30px;
+        margin: -20px -25px 10px;
+        border-radius: 3px 3px 0 0;
+    }
+
+        .table-title h2 {
+            margin: 5px 0 0;
+            font-size: 24px;
+        }
+
+        .table-title .btn {
+            color: #566787;
+            float: right;
+            font-size: 13px;
+            background: #fff;
+            border: none;
+            min-width: 50px;
+            border-radius: 2px;
+            border: none;
+            outline: none !important;
+            margin-left: 10px;
+        }
+
+            .table-title .btn:hover, .table-title .btn:focus {
+                color: #566787;
+                background: #f2f2f2;
+            }
+
+            .table-title .btn i {
+                float: left;
+                font-size: 21px;
+                margin-right: 5px;
+            }
+
+            .table-title .btn span {
+                float: left;
+                margin-top: 2px;
+            }
+
+    table.table tr th, table.table tr td {
+        border-color: #e9e9e9;
+        padding: 12px 15px;
+        vertical-align: middle;
+    }
+
+        table.table tr th:first-child {
+            width: 60px;
+        }
+
+        table.table tr th:last-child {
+            width: 100px;
+        }
+
+    table.table-striped tbody tr:nth-of-type(odd) {
+        background-color: #fcfcfc;
+    }
+
+    table.table-striped.table-hover tbody tr:hover {
+        background: #f5f5f5;
+    }
+
+    table.table th i {
+        font-size: 13px;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+
+    table.table td:last-child i {
+        opacity: 0.9;
+        font-size: 22px;
+        margin: 0 5px;
+    }
+
+    table.table td a {
+        font-weight: bold;
+        color: #566787;
+        display: inline-block;
+        text-decoration: none;
+    }
+
+        table.table td a:hover {
+            color: #2196F3;
+        }
+
+        table.table td a.settings {
+            color: #2196F3;
+        }
+
+        table.table td a.delete {
+            color: #F44336;
+        }
+
+    table.table td i {
+        font-size: 19px;
+    }
+
+    table.table .avatar {
+        border-radius: 50%;
+        vertical-align: middle;
+        margin-right: 10px;
+    }
+
+    .status {
+        font-size: 30px;
+        margin: 2px 2px 0 0;
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 10px;
+    }
+
+    .text-success {
+        color: #10c469;
+    }
+
+    .text-info {
+        color: #62c9e8;
+    }
+
+    .text-warning {
+        color: #FFC107;
+    }
+
+    .text-danger {
+        color: #ff5b5b;
+    }
+
+    .pagination {
+        float: right;
+        margin: 0 0 5px;
+    }
+
+        .pagination li a {
+            border: none;
+            font-size: 13px;
+            min-width: 30px;
+            min-height: 30px;
+            color: #999;
+            margin: 0 2px;
+            line-height: 30px;
+            border-radius: 2px !important;
+            text-align: center;
+            padding: 0 6px;
+        }
+
+            .pagination li a:hover {
+                color: #666;
+            }
+
+        .pagination li.active a, .pagination li.active a.page-link {
+            background: #03A9F4;
+        }
+
+            .pagination li.active a:hover {
+                background: #0397d6;
+            }
+
+        .pagination li.disabled i {
+            color: #ccc;
+        }
+
+        .pagination li i {
+            font-size: 16px;
+            padding-top: 6px
+        }
+
+    .hint-text {
+        float: left;
+        margin-top: 10px;
+        font-size: 13px;
+    }
+
+    .button {
+        color: #03A9F4;
+    }
+
+        .button:hover {
+            color: #0275a8;
+        }
+
+    .search {
+        border: 1.5px solid black;
+        text-align: center;
+        border-radius: 10px;
+        margin-bottom: 7px;
+        margin-right: 15px;
+        margin-left: 0px;
+    }
+
+    tbody {
+        color: black;
+    }
+
+    .page {
+        color: #007bff;
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        margin: 0 2px;
+        display: flex;
+        justify-content: center;
+    }
+
+        .page li {
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #007bff;
+            border-radius: 3px;
+            margin: 0 2px;
+            display: flex;
+            justify-content: center;
+        }
+</style>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+<!-- Sidebar Start -->
+<div class="left-side-bar">
+    <div class="brand-logo">
+
+        <div class="close-sidebar" data-toggle="left-sidebar-close">
+            <i class="ion-close-round"></i>
+        </div>
+    </div>
+    <div class="menu-block customscroll">
+        <div class="sidebar-menu">
+            <ul id="accordion-menu">
+                <li>
+                    <a asp-action="Index" asp-controller="Statics" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-dashboard"></span><span class="mtext">Thống kê</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/Admin/UserModel" class="dropdown-toggle no-arrow ">
+                        <span class="micon fa fa-users"></span><span class="mtext">Quản lí tài khoản</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Customer" class="dropdown-toggle no-arrow  ">
+                        <span class="micon fa fa-users"></span><span class="mtext">Khách hàng</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Staff" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-users"></span><span class="mtext">Nhân viên</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Supplier" class="dropdown-toggle no-arrow ">
+                        <span class="micon fa fa-handshake-o"></span><span class="mtext">Nhà cung cấp</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Discounts" class="dropdown-toggle no-arrow ">
+                        <span class="micon fa fa-th me-2"></span><span class="mtext">Mã giảm giá</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-action="Index" asp-controller="Category" class="dropdown-toggle no-arrow ">
+                        <span class="micon fa fa-th me-2"></span><span class="mtext">Danh mục</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Subcategories" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-th me-2"></span><span class="mtext">Danh mục con</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Add" asp-controller="Product" class="dropdown-toggle no-arrow">
+                        <span class="micon fa fa-cubes"></span><span class="mtext">Nhập hàng</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Product" class="dropdown-toggle no-arrow active">
+                        <span class="micon fa fa-cubes"></span><span class="mtext">Kho</span>
+                    </a>
+                </li>
+                <li>
+                    <a asp-action="Index" asp-controller="Order" class="dropdown-toggle no-arrow">
+                        <span class="micon dw dw-invoice"></span><span class="mtext">Hóa đơn</span>
+                    </a>
+                </li>
+
+            </ul>
         </div>
     </div>
 </div>
+<div class="mobile-menu-overlay"></div>
+
+
+<div class="main-container">
+    <div class="xs-pd-20-10 pd-ltr-20">
+        <p>
+            <a asp-action="Add" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="bi bi-plus-square-fill"></i> Tạo mới</a>
+        </p>
+        <div class="row clearfix progress-box">
+            <div class="col-lg-12">
+                <div class="card-box mb-30">
+                    <div class="pd-20">
+                        <h4 class="text-blue h4">Thông tin hàng hóa</h4>
+
+                    </div>
+                    <div class="pb-20">
+                        <form method="get" asp-action="Index" id="pageSizeForm">
+
+                            <div class="form-group">
+                                <label for="pageSize">Trình bày</label>
+                                <select id="pageSize" name="pageSize" onchange="submitPageSize();">
+                                    <option value="10" selected="@(ViewBag.CurrentPageSize == 10)">10</option>
+                                    <option value="20" selected="@(ViewBag.CurrentPageSize == 20)">20</option>
+                                    <option value="50" selected="@(ViewBag.CurrentPageSize == 50)">50</option>
+                                </select>
+                                cá thể
+                            </div>
+                        </form>
+                        <table class="table project-list-table table-nowrap align-middle table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Hình ảnh</th>
+                                    <th scope="col">Tên</th>
+                                    <th scope="col">Danh Mục</th>
+                                    <th scope="col">Giá</th>
+                                    <th scope="col">Số lượng</th>
+                                    <th scope="col">Chú thích</th>
+                                    <th scope="col" style="width: 200px;height:100px">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null)
+                                {
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+
+                                            <td>
+                                                <img src="@Html.DisplayFor(modelItem => item.ImageUrl)" width="500px" alt="" class="avatar-sm rounded-circle me-2" />
+                                            </td>
+                                            <td><span class="badge badge-soft-danger mb-0">@item.Name</span></td>
+                                            <td><span class="badge badge-soft-success mb-0">@item.Category.Name</span></td>
+                                            <td><span class="badge badge-soft-info mb-0">@item.Price</span></td>
+                                            <td><span class="badge badge-soft-info mb-0">@item.Number</span></td>
+                                            <td><span class="badge badge-soft-danger mb-0">@item.Description</span></td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                                                        <i class="dw dw-more"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                                                        <a asp-action="Update" asp-route-id="@item.Id" class="dropdown-item"><i class="dw dw-edit2"></i> Cập nhật</a>
+                                                        <a asp-action="Details" asp-route-id="@item.Id" class="dropdown-item"><i class="dw dw-eye"></i> Chi tiết</a>
+                                                        <a onclick="confirmDelete(@item.Id)" class="dropdown-item" href="#"><i class="dw dw-delete-3"></i> Xóa</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="3">No items to display.</td>
+                                    </tr>
+                                }
+                                
+
+                            </tbody>
+                            
+                        </table>
+
+                        <div class="page">
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = ViewBag.PageSize.SelectedValue, searchString = ViewData["CurrentFilter"] }))
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function confirmDelete(id) {
+            if (confirm("Bạn có chắc chắn muốn xóa mục này?")) {
+                $.ajax({
+                    url: '@Url.Action("DeleteConfirmed", "Category")',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function (result) {
+                        // Nếu thành công, tải lại trang hoặc xóa hàng từ bảng
+                        location.reload(); // Hoặc bạn có thể xóa hàng từ bảng thay vì tải lại trang
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Đã xảy ra lỗi: " + error);
+                    }
+                });
+            }
+        }
+        function submitPageSize() {
+            document.getElementById("pageSizeForm").submit();
+        }
+    </script>
+}

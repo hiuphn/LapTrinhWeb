@@ -13,6 +13,7 @@ namespace WebBanHang.Models
         public string Address { get; set; }
         public string StaffPhone { get; set; }
         public string Email { get; set; }
+        public string? AvatarPath { get; set; }
         [ForeignKey("UserId")]
         public string UserId { get; set; }
         // Khóa ngoại đến bảng chức vụ (AspNetRoles)

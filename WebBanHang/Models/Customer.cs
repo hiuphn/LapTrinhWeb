@@ -14,6 +14,7 @@ namespace WebBanHang.Models
         public DateTime BirthDay { get; set; }
         public string CustomerAddress { get; set; }
         public string CustomerPhone { get; set; }
+        public string? AvatarPath { get; set; }
         public string Email { get; set; }
         public string? CustomerImage { get; set; }
 

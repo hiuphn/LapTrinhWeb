@@ -24,6 +24,12 @@ namespace WebBanHang.Models
                                  .Where(s => s.CategoryId == categoryId)
                                  .ToListAsync();
         }
+        public async Task<IEnumerable<Subcategory>> GetSubcategoriesByCategoryIdAsync(int categoryId)
+        {
+            return await _context.Subcategorys
+                                 .Where(s => s.CategoryId == categoryId)
+                                 .ToListAsync();
+        }
         public async Task AddAsync(Subcategory subcategory)
         {
             _context.Subcategories.Add(subcategory);

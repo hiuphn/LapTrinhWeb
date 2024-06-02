@@ -6,7 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebBanHang.Migrations
 {
     /// <inheritdoc />
+<<<<<<<< HEAD:WebBanHang/Migrations/20240531204758_testt.cs
     public partial class testt : Migration
+========
+    public partial class connect : Migration
+>>>>>>>> origin/Tung:WebBanHang/Migrations/20240525035836_connect.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,12 +54,28 @@ namespace WebBanHang.Migrations
                     BirthDay = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CustomerAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerPhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AvatarPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CustomerImage = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.CustomerID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Discount",
+                columns: table => new
+                {
+                    DiscountId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    Value = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Discount", x => x.DiscountId);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,7 +87,7 @@ namespace WebBanHang.Migrations
                     CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SuplierPhone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SuplierPhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SupplierAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -110,6 +130,7 @@ namespace WebBanHang.Migrations
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StaffPhone = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AvatarPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -130,8 +151,12 @@ namespace WebBanHang.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+<<<<<<<< HEAD:WebBanHang/Migrations/20240531204758_testt.cs
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+========
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+>>>>>>>> origin/Tung:WebBanHang/Migrations/20240525035836_connect.cs
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -142,7 +167,43 @@ namespace WebBanHang.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
+<<<<<<<< HEAD:WebBanHang/Migrations/20240531204758_testt.cs
                         onDelete: ReferentialAction.Restrict);
+========
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Number = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    SubcategoryId = table.Column<int>(type: "int", nullable: true),
+                    SupplierID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Products_Suppliers_SupplierID",
+                        column: x => x.SupplierID,
+                        principalTable: "Suppliers",
+                        principalColumn: "SupplierID",
+                        onDelete: ReferentialAction.Cascade);
+>>>>>>>> origin/Tung:WebBanHang/Migrations/20240525035836_connect.cs
                 });
 
             migrationBuilder.CreateTable(
@@ -155,6 +216,7 @@ namespace WebBanHang.Migrations
                     Age = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Sex = table.Column<bool>(type: "bit", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AvatarPath = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CustomerID = table.Column<int>(type: "int", nullable: true),
                     StaffId = table.Column<int>(type: "int", nullable: true),
                     ChucVu = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -189,28 +251,24 @@ namespace WebBanHang.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "ProductImages",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
-                    SubcategoryId = table.Column<int>(type: "int", nullable: false),
-                    SupplierID = table.Column<int>(type: "int", nullable: false)
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_ProductImages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
+                        name: "FK_ProductImages_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+<<<<<<<< HEAD:WebBanHang/Migrations/20240531204758_testt.cs
                     table.ForeignKey(
                         name: "FK_Products_Subcategories_SubcategoryId",
                         column: x => x.SubcategoryId,
@@ -223,6 +281,8 @@ namespace WebBanHang.Migrations
                         principalTable: "Suppliers",
                         principalColumn: "SupplierID",
                         onDelete: ReferentialAction.Cascade);
+========
+>>>>>>>> origin/Tung:WebBanHang/Migrations/20240525035836_connect.cs
                 });
 
             migrationBuilder.CreateTable(
@@ -322,7 +382,11 @@ namespace WebBanHang.Migrations
                     CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ShippingAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: false),
+<<<<<<<< HEAD:WebBanHang/Migrations/20240531204758_testt.cs
                     PhuongThucThanhToan = table.Column<string>(type: "nvarchar(max)", nullable: true),
+========
+                    DiscountId = table.Column<int>(type: "int", nullable: true),
+>>>>>>>> origin/Tung:WebBanHang/Migrations/20240525035836_connect.cs
                     Status = table.Column<int>(type: "int", nullable: false),
                     CustomerID = table.Column<int>(type: "int", nullable: true),
                     StaffId = table.Column<int>(type: "int", nullable: true)
@@ -342,30 +406,15 @@ namespace WebBanHang.Migrations
                         principalTable: "Customers",
                         principalColumn: "CustomerID");
                     table.ForeignKey(
+                        name: "FK_Orders_Discount_DiscountId",
+                        column: x => x.DiscountId,
+                        principalTable: "Discount",
+                        principalColumn: "DiscountId");
+                    table.ForeignKey(
                         name: "FK_Orders_Staffs_StaffId",
                         column: x => x.StaffId,
                         principalTable: "Staffs",
                         principalColumn: "StaffId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProductImages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductImages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProductImages_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -461,6 +510,11 @@ namespace WebBanHang.Migrations
                 column: "CustomerID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Orders_DiscountId",
+                table: "Orders",
+                column: "DiscountId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_StaffId",
                 table: "Orders",
                 column: "StaffId");
@@ -479,11 +533,6 @@ namespace WebBanHang.Migrations
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_SubcategoryId",
-                table: "Products",
-                column: "SubcategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_SupplierID",
@@ -526,6 +575,9 @@ namespace WebBanHang.Migrations
                 name: "ProductImages");
 
             migrationBuilder.DropTable(
+                name: "Subcategorys");
+
+            migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
@@ -535,7 +587,14 @@ namespace WebBanHang.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+<<<<<<<< HEAD:WebBanHang/Migrations/20240531204758_testt.cs
                 name: "Subcategories");
+========
+                name: "Discount");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
+>>>>>>>> origin/Tung:WebBanHang/Migrations/20240525035836_connect.cs
 
             migrationBuilder.DropTable(
                 name: "Suppliers");
@@ -545,9 +604,6 @@ namespace WebBanHang.Migrations
 
             migrationBuilder.DropTable(
                 name: "Staffs");
-
-            migrationBuilder.DropTable(
-                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -1,6 +1,9 @@
 ﻿using WebBanHang.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using X.PagedList;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 
 namespace DoAnCuoiky.Areas.Admin.Controllers
@@ -11,16 +14,34 @@ namespace DoAnCuoiky.Areas.Admin.Controllers
     {
         private readonly IProductRespository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
-        public CategoryController(IProductRespository productRepository, ICategoryRepository categoryRepository)
+        private readonly ApplicationDbContext _context;
+        public CategoryController(IProductRespository productRepository, ICategoryRepository categoryRepository, ApplicationDbContext context)
 
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
+            _context = context;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, int? page, int? pageSize)
         {
-            var categories = await _categoryRepository.GetAllAsync();
-            return View(categories);
+            ViewData["CurrentFilter"] = searchString;
+
+            var categoryQuery = _context.Categories.AsQueryable();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                categoryQuery = categoryQuery.Where(n => n.Name.ToLower().Contains(searchString.ToLower()));
+            }
+
+            int defaultPageSize = pageSize ?? 10; // Default page size is 10 if not provided
+            int pageNumber = page ?? 1; // Default page number is 1 if not provided
+
+            var pagedCategory= await categoryQuery.ToPagedListAsync(pageNumber, defaultPageSize);
+
+            ViewBag.PageSize = new SelectList(new List<int> { 10, 20, 50 }, defaultPageSize);
+            ViewBag.CurrentPageSize = defaultPageSize; // Update the value of ViewBag.CurrentPageSize
+
+            return View(pagedCategory);
         }
         public async Task<IActionResult> Add()
         {
@@ -100,11 +121,18 @@ namespace DoAnCuoiky.Areas.Admin.Controllers
             return View(category);
         }
         // Xử lý xóa sản phẩm
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var category = await _categoryRepository.GetByIdAsync(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
             await _categoryRepository.DeleteAsync(id);
-            return RedirectToAction(nameof(Index));
+
+            return Ok();
         }
     }
 }
