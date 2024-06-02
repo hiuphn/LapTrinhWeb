@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-<div class="form-gap" style="padding-top:100px">
+<div class="form-gap" >
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
@@ -86,4 +86,15 @@
             text-align: center; /* Canh giữa nội dung nút */
             display: inline-block; /* Đảm bảo các nút được hiển thị inline-block */
         }
+
+    .form-gap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Đảm bảo phần tử cha có chiều cao bằng 100% chiều cao của trình duyệt */
+    }
+
+    .panel {
+        width: 100%; /* Đảm bảo phần tử cha đầy toàn bộ chiều rộng của cột */
+    }
 </style>

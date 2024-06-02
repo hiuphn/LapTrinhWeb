@@ -129,12 +129,12 @@
 
 
 </head>
-<body class="img js-fullheight" style="background-image: url(/images/login.jpg);">
+<body class="img" style="background-image: url(/images/login2.jpg);">
     <section class="ftco-section">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6 text-center mb-5">
-                    <h2 class="heading-section">Đăng nhập</h2>
+                    <h2 class="heading-section">Đăng Nhập</h2>
                 </div>
             </div>
             <div class="row justify-content-center">
@@ -143,12 +143,11 @@
                         <h3 class="mb-4 text-center">Bạn đã có tài khoản?</h3>
                         <form id="account" class="signin-form" method="post">
                             <div class="form-group">
-                                <input asp-for="Input.Email" class="form-control" placeholder="Tên đăng nhập" required>
+                                <input asp-for="Input.Email" class="form-control" placeholder="Tên đăng nhập" autocomplete="username" aria-required="true">
                                 <span asp-validation-for="Input.Email" class="text-danger"></span>
-                            </div>
-                            
+                            </div>                         
                             <div class="form-group">
-                                <input asp-for="Input.Password" type="password" class="form-control" placeholder="Mật khẩu" required>
+                                <input asp-for="Input.Password" id="password-field" type="password" class="form-control" placeholder="Password" required>
                                 <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                                 <span asp-validation-for="Input.Password" class="text-danger"></span>
                             </div>
@@ -170,7 +169,7 @@
                                 
                             </div>
                             <div class="form-group">
-                                <button id="login-submit" type="submit" class="form-control btn btn-primary submit px-3">Đăng nhập</button>
+                                <button id="login-submit" type="submit" class="btn btn-primary form-control submit px-3">Đăng nhập</button>
                             </div>
                             <div asp-validation-summary="All" class="text-danger"></div>
                             <div style="display:flex; " class=" text-md-left" >
@@ -234,7 +233,113 @@
     <script src="~/js/popper.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
     <script src="~/js/main1.js"></script>
-    
+    <style>
+        .col-md-6 {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            margin: 0;
+            padding: 0;
+            font-family: 'Lato', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .panel {
+            width: 400px; /* Hoặc bất kỳ kích thước cố định nào bạn muốn */
+            margin-top: 50px; /* Đảm bảo phần tử không mất ở phía trên khi zoom */
+        }
+
+        .img {
+            background-image: url('/images/login2.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            width: 100%;
+            height: 100%;
+        }
+
+        .form-control {
+            background: transparent;
+            border: none;
+            height: 50px;
+            color: rgba(255, 255, 255, 1) !important;
+            border: 1px solid black;
+            background: rgba(255, 255, 255, .15);
+            border-radius: 40px;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-top: -10px;
+        }
+
+        .ftco-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .login-wrap {
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .signin-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+            .form-group label {
+                margin-bottom: 10px;
+                display: block;
+            }
+
+        .checkbox-wrap {
+            display: flex;
+            align-items: center;
+        }
+
+            .checkbox-wrap input {
+                margin-right: 10px;
+            }
+
+        .social {
+            margin-top: 20px;
+        }
+
+            .social a {
+                flex: 1;
+                margin: 0 5px;
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+        .form-control.btn {
+            background-color: #007bff; /* Màu nền mặc định */
+            color: #fff; /* Màu chữ mặc định */
+            border: 2px solid #007bff; /* Đường viền mặc định */
+            padding: 10px 20px; /* Kích thước lề */
+            transition: all 0.3s; /* Hiệu ứng chuyển đổi cho tất cả các thuộc tính */
+        }
+
+            .form-control.btn:hover {
+                background-color: #0056b3; /* Màu nền khi trỏ chuột */
+                border-color: #0056b3; /* Đường viền khi trỏ chuột */
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Hiệu ứng bóng khi trỏ chuột */
+            }
+    </style>
 </body>
 
 </html>

@@ -9,7 +9,7 @@ $primary: #fbceb5;
 body{
 	font-family: $font-primary;
 	font-size: 16px;
-	line-height: 1.8;
+	line-height: 3.0;
 	font-weight: normal;
 	color: lighten($black,50%);
 	position: relative;
@@ -113,23 +113,23 @@ h1, h2, h3, h4, h5,
 	border: none;
 	height: 50px;
 	color: rgba(255,255,255,1) !important;
-	border: 1px solid transparent;
-	background: rgba(255,255,255,.08);
+	border: 1px solid black;
+	background: rgba(255,255,255,1);
 	border-radius: 40px;
 	padding-left: 20px;
 	padding-right: 20px;
 	@include transition(.3s);
 	&::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-	  color: rgba(255,255,255,.8) !important;
+	  color: rgba(255,255,255,1) !important;
 	}
 	&::-moz-placeholder { /* Firefox 19+ */
-	  color: rgba(255,255,255,.8) !important;
+	  color: rgba(255,255,255,1) !important;
 	}
 	&:-ms-input-placeholder { /* IE 10+ */
-	  color: rgba(255,255,255,.8) !important;
+	  color: rgba(255,255,255,1) !important;
 	}
 	&:-moz-placeholder { /* Firefox 18- */
-	  color: rgba(255,255,255,.8) !important;
+	  color: rgba(255,255,255,1) !important;
 	}
 	&:hover, &:focus{
 		background: transparent;

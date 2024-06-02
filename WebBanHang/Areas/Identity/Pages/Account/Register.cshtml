@@ -3,9 +3,10 @@
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div style="padding-top:250px; padding-left:50px">
+@* <div style="padding-top:250px; padding-left:50px">
 <h1>@ViewData["Title"]</h1>
 
 <div class="row">
@@ -110,4 +111,255 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
-</div>
+</div> *@
+ 
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Login 10</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="~/css/style1.css">
+
+</head>
+<body class="img" style="background-image: url(/images/login2.jpg);">
+    <section class="ftco-section">
+        <div class="container">
+
+            <div class="row justify-content-center" >
+                <div class="col-md-6 col-lg-4">
+                    <div class="login-wrap p-0">
+                        <h2 class="mb-4 text-center">ĐĂNG KÍ</h2>
+                        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="signin-form">
+                            <div class="form-group">
+                                <input asp-for="Input.FullName" type="text" class="form-control" placeholder="Tên người dùng"  aria-required="true">
+                                <span asp-validation-for="Input.FullName" class="text-danger"></span>
+
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Input.Address" class="form-control" placeholder="Địa chỉ" autocomplete="address" aria-required="true">
+                                <span asp-validation-for="Input.Address" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Số điện thoại" autocomplete="phone" aria-required="true">
+                                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Input.Age" type="date" class="form-control" autocomplete="date" aria-required="true" placeholder="Ngày Sinh" />
+                                <span asp-validation-for="Input.Age" class="text-danger"></span>
+                            </div>
+                            <div class="form-group" style="margin-top:-20px; margin-left:20px">
+                                <label asp-for="Input.Age">Giới TÍnh</label>
+
+                                <div style="display: flex;">
+                                    <div>
+                                        <input asp-for="Input.Sex" type="radio" name="gender" value="True" />
+                                        <span>Nữ</span>
+                                    </div>
+                                    <div style="padding-left: 100px">
+                                        <input asp-for="Input.Sex" type="radio" name="gender" value="False" />
+                                        <span>Nam</span>
+                                    </div>
+                                </div>
+                                <span asp-validation-for="Input.Age" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="Email" />
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Input.Password" id="password-field" type="password" class="form-control" placeholder="Mật khẩu" required>
+                                <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input asp-for="Input.ConfirmPassword" id="password-field" type="password" class="form-control" placeholder="Xác nhận mật khẩu" required>
+                                <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            @* <div class="form-group" style="padding-bottom:20px">
+                                <select asp-for="Input.Role" asp-items="@Model.Input.RoleList" class="form-control" >
+                                    <option disabled selected>-Chọn Vai Trò-</option>
+                                    <span asp-validation-for="Input.Role" class="text-danger"></span>
+                                </select>
+                            </div> *@
+                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div class="form-group">
+                                <button id="registerSubmit" type="submit" class="form-control btn btn-primary submit px-3">Đăng kí</button>
+                            </div>
+                            
+                        </form>
+                        <p style="margin-top:-10px;" class="w-100 text-center">&mdash; Hoặc đăng nhập bằng &mdash; </p>
+                        <div class="social d-flex text-center" style="justify-content:center;margin-top:-10px;">
+
+                            @{
+                                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                                {
+                                    <div>
+                                        <p>
+                                            There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                                                article
+                                                about setting up this ASP.NET application to support logging in via external services
+                                            </a>.
+                                        </p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                        <div>
+                                            <p>
+                                                @foreach (var provider in Model.ExternalLogins!)
+                                                {
+                                                    <button name="provider" value="@provider.Name" class="btn btn-secondary d-flex align-items-center p-2" style="justify-content:center">
+                                                        <div class="bg-white p-1 rounded-full d-flex justify-content-center align-items-center" style="width: 30px; height: 25px; border-radius: 50%">
+                                                            <svg class="w-3" viewBox="0 0 533.5 544.3" style="width: 16px; height: 16px;">
+                                                                <path d="M533.5 278.4c0-18.5-1.5-37.1-4.7-55.3H272.1v104.8h147c-6.1 33.8-25.7 63.7-54.4 82.7v68h87.7c51.5-47.4 81.1-117.4 81.1-200.2z"
+                                                                      fill="#4285f4" />
+                                                                <path d="M272.1 544.3c73.4 0 135.3-24.1 180.4-65.7l-87.7-68c-24.4 16.6-55.9 26-92.6 26-71 0-131.2-47.9-152.8-112.3H28.9v70.1c46.2 91.9 140.3 149.9 243.2 149.9z"
+                                                                      fill="#34a853" />
+                                                                <path d="M119.3 324.3c-11.4-33.8-11.4-70.4 0-104.2V150H28.9c-38.6 76.9-38.6 167.5 0 244.4l90.4-70.1z"
+                                                                      fill="#fbbc04" />
+                                                                <path d="M272.1 107.7c38.8-.6 76.3 14 104.4 40.8l77.7-77.7C405 24.6 339.7-.8 272.1 0 169.2 0 75.1 58 28.9 150l90.4 70.1c21.5-64.5 81.8-112.4 152.8-112.4z"
+                                                                      fill="#ea4335" />
+                                                            </svg>
+                                                        </div>
+                                                        <span class="ml-2">
+                                                            Đăng nhập với Google
+                                                        </span>
+                                                    </button>
+                                                }
+                                            </p>
+                                        </div>
+                                    </form>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/popper.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/main1.js"></script>
+    <style>
+        
+
+        .col-md-6 {
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            margin: 0;
+            padding: 0;
+            font-family: 'Lato', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .panel {
+            width: 400px; /* Hoặc bất kỳ kích thước cố định nào bạn muốn */
+            margin-top: 50px; /* Đảm bảo phần tử không mất ở phía trên khi zoom */
+        }
+
+        .img {
+            background-image: url('/images/login2.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            width: 100%;
+            height: 100%;
+        }
+
+        .form-control {
+            background: transparent;
+            border: none;
+            height: 50px;
+            color: rgba(255, 255, 255, 1) !important;
+            border: 1px solid black;
+            background: rgba(255, 255, 255, .3);
+            border-radius: 40px;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-top:-10px;
+        }
+
+        .ftco-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .login-wrap {
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .signin-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .checkbox-wrap {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-wrap input {
+            margin-right: 10px;
+        }
+
+        .social {
+            margin-top: 20px;
+        }
+
+        .social a {
+            flex: 1;
+            margin: 0 5px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+       /*  .abc {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .panel {
+            width: 100%; */ /* Đảm bảo phần tử cha đầy toàn bộ chiều rộng của cột */
+        }
+
+    </style>
+</body>
+</html>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

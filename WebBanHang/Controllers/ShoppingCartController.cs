@@ -177,9 +177,11 @@ namespace WebBanHang.Controllers
                     };
                     var patientEmail = hoadon.ApplicationUser.Email; // Replace with the patient's email
                     var emailSubject = "Thanh toán hóa đơn";
-                    var emailMessage = $"Bạn đã thanh toán thành công Hóa đơn .<br><br> " +
+                    var emailMessage =  $"<h1>Hóa đơn</h1<br><br>" +
+                                        $"Bạn đã thanh toán thành công Hóa đơn .<br><br> " +
                                         $"Bạn đã thanh toán thành công hóa đơn vào lúc {currentTime}.<br><br>" +
                                         $"Tổng tiền đã thanh toán là {TongTien.ToString("C", new CultureInfo("vi-VN"))}<br><br>" +
+                                        $"Đơn hàng sẽ sớm về với bạn.<br><br>"+
                                         $"Thông tin chi tiết:<br><br>";
 
                     hoadon.PhuongThucThanhToan = "VN-PAY";
@@ -192,10 +194,11 @@ namespace WebBanHang.Controllers
                 {
                     var patientEmail = hoadon.ApplicationUser.Email; // Replace with the patient's email
                     var emailSubject = "Thanh toán hóa đơn";
-                    var emailMessage = $"BẠN CÓ HÓA ĐƠN CẦN THANH TOÁN .<br><br> " +
+                    var emailMessage =  $"<h1>Hóa đơn</h1><br>" +
+                                        $"BẠN CÓ HÓA ĐƠN CẦN THANH TOÁN .<br><br> " +
                                         $"Bạn đã đặt đơn hàng thành công vào lúc {currentTime}.<br><br>" +
                                         $"Tổng tiền chưa thanh toán là {TongTien.ToString("C", new CultureInfo("vi-VN"))}<br><br>" +
-                                        $"Bạn cần thanh toán số tiền khi nhận được hàng" +
+                                        $"Bạn cần thanh toán số tiền khi nhận được hàng.<br><br>" +
                                         $"Thông tin chi tiết:<br><br>";
 
                     hoadon.PhuongThucThanhToan = "COD";

@@ -170,7 +170,6 @@ namespace WebBanHang.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ChucVu")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")

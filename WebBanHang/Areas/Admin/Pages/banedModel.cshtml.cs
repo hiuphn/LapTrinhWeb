@@ -66,8 +66,8 @@ namespace WebBanHang.Areas.Admin.Pages
 
                 await _emailSender.SendEmailAsync(
                     user.Email,
-                    "Your account has been locked",
-                    $"Your account has been locked. Please <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>login</a> to check.");
+                    "Khóa tài khoản",
+                    $"Tài khoản của bạn đã bị khóa <br><br>. Vui lòng <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Đăng nhập</a> để kiểm tra.");
 
             }
             else

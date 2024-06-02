@@ -15,7 +15,7 @@ namespace WebBanHang.Models
         public string PhoneNumber { get; set; }
         public int? CustomerID { get; set; }
         public int? StaffId { get; set; }
-        public string ChucVu { get; set; }
+        public string? ChucVu { get; set; }
         public Customer? Customer { get; set; }
         public Staff? Staff { get; set; }
         public Boolean IsLocked { get; set; }
