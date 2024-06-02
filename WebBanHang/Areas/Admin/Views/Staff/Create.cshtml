@@ -241,7 +241,7 @@
                 </li>
                 <li>
                     <a asp-action="Index" asp-controller="Discounts" class="dropdown-toggle no-arrow ">
-                        <span class="micon fa fa-keyboard me-2"></span><span class="mtext">Mã giảm giá</span>
+                        <span class="micon fa fa-th me-2"></span><span class="mtext">Mã giảm giá</span>
                     </a>
                 </li>
 
@@ -292,7 +292,7 @@
                 <div class="flex justify-center items-center h-screen ">
                     <div class="container p-[20px] max-w-[700px] max-h-[500px] bg-white rounded-xl">
                         <div class="relative">
-                            <h1 class="text-[32px] font-bold">Tạo mới mã giảm giá</h1>
+                            <h1 class="text-[32px] font-bold">Tạo mới nhân viên</h1>
                             <span class="absolute inline-block w-[70px] h-[4px] bg-gradient-to-r from-blue-500 to-fuchsia-500 rounded-xl"></span>
                         </div>
                         <div class="flex justify-center gap-10 mt-[10px]">
@@ -328,7 +328,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label asp-for="Position" class="control-label"></label>
+                                    <label asp-for="Position" class="control-label">Chức vụ</label>
                                     <select asp-for="Position" class="form-control">
                                         <option value="Admin">Admin</option>
                                         <option value="Nhân viên">Nhân viên</option>
@@ -356,7 +356,7 @@
                                     <span asp-validation-for="Password" class="text-danger"></span>
                                 </div>
                                 <div class="mt-[10px] w-full body">
-                                    <button type="submit" value="Create" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-violet dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
+                                    <button value="Create" type="submit" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-violet dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
                                         <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
                                             Thêm
                                         </span>

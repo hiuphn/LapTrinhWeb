@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebBanHang.Models;
 
 namespace WebBanHang.Areas.Admin.Controllers
@@ -16,14 +17,24 @@ namespace WebBanHang.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            // Hành động này để tạo view
+            // Tính tổng doanh thu
+            var totalRevenue1 = await _context.Orders // Giả sử chỉ tính các đơn hàng hoàn thành
+                .SumAsync(o => o.TotalPrice);
+
+            // Đếm số lượng người dùng
+            var userCount = await _context.Customers.CountAsync();
+
+            // Truyền dữ liệu đến view
+            ViewData["TotalRevenue1"] = totalRevenue1;
+            ViewData["UserCount"] = userCount;
+
             return View();
         }
 
         [HttpPost]
-        public IActionResult Index(int year)
+        public async Task<IActionResult> Index(int year)
         {
             // Hành động này để xử lý dữ liệu
             DateTime startDate;
@@ -47,13 +58,23 @@ namespace WebBanHang.Areas.Admin.Controllers
             decimal totalRevenue = 0;
 
             // Tính toán tổng tiền của các hóa đơn trong từng tháng
-            foreach (var invoice in invoices)
+            
+           
+            if (year==null)
             {
-                int monthIndex = invoice.OrderDate.Month - 1; // Chỉ số tháng trong mảng (từ 0 đến 11)
-                revenuePerMonth[monthIndex] += invoice.TotalPrice; // Cộng tổng tiền của hóa đơn vào tháng tương ứng
-                totalRevenue += invoice.TotalPrice;
+                totalRevenue = await _context.Orders
+                   .SumAsync(o => o.TotalPrice);
             }
-
+            else
+            {
+                foreach (var invoice in invoices)
+                {
+                    int monthIndex = invoice.OrderDate.Month - 1; // Chỉ số tháng trong mảng (từ 0 đến 11)
+                    revenuePerMonth[monthIndex] += invoice.TotalPrice; // Cộng tổng tiền của hóa đơn vào tháng tương ứng
+                    totalRevenue += invoice.TotalPrice;
+                }
+               
+            }
             var revenueData = revenuePerMonth.Select((value, index) =>
             {
                 string label;

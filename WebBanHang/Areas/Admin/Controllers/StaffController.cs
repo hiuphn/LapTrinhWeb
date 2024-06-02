@@ -67,6 +67,7 @@ namespace WebBanHang.Areas.Admin.Controllers
 
         // GET: Admin/NhanViens/Create
         public IActionResult Create()
+        
         {
             return View();
         }
@@ -102,6 +103,7 @@ namespace WebBanHang.Areas.Admin.Controllers
                     Email = staff.Email,
                     Age = staff.BirthDay,
                     Sex = staff.Sex,
+                    ChucVu= staff.Position,
                     PhoneNumber = staff.StaffPhone,
                     AvatarPath = imagePath,
                     Address = staff.Address};

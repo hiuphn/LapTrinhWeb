@@ -183,7 +183,15 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                 user.Age = Input.Age;
                 user.PhoneNumber = Input.PhoneNumber;
                 user.Sex = Input.Sex;
-                user.ChucVu = Input.Role;
+                if (!string.IsNullOrEmpty(Input.Role))
+                {
+                    user.ChucVu=Input.Role;
+                }
+                else
+                {
+
+                    user.ChucVu = "Khách hàng";
+                }
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var imagePath = await SaveImage(Input.Avatar);
@@ -206,7 +214,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                     if (Input.Role == "Nhân viên" || Input.Role == "Admin")
                     {
                         var roleEmployee = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Nhân viên");
-                        var roleAdmin = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Khách hàng");
+                        var roleAdmin = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Admin");
 
                         var roleName = "";
                         var roleId = "";

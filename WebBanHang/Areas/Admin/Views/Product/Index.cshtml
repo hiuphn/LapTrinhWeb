@@ -225,6 +225,28 @@
     tbody {
         color: black;
     }
+
+    .page {
+        color: #007bff;
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 3px;
+        margin: 0 2px;
+        display: flex;
+        justify-content: center;
+    }
+
+        .page li {
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #007bff;
+            border-radius: 3px;
+            margin: 0 2px;
+            display: flex;
+            justify-content: center;
+        }
 </style>
 <script>
     $(document).ready(function () {
@@ -269,7 +291,7 @@
                 </li>
                 <li>
                     <a asp-action="Index" asp-controller="Discounts" class="dropdown-toggle no-arrow ">
-                        <span class="micon fa fa-keyboard me-2"></span><span class="mtext">Mã giảm giá</span>
+                        <span class="micon fa fa-th me-2"></span><span class="mtext">Mã giảm giá</span>
                     </a>
                 </li>
 
@@ -315,7 +337,7 @@
             <div class="col-lg-12">
                 <div class="card-box mb-30">
                     <div class="pd-20">
-                        <h4 class="text-blue h4">Thông tin danh mục</h4>
+                        <h4 class="text-blue h4">Thông tin hàng hóa</h4>
 
                     </div>
                     <div class="pb-20">

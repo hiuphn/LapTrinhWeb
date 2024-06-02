@@ -284,7 +284,7 @@
                 </li>
                 <li>
                     <a asp-action="Index" asp-controller="Discounts" class="dropdown-toggle no-arrow">
-                        <span class="micon fa fa-keyboard me-2"></span><span class="mtext">Mã giảm giá</span>
+                        <span class="micon fa fa-th me-2"></span><span class="mtext">Mã giảm giá</span>
                     </a>
                 </li>
 
@@ -322,9 +322,7 @@
 
 <div class="main-container">
     <div class="xs-pd-20-10 pd-ltr-20">
-        <p>
-            <a asp-action="Add" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="bi bi-plus-square-fill"></i> Tạo mới</a>
-        </p>
+       
         <div class="row clearfix progress-box">
             <div class="col-lg-12">
                 <div class="card-box mb-30">
@@ -332,28 +330,48 @@
                         <h4 class="text-blue h4">Quản lý tài khoản</h4>
 
                     </div>
+                    <form method="get" id="filterForm">
+                        <div class="form-group mb-0 d-flex align-items-center">
+                            <select class="form-select ml-2" name="SelectedRole" onchange="document.getElementById('filterForm').submit();">
+                                <option value="">Chọn chức vụ</option>
+                                <option value="Admin" Model.SelectedRole="Admin">Admin</option>
+
+                                <option value="Khách hàng" Model.SelectedRole="Khách hàng">Khách hàng</option>
+                                <!-- Thêm các chức vụ khác nếu cần -->
+                            </select>
+                            <select class="form-select ml-2" name="AccountStatus" onchange="document.getElementById('filterForm').submit();" >
+                                <option value="">Chọn trạng thái tài khoản</option>
+                                <option value="true" Model.AccountStatus="true">Đã bị khóa</option>
+                                <option value="false" Model.AccountStatus="false">Chưa bị khóa</option>
+                            </select>
+                        </div>
+                    </form>
+                    
                     <div class="pb-20">
                        
                         <table class="table project-list-table table-nowrap align-middle table-borderless">
                             <thead>
                                 <tr>
-
                                     <th scope="col">Tên</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Số Điện Thoại</th>
+                                    <th scope="col">Địa chỉ</th>
                                     <th scope="col">Chức vụ</th>
-                                    <th scope="col">Khóa Tài Khoản </th>
-
+                                    <th scope="col">Khóa  </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model.User){
+                                @foreach (var item in Model.Users)
+                                {
                                     <tr>
 
-                                       
-                                        <td><span>@item.UserName</span></td>
+                                        <td>
+
+                                            <p class="text-body">@item.FullName</p>
+                                        </td>
                                         <td><span>@item.Email</span></td>
-                                        <td><span>@item.PhoneNumber</span></td>
+                                        <td><span >@item.PhoneNumber</span></td>
+                                        <td><span>@item.Address</span></td>
                                         <td><span>@item.ChucVu</span></td>
                                         <td>
                                             <ul class="list-inline mb-0" style="align-items:center">
@@ -387,3 +405,21 @@
 
     </div>
 </div>
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var selectRole = document.querySelector('select[name="SelectedRole"]');
+            selectRole.addEventListener('change', function () {
+                document.getElementById('filterForm').submit();
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var accountStatus = document.querySelector('select[name="AccountStatus"]');
+            accountStatus.addEventListener('change', function () {
+                document.getElementById('filterForm').submit();
+            });
+        });
+    </script>
+}
