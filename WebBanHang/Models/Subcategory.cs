@@ -6,8 +6,6 @@ namespace WebBanHang.Models
 {
     public class Subcategory
     {
-        
-
         public int Id { get; set; }
         [Required(ErrorMessage = "Tên danh mục con là bắt buộc")]
         [StringLength(50, ErrorMessage = "Tên danh mục con không được vượt quá 50 kí tự ")]

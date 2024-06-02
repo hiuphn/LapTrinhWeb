@@ -322,54 +322,58 @@
                         </form>
                         @if (year.HasValue)
                         {
-                            <div class="container-fluid pt-4 px-4 ">
-                                <div class="col-sm-6 col-xl-3">
-                                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                                        <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                                        <div class="ms-3">
-                                            <p class="mb-2">Tổng doanh thu của năm @(year.Value)</p>
-                                            <h6 class="mb-0">@totalRevenue.Value.ToString("C", cultureInfo)</h6>
+                            <div class="container-fluid pt-4 px-4">
+                                <div class="row g-4">
+                                    <div class="col-sm-6 col-xl-3">
+                                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                                            <div class="ms-3">
+                                                <p class="mb-2">Tổng doanh thu của năm @(year.Value)</p>
+                                                <h6 class="mb-0">@totalRevenue.Value.ToString("C", cultureInfo)</h6>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6 col-xl-3">
-                                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                                        <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                                        <div class="ms-3">
-                                            <p class="mb-2">Tổng người dùng</p>
-                                            <h6 class="mb-0">@userCount</h6>
+                                    <div class="col-sm-6 col-xl-3">
+                                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                                            <div class="ms-3">
+                                                <p class="mb-2">Tổng người dùng</p>
+                                                <h6 class="mb-0">@userCount người</h6>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                             <div>
                                 <canvas id="myChart"></canvas>
                             </div>
                         }
                         else
                         {
-                            <div class="container-fluid pt-4 px-4 ">
-                                <div class="col-sm-6 col-xl-3">
-                                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                                        <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                                        <div class="ms-3">
-                                            <p class="mb-2">Tổng doanh thu của  </p>
-                                            <h6 class="mb-0">@totalRevenue.Value.ToString("C", cultureInfo)</h6>
+                            <div class="container-fluid pt-4 px-4">
+                                <div class="row g-4">
+                                    <div class="col-sm-6 col-xl-3">
+                                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                                            <div class="ms-3">
+                                                <p class="mb-2">Tổng doanh thu </p>
+                                                <h6 class="mb-0">@totalRevenue.Value.ToString("C", cultureInfo)</h6>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-6 col-xl-3">
-                                    <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
-                                        <i class="fa fa-chart-bar fa-3x text-primary"></i>
-                                        <div class="ms-3">
-                                            <p class="mb-2">Tổng người dùng</p>
-                                            <h6 class="mb-0">@userCount</h6>
+                                    <div class="col-sm-6 col-xl-3">
+                                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                                            <div class="ms-3">
+                                                <p class="mb-2">Tổng người dùng</p>
+                                                <h6 class="mb-0">@userCount người</h6>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         }
+                        
                     </div>
                 </div>
             </div>

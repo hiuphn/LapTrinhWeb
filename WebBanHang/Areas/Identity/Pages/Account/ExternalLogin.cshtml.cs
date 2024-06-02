@@ -186,8 +186,8 @@ namespace WebBanHang.Areas.Identity.Pages.Account
 
 
 
-            if (ModelState.IsValid)
-            {
+            /*if (ModelState.IsValid)
+            {*/
 
                 string externalMail = null;
                 if (info.Principal.HasClaim(c => c.Type == ClaimTypes.Email))
@@ -231,8 +231,9 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                 }
 
                 // Tài khoản chưa có, tạo tài khoản mới
+                var abc = "Khách hàng";
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email,
-                PhoneNumber = Input.PhoneNumber, Address = Input.Address, FullName=Input.FullName,ChucVu=Input.ChucVu };
+                PhoneNumber = Input.PhoneNumber, Address = Input.Address, FullName=Input.FullName,ChucVu= abc };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -294,7 +295,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
-            }
+            //}
 
             ProviderDisplayName = info.ProviderDisplayName;
             ReturnUrl = returnUrl;

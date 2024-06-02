@@ -19,17 +19,16 @@ namespace WebBanHang.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            // Tính tổng doanh thu
-            var totalRevenue1 = await _context.Orders // Giả sử chỉ tính các đơn hàng hoàn thành
-                .SumAsync(o => o.TotalPrice);
-
-            // Đếm số lượng người dùng
-            var userCount = await _context.Customers.CountAsync();
-
-            // Truyền dữ liệu đến view
-            ViewData["TotalRevenue1"] = totalRevenue1;
+            var invoices = _context.Orders.ToList();
+            decimal totalRevenue = 0;
+            foreach (var invoice in invoices)
+            {
+                totalRevenue += invoice.TotalPrice;
+            }
+            var userCount = 0;
+            userCount = _context.Customers.Count();
             ViewData["UserCount"] = userCount;
-
+            ViewBag.TotalRevenue = totalRevenue;
             return View();
         }
 
@@ -58,14 +57,9 @@ namespace WebBanHang.Areas.Admin.Controllers
             decimal totalRevenue = 0;
 
             // Tính toán tổng tiền của các hóa đơn trong từng tháng
-            
-           
-            if (year==null)
-            {
-                totalRevenue = await _context.Orders
-                   .SumAsync(o => o.TotalPrice);
-            }
-            else
+
+
+            if (year != 0)
             {
                 foreach (var invoice in invoices)
                 {
@@ -73,7 +67,14 @@ namespace WebBanHang.Areas.Admin.Controllers
                     revenuePerMonth[monthIndex] += invoice.TotalPrice; // Cộng tổng tiền của hóa đơn vào tháng tương ứng
                     totalRevenue += invoice.TotalPrice;
                 }
-               
+            }
+            else
+            {
+                var invoices1 = _context.Orders.ToList();
+                foreach (var invoice in invoices1)
+                {
+                    totalRevenue += invoice.TotalPrice;
+                }
             }
             var revenueData = revenuePerMonth.Select((value, index) =>
             {
@@ -93,7 +94,9 @@ namespace WebBanHang.Areas.Admin.Controllers
 
                 return new { Value = formattedValue, Label = label };
             }).ToArray();
-
+            var userCount = 0;
+            userCount = await _context.Customers.CountAsync();
+            ViewData["UserCount"] = userCount;
             ViewBag.RevenueData = revenueData;
             ViewBag.TotalRevenue = totalRevenue;
             ViewBag.Year = year;

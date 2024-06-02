@@ -251,7 +251,7 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                             Email = Input.Email,
                             AvatarPath = imagePath
                         };
-                        _context.Staffs.Add(staff);
+                        _context.Staffs.Add(nhanVien);
                     }
                         else
                         {

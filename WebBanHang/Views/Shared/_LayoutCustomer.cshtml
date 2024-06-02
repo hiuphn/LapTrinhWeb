@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <link rel="icon" href="~/favicon.png" type="image/gif"/>
+    <link rel="icon" href="~/favicon.png" type="image/gif" />
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,12 +21,6 @@
     <!-- Libraries Stylesheet -->
     <link href="~/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
     <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="~/Test/vendors/styles/core.css">
-    <link rel="stylesheet" type="text/css" href="~/Test/vendors/styles/icon-font.min.css">
-    <link rel="stylesheet" type="text/css" href="~/Test/src/plugins/jvectormap/jquery-jvectormap-2.0.3.css">
-    <link rel="stylesheet" type="text/css" href="~/Test/vendors/styles/style.css">
 
 
     <!-- Customized Bootstrap Stylesheet -->
@@ -82,7 +76,7 @@
                                     <a class="nav-item nav-link " asp-area="Admin" asp-controller="Product" asp-action="Index">AdminDashboard</a>
                                 </li>
                             }
-                            
+
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Hàng Hóa</a>
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -94,23 +88,14 @@
                         </div>
                         <div class="d-flex m-3 me-0">
                             <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search text-primary"></i></button>
-                            <a  class="position-relative me-4 my-auto" asp-controller="ShoppingCart" asp-action="Index">
+                            <a class="position-relative me-4 my-auto" asp-controller="ShoppingCart" asp-action="Index">
                                 <i class="fa fa-shopping-bag fa-2x"></i>
-                                  <span id="cart-count" class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">0</span>
+                                <span id="cart-count" class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">0</span>
 
                             </a>
-
-                            <div class="user-info-dropdown">
-                                <div class="dropdown">
-                                    <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
-                                        <span class="user-icon">
-                                            <img src="~/Test/vendors/images/login-img.png" alt="">
-                                        </span>
-                                    </a>
-                                    <partial name="_LoginPartial" />
-                                </div>
-                            </div>
-                          
+                            <a href="#" class="my-auto">
+                                <partial name="_LoginPartial"></partial>
+                            </a>
                         </div>
                     </div>
                 </nav>
@@ -127,7 +112,7 @@
                     </div>
                     <div class="modal-body">
                         <!-- Nội dung của modal -->
-                        <form action="/Product1/Search" method="get" >
+                        <form action="/Product1/Search" method="get">
                             <div class="mb-3">
                                 <label for="searchInput" class="form-label">Tìm kiếm:</label>
                                 <input type="text" name="query" class="form-control" id="searchInput">
@@ -138,19 +123,19 @@
                 </div>
             </div>
         </div>
-        </div>
-        <!-- Modal Search End -->
+    </div>
+    <!-- Modal Search End -->
 
-        <div style="min-height:400px">
+    <div style="min-height:400px">
 
-            @RenderBody()
+        @RenderBody()
 
-        </div>
-        
-     
+    </div>
 
 
-        @await Html.PartialAsync("_foodter")
+
+
+    @await Html.PartialAsync("_foodter")
 
     </div>
 
@@ -166,17 +151,6 @@
     <script src="~/lib/lightbox/js/lightbox.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="~/Test/vendors/scripts/core.js"></script>
-    <script src="~/Test/vendors/scripts/script.min.js"></script>
-    <script src="~/Test/vendors/scripts/process.js"></script>
-    <script src="~/Test/vendors/scripts/layout-settings.js"></script>
-    <script src="~/Test/src/plugins/jQuery-Knob-master/jquery.knob.min.js"></script>
-    <script src="~/Test/src/plugins/highcharts-6.0.7/code/highcharts.js"></script>
-    <script src="~/Test/src/plugins/highcharts-6.0.7/code/highcharts-more.js"></script>
-    <script src="~/Test/src/plugins/jvectormap/jquery-jvectormap-2.0.3.min.js"></script>
-    <script src="~/Test/src/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="~/Test/vendors/scripts/dashboard2.js"></script>
-    <script src="~/Test/gulpfile.js"></script>
     @RenderSection("Scripts", required: false)
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>

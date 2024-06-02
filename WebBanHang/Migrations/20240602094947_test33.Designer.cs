@@ -12,13 +12,8 @@ using WebBanHang.Models;
 namespace WebBanHang.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-<<<<<<<< HEAD:WebBanHang/Migrations/20240531204758_testt.Designer.cs
-    [Migration("20240531204758_testt")]
-    partial class testt
-========
-    [Migration("20240525035836_connect")]
-    partial class connect
->>>>>>>> origin/Tung:WebBanHang/Migrations/20240525035836_connect.Designer.cs
+    [Migration("20240602094947_test33")]
+    partial class test33
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -177,11 +172,11 @@ namespace WebBanHang.Migrations
                     b.Property<DateTime?>("Age")
                         .HasColumnType("datetime2");
 
-<<<<<<<< HEAD:WebBanHang/Migrations/20240531204758_testt.Designer.cs
-                    b.Property<string>("ChucVu")
-========
                     b.Property<string>("AvatarPath")
->>>>>>>> origin/Tung:WebBanHang/Migrations/20240525035836_connect.Designer.cs
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ChucVu")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -476,6 +471,8 @@ namespace WebBanHang.Migrations
 
                     b.HasIndex("CategoryId");
 
+                    b.HasIndex("SubcategoryId");
+
                     b.HasIndex("SupplierID");
 
                     b.ToTable("Products");
@@ -565,10 +562,6 @@ namespace WebBanHang.Migrations
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -737,6 +730,10 @@ namespace WebBanHang.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("WebBanHang.Models.Subcategory", "Subcategory")
+                        .WithMany()
+                        .HasForeignKey("SubcategoryId");
+
                     b.HasOne("WebBanHang.Models.Supplier", "Supplier")
                         .WithMany()
                         .HasForeignKey("SupplierID")
@@ -744,6 +741,8 @@ namespace WebBanHang.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("Subcategory");
 
                     b.Navigation("Supplier");
                 });
@@ -775,11 +774,7 @@ namespace WebBanHang.Migrations
                     b.HasOne("WebBanHang.Models.Category", "Category")
                         .WithMany("Subcategories")
                         .HasForeignKey("CategoryId")
-<<<<<<<< HEAD:WebBanHang/Migrations/20240531204758_testt.Designer.cs
                         .OnDelete(DeleteBehavior.Restrict)
-========
-                        .OnDelete(DeleteBehavior.Cascade)
->>>>>>>> origin/Tung:WebBanHang/Migrations/20240525035836_connect.Designer.cs
                         .IsRequired();
 
                     b.Navigation("Category");

@@ -8,14 +8,14 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <style>
-    body {
+    /* body {
         color: #566787;
         background: #f5f5f5;
         font-family: 'Varela Round', sans-serif;
         font-size: 13px;
-    }
+    } 
 
-    .table-responsive {
+     .table-responsive {
         margin: 30px 0;
     }
 
@@ -131,9 +131,9 @@
         border-radius: 50%;
         vertical-align: middle;
         margin-right: 10px;
-    }
+    } 
 
-    .status {
+     .status {
         font-size: 30px;
         margin: 2px 2px 0 0;
         display: inline-block;
@@ -240,6 +240,9 @@
             display: flex;
             justify-content: center;
         }
+        .col{
+        text-align: center;
+        } */
 </style>
 <script>
     $(document).ready(function () {
@@ -348,56 +351,55 @@
                     </form>
                     
                     <div class="pb-20">
-                       
-                        <table class="table project-list-table table-nowrap align-middle table-borderless">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Tên</th>
-                                    <th scope="col">Email</th>
-                                    <th scope="col">Số Điện Thoại</th>
-                                    <th scope="col">Địa chỉ</th>
-                                    <th scope="col">Chức vụ</th>
-                                    <th scope="col">Khóa  </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.Users)
-                                {
+                        
+                        <div class="table-responsive">
+                            <table class="table project-list-table table-nowrap align-middle table-borderless">
+                                <thead>
                                     <tr>
-
-                                        <td>
-
-                                            <p class="text-body">@item.FullName</p>
-                                        </td>
-                                        <td><span>@item.Email</span></td>
-                                        <td><span >@item.PhoneNumber</span></td>
-                                        <td><span>@item.Address</span></td>
-                                        <td><span>@item.ChucVu</span></td>
-                                        <td>
-                                            <ul class="list-inline mb-0" style="align-items:center">
-                                                @if (!item.IsLocked)
-                                                {
-                                                    <li class="list-inline-item">
-                                                        <a asp-page="banedModel" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Khóa Tài khoản" class="px-2 text-danger">
-                                                            <i class="bi bi-lock"></i>Khóa
-                                                        </a>
-                                                    </li>
-                                                }
-                                                else
-                                                {
-                                                    <li class="list-inline-item">
-                                                        <a asp-page="UnlockModel" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Mở Khóa Tài khoản" class="px-2 text-success">
-                                                            <i class="bi bi-unlock"></i> Mở Khóa
-                                                        </a>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        </td>
+                                        <th scope="col">Tên</th>
+                                        <th scope="col style="text-align">Email</th>
+                                        <th scope="col">Số Điện Thoại</th>
+                                        <th scope="col">Địa chỉ</th>
+                                        <th scope="col">Chức vụ</th>
+                                        <th scope="col">Khóa  </th>
                                     </tr>
-                                }
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.Users)
+                                    {
+                                        <tr >
 
-                            </tbody>
-                        </table>
+                                            <td ><span class="badge badge-soft-success mb-0">@item.FullName</span></td>
+                                            <td><span class="badge badge-soft-success mb-0">@item.Email</span></td>
+                                            <td><span class="badge badge-soft-info mb-0">@item.PhoneNumber</span></td>
+                                            <td><span class="badge badge-soft-info mb-0">@item.Address</span></td>
+                                            <td><span class="badge badge-soft-danger mb-0">@item.ChucVu</span></td>
+                                            <td>
+                                                <ul class="list-inline mb-0" >
+                                                    @if (!item.IsLocked)
+                                                    {
+                                                        <li class="list-inline-item">
+                                                            <a asp-page="banedModel" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Khóa Tài khoản" class="px-2 text-danger">
+                                                                <i class="bi bi-lock"></i>Khóa
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                    else
+                                                    {
+                                                        <li class="list-inline-item">
+                                                            <a asp-page="UnlockModel" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Mở Khóa Tài khoản" class="px-2 text-success">
+                                                                <i class="bi bi-unlock"></i> Mở Khóa
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

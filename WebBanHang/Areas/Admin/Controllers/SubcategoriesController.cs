@@ -29,7 +29,7 @@ namespace WebBanHang.Areas.Admin.Controllers
         {
             ViewData["CurrentFilter"] = searchString;
 
-            var subcategoryQuery = _context.Subcategorys.Include(p => p.Category).AsQueryable();
+            var subcategoryQuery = _context.Subcategories.Include(p => p.Category).AsQueryable();
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -55,7 +55,7 @@ namespace WebBanHang.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var subcategory = await _context.Subcategorys
+            var subcategory = await _context.Subcategories
            .Include(s => s.Category) // Include the related Category
            .FirstOrDefaultAsync(m => m.Id == id);
             if (subcategory == null)
@@ -98,7 +98,7 @@ namespace WebBanHang.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var subcategory = await _context.Subcategorys.Include(x => x.Category).SingleOrDefaultAsync(x => x.Id == id);
+            var subcategory = await _context.Subcategories.Include(x => x.Category).SingleOrDefaultAsync(x => x.Id == id);
             var categories = await _categoryRepository.GetAllAsync();
             ViewBag.categories = new SelectList(categories, "Id", "Name");
             if (subcategory == null)
@@ -124,7 +124,7 @@ namespace WebBanHang.Areas.Admin.Controllers
             {
                 try
                 {
-                    var existing = await _context.Subcategorys.FindAsync(id);
+                    var existing = await _context.Subcategories.FindAsync(id);
                     existing.Name = subcategory.Name;
                     existing.CategoryId = subcategory.CategoryId;
                     _context.Update(existing);
@@ -154,7 +154,7 @@ namespace WebBanHang.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var subcategory = await _context.Subcategorys
+            var subcategory = await _context.Subcategories
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (subcategory == null)
             {
@@ -168,13 +168,13 @@ namespace WebBanHang.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var subcategory = await _context.Subcategorys.FindAsync(id);
+            var subcategory = await _context.Subcategories.FindAsync(id);
             if (subcategory == null)
             {
                 return NotFound();
             }
 
-            _context.Subcategorys.Remove(subcategory);
+            _context.Subcategories.Remove(subcategory);
             await _context.SaveChangesAsync();
 
             return Ok();
@@ -183,7 +183,7 @@ namespace WebBanHang.Areas.Admin.Controllers
 
         private bool SubcategoryExists(int id)
         {
-            return _context.Subcategorys.Any(e => e.Id == id);
+            return _context.Subcategories.Any(e => e.Id == id);
         }
     }
 }
