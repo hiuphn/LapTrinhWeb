@@ -51,11 +51,20 @@ namespace WebBanHang.Controllers
             HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart") ?? new ShoppingCart();
             cart.AddItem(cartItem);
             HttpContext.Session.SetObjectAsJson("Cart", cart);
-            /*			       return Json(new { success = true, message = "Product added to cart." });
-*/
-            return RedirectToAction("Index");
-        }
+/*            			       return Json(Response);
+*/           return RedirectToAction("Index");
+       }
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(int productId)
+        {
+            var category = await _productRepository.GetByIdAsync(productId);
+            if (category == null)
+            {
+                return NotFound();
+            }
 
+            return Ok();
+        }
 
         public IActionResult Index()
         {

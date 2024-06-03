@@ -12,12 +12,12 @@
         visibility: visible;
         opacity: 1;
     }
-.card {
+/*.card {
     background-color: #fff;
     width: 300px;
     border: none;
     border-radius: 16px;
-}
+}*/
 .info {
     line-height: 19px;
 }
