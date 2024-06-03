@@ -40,7 +40,7 @@ namespace WebBanHang.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=WINDOWS-11;Database=test3;Trusted_Connection=True;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=phra\\SQLEXPRESS;Database=QLBanHang_CoSoMoi;Trusted_Connection=True;TrustServerCertificate=True;");
         }
         public DbSet<WebBanHang.Models.Discount> Discount { get; set; } = default!;
 
