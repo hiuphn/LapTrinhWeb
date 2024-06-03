@@ -42,7 +42,7 @@ namespace WebBanHang.Models
         {
             optionsBuilder.UseSqlServer("Server=phra\\SQLEXPRESS;Database=QLBanHang_CoSoMoi;Trusted_Connection=True;TrustServerCertificate=True;");
         }
-        public DbSet<WebBanHang.Models.Discount> Discount { get; set; } = default!;
+        public DbSet<Discount> Discounts { get; set; }
 
     }
 }

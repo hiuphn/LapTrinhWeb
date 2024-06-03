@@ -24,6 +24,8 @@ builder.Services.AddSession(options =>
 
 
 // Add services to the container.
+builder.Services.AddSession();
+builder.Services.AddLogging();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("connectionString"));
@@ -31,6 +33,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddDefaultTokenProviders()
     .AddDefaultUI()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
 builder.Services.AddRazorPages();
 
@@ -86,7 +89,15 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
+}
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

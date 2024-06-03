@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebBanHang.Migrations
 {
     /// <inheritdoc />
-    public partial class test33 : Migration
+    public partial class connect : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -60,7 +60,7 @@ namespace WebBanHang.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Discount",
+                name: "Discounts",
                 columns: table => new
                 {
                     DiscountId = table.Column<int>(type: "int", nullable: false)
@@ -71,7 +71,7 @@ namespace WebBanHang.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Discount", x => x.DiscountId);
+                    table.PrimaryKey("PK_Discounts", x => x.DiscountId);
                 });
 
             migrationBuilder.CreateTable(
@@ -360,9 +360,9 @@ namespace WebBanHang.Migrations
                         principalTable: "Customers",
                         principalColumn: "CustomerID");
                     table.ForeignKey(
-                        name: "FK_Orders_Discount_DiscountId",
+                        name: "FK_Orders_Discounts_DiscountId",
                         column: x => x.DiscountId,
-                        principalTable: "Discount",
+                        principalTable: "Discounts",
                         principalColumn: "DiscountId");
                     table.ForeignKey(
                         name: "FK_Orders_Staffs_StaffId",
@@ -563,7 +563,7 @@ namespace WebBanHang.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Discount");
+                name: "Discounts");
 
             migrationBuilder.DropTable(
                 name: "Subcategories");

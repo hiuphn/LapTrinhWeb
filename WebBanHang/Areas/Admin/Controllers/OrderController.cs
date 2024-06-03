@@ -87,13 +87,13 @@ namespace WebBanHang.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var discounts = await _context.Discount.FindAsync(id);
+            var discounts = await _context.Discounts.FindAsync(id);
             if (discounts == null)
             {
                 return NotFound();
             }
 
-            _context.Discount.Remove(discounts);
+            _context.Discounts.Remove(discounts);
             await _context.SaveChangesAsync();
 
             return Ok();

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Configuration;
 using System.Globalization;
@@ -20,15 +21,17 @@ namespace WebBanHang.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IVnPayService _vnPayService;
         private readonly EmailService _emailService;
+        private readonly ILogger<ShoppingCartController> _logger;
         public ShoppingCartController(ApplicationDbContext context,
         UserManager<ApplicationUser> userManager, IProductRespository
-        productRepository, EmailService emailService, IVnPayService vnPayService)
+        productRepository, EmailService emailService, IVnPayService vnPayService, ILogger<ShoppingCartController> logger)
         {
             _productRepository = productRepository;
             _context = context;
             _userManager = userManager;
             _emailService = emailService;
             _vnPayService = vnPayService;
+            _logger = logger;
         }
         public async Task<IActionResult> AddToCart(int productId, int quantity)
         {
@@ -57,9 +60,40 @@ namespace WebBanHang.Controllers
         public IActionResult Index()
         {
             var cart = HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart") ?? new
-            ShoppingCart();
+    ShoppingCart();
             ViewBag.Cart = cart;
+            var discountCodes = _context.Discounts.ToList();
+            ViewBag.DiscountCodes = new SelectList(discountCodes, "DiscountId", "Code");
             return View(cart);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApplyDiscount(int discountCode)
+        {
+            _logger.LogInformation("ApplyDiscount method hit. DiscountCode: {DiscountCode}", discountCode); // Add logging
+
+            var cart = HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart") ?? new ShoppingCart();
+            var discount = await _context.Discounts.FirstOrDefaultAsync(d => d.DiscountId == discountCode);
+
+            if (discount != null)
+            {
+                if (discount.Type.ToString() == "Percentage")
+                {
+                    cart.DiscountAmount = cart.Items.Sum(item => item.Price * item.Quantity) * (discount.Value / 100);
+                }
+                else if (discount.Type.ToString() == "Amount")
+                {
+                    cart.DiscountAmount = discount.Value;
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("", "Mã giảm giá không hợp lệ.");
+            }
+
+            HttpContext.Session.SetObjectAsJson("Cart", cart);
+
+            return RedirectToAction("Index");
         }
         // Các actions khác...
         private async Task<Product> GetProductFromDatabase(int productId)
@@ -114,6 +148,8 @@ namespace WebBanHang.Controllers
 
         public IActionResult Checkout()
         {
+            var discountCodes = _context.Discounts.ToList();
+            ViewBag.DiscountCodes = new SelectList(discountCodes, "DiscountId", "Code");
             var cart = HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart");
             if (cart == null || !cart.Items.Any())
             {
