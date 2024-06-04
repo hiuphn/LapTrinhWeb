@@ -1,4 +1,5 @@
 ﻿@model List<WebBanHang.Models.Product>
+@using X.PagedList.Mvc.Core;
 @{
     ViewData["Title"] = "Search";
     Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
@@ -106,7 +107,7 @@ else
                                             <p>@item.Description</p>
                                             <div class="d-flex justify-content-between flex-lg-wrap">
                                                 <a href="@Url.Action("Details", "Product1", new { id = item.Id })" class="text-dark fs-5 fw-bold mb-0">@item.Price.ToString("N0")₫</a>
-                                                <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                                <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Thêm giỏ hàng</a>
                                             </div>
                                         </div>
                                     </div>
@@ -114,14 +115,7 @@ else
                             }
                             <div class="col-12">
                                 <div class="pagination d-flex justify-content-center mt-5">
-                                    <a href="#" class="rounded">&laquo;</a>
-                                    <a href="#" class="active rounded">1</a>
-                                    <a href="#" class="rounded">2</a>
-                                    <a href="#" class="rounded">3</a>
-                                    <a href="#" class="rounded">4</a>
-                                    <a href="#" class="rounded">5</a>
-                                    <a href="#" class="rounded">6</a>
-                                    <a href="#" class="rounded">&raquo;</a>
+                                    
                                 </div>
                             </div>
                         </div>

@@ -24,8 +24,7 @@ builder.Services.AddSession(options =>
 
 
 // Add services to the container.
-builder.Services.AddSession();
-builder.Services.AddLogging();
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("connectionString"));

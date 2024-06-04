@@ -246,14 +246,14 @@ namespace WebBanHang.Areas.Identity.Pages.Account
                         // Email tạo tài khoản và email từ info giống nhau -> xác thực email luôn
                         if (user.Email == externalMail)
                         {
-                            if (!string.IsNullOrEmpty(Input.ChucVu))
+                            /*if (!string.IsNullOrEmpty(Input.ChucVu))
                             {
                                 await _userManager.AddToRoleAsync(user, Input.ChucVu);
                             }
                             else
                             {
                                 await _userManager.AddToRoleAsync(user, SD.Role_Customer);
-                            }
+                            }*/
                             var codeactive = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                             await _userManager.ConfirmEmailAsync(user, codeactive);
                             await _signInManager.SignInAsync(user, isPersistent: false, info.LoginProvider);
