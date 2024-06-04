@@ -23,7 +23,7 @@ namespace WebBanHang.Controllers
             ViewBag.productsss = products.Take(20);
             List<Product> cars = products.Where(p => p.Category.Name == "Quà Sinh Nhật").Take(6).ToList();
             ViewBag.Cars = cars;
-            List<Product> motors = products.Where(p => p.Category.Name == "Quà Kỷ Niệm").Take(8).ToList();
+            List<Product> motors = products.Where(p => p.Category.Name == "test").Take(8).ToList();
             ViewBag.Motors = motors;
             return View(products);
 		}
