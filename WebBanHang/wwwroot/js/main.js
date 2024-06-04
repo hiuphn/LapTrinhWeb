@@ -10,31 +10,7 @@
         }, 1);
     };
     spinner(0);
-    $('.addToCartBtn').click(function () {
-        $.ajax({
-            url: '/Cart/AddToCart',
-            type: 'POST',
-            data: {
-                productId: @Model.Id,
-                colorId: $('#p_color').val(),
-                storageId: $('#p_storage').val(),
-                quantity: 1
-            },
-            success: function (response) {
-                if (response.success) {
-                    loadCart();
-                    console.log("Thêm sản phẩm thành công!");
-                }
-                else {
-                    notyf.warning(response.message);
-                }
-            },
-            error: function (xhr, status, error) {
-                notyf.error('Lỗi khi thêm sản phẩm vào giỏ hàng:', error);
-                console.error('Lỗi khi thêm sản phẩm vào giỏ hàng:', error);
-            }
-        });
-    });
+
 
     // Fixed Navbar
     $(window).scroll(function () {
