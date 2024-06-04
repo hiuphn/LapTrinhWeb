@@ -191,7 +191,7 @@ namespace WebBanHang.Controllers
 
         public async Task<IActionResult> DisplayProducts(int categoryId, int page = 1)
         {
-            int pageSize = 10; // Số sản phẩm trên mỗi trang
+            int pageSize = 9; // Số sản phẩm trên mỗi trang
             var category = await _categoryRepository.GetByIdAsync(categoryId);
             var products = await _productRespository.GetByCategoryIdAsync(categoryId);
             var pagedProducts = products.ToPagedList(page, pageSize);

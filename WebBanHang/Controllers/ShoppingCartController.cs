@@ -51,11 +51,20 @@ namespace WebBanHang.Controllers
             HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart") ?? new ShoppingCart();
             cart.AddItem(cartItem);
             HttpContext.Session.SetObjectAsJson("Cart", cart);
-            /*			       return Json(new { success = true, message = "Product added to cart." });
-*/
-            return RedirectToAction("Index");
-        }
+/*            			       return Json(Response);
+*/           return RedirectToAction("Index");
+       }
+        [HttpPost]
+        public async Task<IActionResult> AddToCart(int productId)
+        {
+            var category = await _productRepository.GetByIdAsync(productId);
+            if (category == null)
+            {
+                return NotFound();
+            }
 
+            return Ok();
+        }
 
         public IActionResult Index()
         {
@@ -130,67 +139,51 @@ namespace WebBanHang.Controllers
             return View();
 
         }
+        public IActionResult Error()
+        {
+            return View();
+        }
+
+        public IActionResult OrderCompleted(int orderId)
+        {
+            var order = _context.Orders.Include(o => o.ApplicationUser).FirstOrDefault(o => o.Id == orderId);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return View(order);
+        }
+
         public IActionResult Checkout()
         {
             var discountCodes = _context.Discounts.ToList();
             ViewBag.DiscountCodes = new SelectList(discountCodes, "DiscountId", "Code");
             var cart = HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart");
-            if (cart == null || cart.Items.Count == 0)
+            if (cart == null || !cart.Items.Any())
             {
                 return View("EmptyCart");
             }
-            List<CartItem> cartItem = cart.Items;
-            ViewBag.Cart = cartItem;
+
+            ViewBag.Cart = cart.Items;
             return View(new Order());
         }
-        [HttpPost]
-        /*public async Task<IActionResult> Checkout(Order order)
-        {
-
-            var cart =
-            HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart");
-            if (cart == null || !cart.Items.Any())
-            {
-                // Xử lý giỏ hàng trống...
-                return RedirectToAction("Index");
-            }
-            var user = await _userManager.GetUserAsync(User);
-            order.UserId = user.Id;
-            order.OrderDate = DateTime.UtcNow;
-            order.TotalPrice = cart.Items.Sum(i => i.Price * i.Quantity);
-            order.OrderDetails = cart.Items.Select(i => new OrderDetail
-            {
-                ProductId = i.ProductId,
-                Quantity = i.Quantity,
-                Price = i.Price
-            }).ToList();
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
-            HttpContext.Session.Remove("Cart");
-
-            return View("OrderCompleted", order.Id); // Trang xác nhận hoàn thành đơn hàng
-        }*/
 
         [HttpPost]
         public async Task<IActionResult> Checkout(Order hoadon, string payment)
         {
-            
-            var cart =
-            HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart");
+            var cart = HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart");
             if (cart == null || !cart.Items.Any())
             {
-                // Xử lý giỏ hàng trống...
                 return RedirectToAction("Index");
             }
+
             try
             {
-
                 var user = await _userManager.GetUserAsync(User);
                 hoadon.UserId = user.Id;
                 hoadon.OrderDate = DateTime.UtcNow;
-                decimal TongTien = cart.Items.Sum(i => i.Price * i.Quantity);
                 hoadon.TotalPrice = cart.Items.Sum(i => i.Price * i.Quantity);
-                var currentTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
                 hoadon.OrderDetails = cart.Items.Select(i => new OrderDetail
                 {
                     ProductId = i.ProductId,
@@ -201,65 +194,187 @@ namespace WebBanHang.Controllers
                 await _context.SaveChangesAsync();
                 HttpContext.Session.Remove("Cart");
 
+                var patientEmail = user.Email;
+                var emailSubject = "Order Confirmation";
+                var currentTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+                var TongTien = hoadon.TotalPrice;
+                var emailMessage = string.Empty;
+
                 if (payment == "VN-PAY")
                 {
                     var vnPayModel = new VnPaymentRequestModel()
                     {
                         Amount = (double)hoadon.TotalPrice,
                         CreateDate = DateTime.Now,
-                        Description = "Thanh toán viện phí",
+                        Description = "Order Payment",
                         OrderId = hoadon.Id
-
                     };
-                    var patientEmail = hoadon.ApplicationUser.Email; // Replace with the patient's email
-                    var emailSubject = "Thanh toán hóa đơn";
-                    var emailMessage =  $"<h1>Hóa đơn</h1<br><br>" +
-                                        $"Bạn đã thanh toán thành công Hóa đơn .<br><br> " +
-                                        $"Bạn đã thanh toán thành công hóa đơn vào lúc {currentTime}.<br><br>" +
-                                        $"Tổng tiền đã thanh toán là {TongTien.ToString("C", new CultureInfo("vi-VN"))}<br><br>" +
-                                        $"Đơn hàng sẽ sớm về với bạn.<br><br>"+
-                                        $"Thông tin chi tiết:<br><br>";
+
+                    emailMessage = $"<h1>Invoice</h1><br>" +
+                                   $"Your order has been successfully paid at {currentTime}.<br>" +
+                                   $"Total amount paid is {TongTien.ToString("C", new CultureInfo("vi-VN"))}.<br>" +
+                                   $"Your order will be delivered soon.<br>" +
+                                   $"Order details:<br>";
 
                     hoadon.PhuongThucThanhToan = "VN-PAY";
-
                     await _context.SaveChangesAsync();
                     await _emailService.SendEmailAsync(patientEmail, emailSubject, emailMessage);
                     return Redirect(_vnPayService.CreatePaymentUrl(HttpContext, vnPayModel));
                 }
                 else
                 {
-                    var patientEmail = hoadon.ApplicationUser.Email; // Replace with the patient's email
-                    var emailSubject = "Thanh toán hóa đơn";
-                    var emailMessage =  $"<h1>Hóa đơn</h1><br>" +
-                                        $"BẠN CÓ HÓA ĐƠN CẦN THANH TOÁN .<br><br> " +
-                                        $"Bạn đã đặt đơn hàng thành công vào lúc {currentTime}.<br><br>" +
-                                        $"Tổng tiền chưa thanh toán là {TongTien.ToString("C", new CultureInfo("vi-VN"))}<br><br>" +
-                                        $"Bạn cần thanh toán số tiền khi nhận được hàng.<br><br>" +
-                                        $"Thông tin chi tiết:<br><br>";
+                    emailMessage = $"<h1>Invoice</h1><br>" +
+                                   $"You have an outstanding invoice.<br>" +
+                                   $"Your order was placed successfully at {currentTime}.<br>" +
+                                   $"Total amount due is {TongTien.ToString("C", new CultureInfo("vi-VN"))}.<br>" +
+                                   $"Please pay the amount upon delivery.<br>" +
+                                   $"Order details:<br>";
 
                     hoadon.PhuongThucThanhToan = "COD";
-
                     await _context.SaveChangesAsync();
                     await _emailService.SendEmailAsync(patientEmail, emailSubject, emailMessage);
                 }
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
-                if (!HoaDonExists(hoadon.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToAction("Error");
             }
 
-            return View("OrderCompleted", hoadon.Id); // Trang xác nhận hoàn thành đơn hàng
-
-
-
+            return RedirectToAction("OrderCompleted", new { orderId = hoadon.Id });
         }
+
+
+
+
+
+        /*        public IActionResult Checkout()
+                {
+                    var cart = HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart");
+                    if (cart == null || cart.Items.Count == 0)
+                    {
+                        return View("EmptyCart");
+                    }
+                    List<CartItem> cartItem = cart.Items;
+                    ViewBag.Cart = cartItem;
+                    return View(new Order());
+                }
+                [HttpPost]
+                *//*public async Task<IActionResult> Checkout(Order order)
+                {
+
+                    var cart =
+                    HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart");
+                    if (cart == null || !cart.Items.Any())
+                    {
+                        // Xử lý giỏ hàng trống...
+                        return RedirectToAction("Index");
+                    }
+                    var user = await _userManager.GetUserAsync(User);
+                    order.UserId = user.Id;
+                    order.OrderDate = DateTime.UtcNow;
+                    order.TotalPrice = cart.Items.Sum(i => i.Price * i.Quantity);
+                    order.OrderDetails = cart.Items.Select(i => new OrderDetail
+                    {
+                        ProductId = i.ProductId,
+                        Quantity = i.Quantity,
+                        Price = i.Price
+                    }).ToList();
+                    _context.Orders.Add(order);
+                    await _context.SaveChangesAsync();
+                    HttpContext.Session.Remove("Cart");
+
+                    return View("OrderCompleted", order.Id); // Trang xác nhận hoàn thành đơn hàng
+                }*//*
+
+                [HttpPost]
+                public async Task<IActionResult> Checkout(Order hoadon, string payment)
+                {
+
+                    var cart =
+                    HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart");
+                    if (cart == null || !cart.Items.Any())
+                    {
+                        // Xử lý giỏ hàng trống...
+                        return RedirectToAction("Index");
+                    }
+                    try
+                    {
+
+                        var user = await _userManager.GetUserAsync(User);
+                        hoadon.UserId = user.Id;
+                        hoadon.OrderDate = DateTime.UtcNow;
+                        decimal TongTien = cart.Items.Sum(i => i.Price * i.Quantity);
+                        hoadon.TotalPrice = cart.Items.Sum(i => i.Price * i.Quantity);
+                        var currentTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+                        hoadon.OrderDetails = cart.Items.Select(i => new OrderDetail
+                        {
+                            ProductId = i.ProductId,
+                            Quantity = i.Quantity,
+                            Price = i.Price
+                        }).ToList();
+                        _context.Orders.Add(hoadon);
+                        await _context.SaveChangesAsync();
+                        HttpContext.Session.Remove("Cart");
+
+                        if (payment == "VN-PAY")
+                        {
+                            var vnPayModel = new VnPaymentRequestModel()
+                            {
+                                Amount = (double)hoadon.TotalPrice,
+                                CreateDate = DateTime.Now,
+                                Description = "Thanh toán viện phí",
+                                OrderId = hoadon.Id
+
+                            };
+                            var patientEmail = hoadon.ApplicationUser.Email; // Replace with the patient's email
+                            var emailSubject = "Thanh toán hóa đơn";
+                            var emailMessage =  $"<h1>Hóa đơn</h1<br><br>" +
+                                                $"Bạn đã thanh toán thành công Hóa đơn .<br><br> " +
+                                                $"Bạn đã thanh toán thành công hóa đơn vào lúc {currentTime}.<br><br>" +
+                                                $"Tổng tiền đã thanh toán là {TongTien.ToString("C", new CultureInfo("vi-VN"))}<br><br>" +
+                                                $"Đơn hàng sẽ sớm về với bạn.<br><br>"+
+                                                $"Thông tin chi tiết:<br><br>";
+
+                            hoadon.PhuongThucThanhToan = "VN-PAY";
+
+                            await _context.SaveChangesAsync();
+                            await _emailService.SendEmailAsync(patientEmail, emailSubject, emailMessage);
+                            return Redirect(_vnPayService.CreatePaymentUrl(HttpContext, vnPayModel));
+                        }
+                        else
+                        {
+                            var patientEmail = hoadon.ApplicationUser.Email; // Replace with the patient's email
+                            var emailSubject = "Thanh toán hóa đơn";
+                            var emailMessage =  $"<h1>Hóa đơn</h1><br>" +
+                                                $"BẠN CÓ HÓA ĐƠN CẦN THANH TOÁN .<br><br> " +
+                                                $"Bạn đã đặt đơn hàng thành công vào lúc {currentTime}.<br><br>" +
+                                                $"Tổng tiền chưa thanh toán là {TongTien.ToString("C", new CultureInfo("vi-VN"))}<br><br>" +
+                                                $"Bạn cần thanh toán số tiền khi nhận được hàng.<br><br>" +
+                                                $"Thông tin chi tiết:<br><br>";
+
+                            hoadon.PhuongThucThanhToan = "COD";
+
+                            await _context.SaveChangesAsync();
+                            await _emailService.SendEmailAsync(patientEmail, emailSubject, emailMessage);
+                        }
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!HoaDonExists(hoadon.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+
+                    return View("OrderCompleted", hoadon.Id); // Trang xác nhận hoàn thành đơn hàng
+
+
+
+                }*/
 
         /*    public ActionResult Checkout1()
                 {

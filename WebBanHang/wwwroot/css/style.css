@@ -12,7 +12,30 @@
         visibility: visible;
         opacity: 1;
     }
+/*.card {
+    background-color: #fff;
+    width: 300px;
+    border: none;
+    border-radius: 16px;
+}*/
+.info {
+    line-height: 19px;
+}
+.order {
+    font-size: 14px;
+    font-weight: 400;
+    color: #b7b5b5;
+}
 
+.address {
+    color: #d2cfcf;
+    font-weight: 500;
+    font-size: 14px;
+}
+.money {
+    font-size: 14px;
+    font-weight: 500;
+}
 .back-to-top {
     position: fixed;
     right: 30px;
