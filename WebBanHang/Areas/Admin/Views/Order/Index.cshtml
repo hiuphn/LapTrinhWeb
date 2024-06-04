@@ -380,12 +380,12 @@
 
                                             <p class="text-body">@item.Id</p>
                                         </td>
-                                        <td><span @* class="badge badge-soft-success mb-0" *@>@item.CustomerName</span></td>
-                                        <td><span @* class="badge badge-soft-success mb-0" *@>@item.OrderDate</span></td>
-                                        <td><span @* class="badge badge-soft-success mb-0" *@>@item.ShippingAddress</span></td>
-                                        <td><span @* class="badge badge-soft-danger mb-0" *@>@item.TotalPrice.ToString("C", cultureInfo)</span></td>
-                                        <td><span@* class="badge badge-soft-danger mb-0" *@>@item.Notes</span></td>
-                                        <td><span @* class="badge badge-soft-danger mb-0" *@>@item.Status</span></td>
+                                        <td><span class="badge badge-soft-success mb-0">@item.CustomerName</span></td>
+                                        <td><span class="badge badge-soft-success mb-0">@item.OrderDate</span></td>
+                                        <td><span class="badge badge-soft-success mb-0">@item.ShippingAddress</span></td>
+                                        <td><span class="badge badge-soft-danger mb-0">@item.TotalPrice</span></td>
+                                        <td><span class="badge badge-soft-danger mb-0">@item.Notes</span></td>
+                                        <td><span class="badge badge-soft-danger mb-0">@item.Status</span></td>
                                         <td>
                                             <span class="badge badge-soft-danger mb-0">
                                                 <form asp-action="UpdateStatus" method="post">
@@ -401,6 +401,7 @@
                                                 </form>
                                             </span>
                                         </td>
+
 
                                     </tr>
                                 }

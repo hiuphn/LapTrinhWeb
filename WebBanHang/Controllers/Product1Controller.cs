@@ -171,8 +171,9 @@ namespace WebBanHang.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Search(string query)
+        public IActionResult Search(string query, int page = 1)
         {
+            int pageSize = 10;
             using (var context = new ApplicationDbContext(new DbContextOptions<ApplicationDbContext>()))
             {
                 List<Product> searchResults = context.Products
