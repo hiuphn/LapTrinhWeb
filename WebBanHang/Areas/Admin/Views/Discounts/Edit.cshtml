@@ -1,8 +1,10 @@
-﻿@model WebBanHang.Models.Discount
+﻿
+@model WebBanHang.Models.Discount
 
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var cultureInfo = new System.Globalization.CultureInfo("vi-VN");
 }
 <style>
     body {
@@ -279,41 +281,38 @@
 
 <div class="main-container">
     <div class="xs-pd-20-10 pd-ltr-20">
-
         <div class="row clearfix progress-box">
             <div class="col-lg-12">
                 <div class="col-12">
                     <div class="card">
                         <h5 class="card-header">Thay đổi</h5>
                         <div class="card-body">
-
                             <form id="formValidationExamples" class="row g-3" method="post">
-                                <input type="hidden" asp-for="DiscountId" /> <input type="hidden" asp-for="DiscountId" />
+                                <input type="hidden" asp-for="DiscountId" />
                                 <div class="col-md-6">
-                                    <label class="form-label" for="formValidationName">Mã</label>
-                                    <input type="text" id="formValidationName" class="form-control" asp-for="Code" class="form-control" />
+                                    <label class="form-label" for="formValidationCode">Mã</label>
+                                    <input type="text" id="formValidationCode" class="form-control" asp-for="Code" />
                                     <span asp-validation-for="Code" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-6">
-                                    <label asp-for="Type" class="control-label" for="formValidationName"></label>
-                                    <select asp-for="Type" class="form-control">
+                                    <label asp-for="Type" class="control-label" for="formValidationType">Loại</label>
+                                    <select asp-for="Type" id="formValidationType" class="form-control">
                                         <option value="">Chọn loại giảm giá</option>
                                         <option value="Percentage">Theo phần trăm</option>
                                         <option value="Amount">Theo giá tiền</option>
-                                        <!-- Thêm các lựa chọn khác nếu cần -->
                                     </select>
                                     <span asp-validation-for="Type" class="text-danger"></span>
                                 </div>
-                                <div class="col-md-6">
-                                    <label class="form-label" for="formValidationName">Giá trị</label>
-                                    <input type="text" id="formValidationName" class="form-control" asp-for="Value" class="form-control" />
+                                <div class="col-md-6" style="margin-bottom:20px">
+                                    <label class="form-label" for="formValidationValue">Giá trị</label>
+                                    <input type="text" id="formValidationValue" class="form-control" asp-for="Value" value="@Model.Value.ToString("F0")" />
                                     <span asp-validation-for="Value" class="text-danger"></span>
                                 </div>
-
                                 <div class="col-12 form-group">
                                     <button type="submit" value="Save" class="btn btn-primary text-white button">Lưu</button>
-
-                                    <button class="btn btn-primary"><a asp-action="Index" class="text-white button">Quay về danh sách</a></button>
+                                    <button class="btn btn-primary">
+                                        <a asp-action="Index" class="text-white button">Quay về danh sách</a>
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -321,9 +320,49 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var typeSelect = document.getElementById("formValidationType");
+        var valueInput = document.getElementById("formValidationValue");
+
+        // Định dạng giá trị khi trang được tải
+        formatValue(valueInput);
+
+        // Lắng nghe sự kiện thay đổi giá trị
+        valueInput.addEventListener("input", function () {
+            formatValue(valueInput);
+        });
+
+        function formatValue(input) {
+            var value = input.value.replace(/,/g, ''); // Loại bỏ dấu phẩy
+            var parsedValue = parseFloat(value);
+
+            if (!isNaN(parsedValue)) {
+                if (typeSelect.value === "Percentage") {
+                    // Giới hạn giá trị từ 1 đến 100 khi loại giảm giá là phần trăm
+                    if (parsedValue < 1) {
+                        parsedValue = 1;
+                    }
+                    if (parsedValue > 100) {
+                        parsedValue = 100;
+                    }
+                }
+                input.value = parsedValue.toFixed(0); // Làm tròn và bỏ số thập phân
+            } else {
+                input.value = value; // Giữ nguyên giá trị nếu không hợp lệ
+            }
+        }
+
+        // Lắng nghe sự kiện thay đổi loại giảm giá
+        typeSelect.addEventListener("change", function () {
+            formatValue(valueInput); // Định dạng lại giá trị khi thay đổi loại
+        });
+    });
+</script>
+
 
 
 

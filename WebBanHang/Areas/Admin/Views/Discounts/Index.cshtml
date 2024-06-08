@@ -239,6 +239,68 @@
             display: flex;
             justify-content: center;
         }
+
+    .dw-more:before {
+        content: "\e98c";
+    }
+
+    .badge-soft-danger {
+        color: #f56e6e !important;
+        background-color: rgba(245,110,110,.1);
+    }
+
+    .badge-soft-success {
+        color: #63ad6f !important;
+        background-color: rgba(99,173,111,.1);
+    }
+
+    .badge-soft-primary {
+        color: #3b76e1 !important;
+        background-color: rgba(59,118,225,.1);
+    }
+
+
+    .badge-soft-info {
+        color: #57c9eb !important;
+        background-color: rgba(87,201,235,.1);
+    }
+
+    .badge-soft-warning {
+        color: #ffd24d !important;
+        background-color: rgba(255, 300, 77,.1);
+    }
+    .page-size-form {
+        display: flex;
+        padding-left: 25px;
+        margin-top:-10px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Thiết kế lại label */
+    .form-label {
+        font-weight: bold;
+        margin-right: -5px;
+        padding-top: 7px;
+        color: #333;
+    }
+
+    /* Thiết kế lại select */
+    .form-select {
+        width: 60px;
+        height: 30px;
+        font-size: 16px;
+        border: 1px solid #ced4da;
+        border-radius: 20px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+        .form-select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
 </style>
 <script>
     $(document).ready(function () {
@@ -332,16 +394,14 @@
 
                     </div>
                     <div class="pb-20">
-                        <form method="get" asp-action="Index" id="pageSizeForm">
-
-                            <div class="form-group">
-                                <label for="pageSize">Trình bày</label>
-                                <select id="pageSize" name="pageSize" onchange="submitPageSize();">
+                        <form method="get" asp-action="Index" id="pageSizeForm" class="page-size-form">
+                            <div class="form-group d-flex align-items-center">
+                                <label for="pageSize" class="form-label">Trình bày</label>
+                                <select id="pageSize" name="pageSize" class="form-select ml-2" onchange="submitPageSize();">
                                     <option value="10" selected="@(ViewBag.CurrentPageSize == 10)">10</option>
                                     <option value="20" selected="@(ViewBag.CurrentPageSize == 20)">20</option>
                                     <option value="50" selected="@(ViewBag.CurrentPageSize == 50)">50</option>
                                 </select>
-                                cá thể
                             </div>
                         </form>
                         <table class="table project-list-table table-nowrap align-middle table-borderless">
@@ -351,7 +411,6 @@
                                     <th scope="col">Loại</th>
                                     <th scope="col">Giá trị</th>
                                     <th scope="col">Action</th>
-
                                 </tr>
                             </thead>
                             <tbody>
@@ -359,26 +418,26 @@
                                 {
                                     <tr>
                                         <td>
-                                            <a href="#" class="text-body">@item.Code</a>
+                                            <a href="#" class="badge badge-soft-danger mb-0">@item.Code</a>
                                         </td>
                                         <td>
                                             @if (item.Type.ToString() == "Percentage")
                                             {
-                                                <a href="#" class="text-body">Phần trăm</a>
+                                                <a href="#" class="badge badge-soft-success mb-0">Phần trăm</a>
                                             }
                                             else
                                             {
-                                                <a href="#" class="text-body">Số tiền</a>
+                                                <a href="#" class="badge badge-soft-success mb-0">Số tiền</a>
                                             }
                                         </td>
                                         <td>
                                             @if (item.Type.ToString() == "Percentage")
                                             {
-                                                <a href="#" class="text-body">@item.Value %</a>
+                                                <a href="#" class="badge badge-soft-info mb-0">@item.Value.ToString("F0") %</a>
                                             }
                                             else
                                             {
-                                                <a href="#" class="text-body">@item.Value.ToString("C", cultureInfo)</a>
+                                                <a href="#" class="badge badge-soft-info mb-0">@item.Value.ToString("C0", cultureInfo)</a>
                                             }
                                         </td>
                                         <td>

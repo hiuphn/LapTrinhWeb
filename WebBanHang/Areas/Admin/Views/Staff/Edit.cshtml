@@ -210,6 +210,49 @@
     .boder {
         border: 1.5px solid black;
     }
+
+    .card {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 0 solid transparent;
+        border-radius: 1rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+        
+    }
+
+    .me-2 {
+        margin-right: .5rem !important;
+    }
+
+    .inputfile {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+
+    inputfile + label {
+        font-size: 1.25em;
+        font-weight: 700;
+        color: white;
+        background-color: black;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .inputfile:focus + label,
+    .inputfile + label:hover {
+        background-color: blue;
+    }
+
 </style>
 <script>
     $(document).ready(function () {
@@ -290,86 +333,166 @@
 <div class="mobile-menu-overlay"></div>
 
 
-<div class="main-container">
-    <div class="xs-pd-20-10 pd-ltr-20">
+<div class="container" style="padding-top:120px; padding-left:200px">
+    <script>
+        <input type="file" name = "file" id = "file" class="inputfile" data - multiple - caption="{count} files selected" multiple />
+        var inputs = document.querySelectorAll('.inputfile');
+        Array.prototype.forEach.call(inputs, function (input) {
+            var label = input.nextElementSibling,
+                labelVal = label.innerHTML;
 
-        <div class="row clearfix progress-box">
-            <div class="col-lg-12">
-                <div class="col-12">
-                    <div class="card">
-                        <h5 class="card-header">Thông tin chi tiết</h5>
+            input.addEventListener('change', function (e) {
+                var fileName = '';
+                if (this.files && this.files.length > 1)
+                    fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+                else
+                    fileName = e.target.value.split('\\').pop();
+
+                if (fileName)
+                    label.querySelector('span').innerHTML = fileName;
+                else
+                    label.innerHTML = labelVal;
+            });
+        });
+    </script>
+    <div class="main-body">
+        <div class="row">
+            <form id="formValidationExamples" class="row g-3" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="StaffId" />
+                <div class="col-lg-4" >
+                    <div class="card" style="width:300px;margin-right : 20rem;">
                         <div class="card-body">
-                            <form id="formValidationExamples" class="row g-3" method="post" enctype="multipart/form-data">
-                                <input type="hidden" asp-for="StaffId" />
-                                <div class="col-md-6">
-                                    <label class="form-label" for="formValidationName">Tên nhân viên</label>
-                                    <input type="text" id="formValidationName" class="form-control" asp-for="StaffName" class="form-control" />
-                                    <span asp-validation-for="StaffName" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label" for="formValidationName">Hình đại diện</label>
-                                    <img src="@Model.AvatarPath" alt="Avata Image" id="previewImage" style="width: 100px; height: auto;" />
-                                    <input type="file" id="imageInput" name="logo" asp-for="AvatarPath" class="form-control" />
+                            <div class="d-flex flex-column align-items-center text-center">
+                                <img src="@Model.AvatarPath" alt="Ảnh Nhân viên" id="previewImage" class="rounded-circle p-1 bg-primary" style="height:120px; width:120px;margin-bottom:10px">
+                                <input type="file" id="imageInput" name="logo" asp-for="AvatarPath" class="inputfile" />
+                                <label for="imageInput" class="btn btn-outline-primary btn-rounded"><i class="bi bi-cloud-arrow-up"></i></label>
                                     <span asp-validation-for="AvatarPath" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label" for="formValidationName">Email</label>
-                                    <input type="text" id="formValidationName" class="form-control" asp-for="Email" class="form-control" />
-                                    <span asp-validation-for="Email" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label" for="formValidationName">Điện thoại</label>
-                                    <input type="text" id="formValidationName" class="form-control" asp-for="StaffPhone" class="form-control" />
-                                    <span asp-validation-for="StaffPhone" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label" for="formValidationName">Địa chỉ</label>
-                                    <input type="text" id="formValidationName" class="form-control" asp-for="Address" class="form-control" />
-                                    <span asp-validation-for="Address" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label" for="formValidationName">Ngày sinh</label>
-                                    <input type="date" id="formValidationName" class="form-control" asp-for="BirthDay" class="form-control" />
-                                    <span asp-validation-for="BirthDay" class="text-danger"></span>
-                                </div>
-                                <div class="col-md-6">
-                                    <div>
-                                        <div>
-                                            <input asp-for="Sex" type="radio" name="gender" value="True" />
-                                            <span>Nữ</span>
+                                <div class="mt-3">
+                                    <h4>@Html.DisplayFor(model => model.StaffName)</h4>
 
-                                        </div>
-                                        <div>
-                                            <input asp-for="Sex" type="radio" name="gender" value="False" />
-                                            <span>Nam</span>
-                                        </div>
-                                    </div>
-
-                                    <span asp-validation-for="Sex" class="text-danger"></span>
                                 </div>
-                                <div class="col-md-6">
-                                    <label asp-for="Position" class="control-label"></label>
-                                    <select asp-for="Position" class="form-control">
-                                        <option value="">Chọn vai trò</option>
-                                        <option value="Nhân viên">Nhân viên</option>
-                                        <option value="Admin">Admin</option>
-                                        <!-- Thêm các lựa chọn khác nếu cần -->
-                                    </select>
-                                    <span asp-validation-for="Position" class="text-danger"></span>
-                                </div>
-                                <div class="col-12 form-group">
-                                    <button type="submit" value="Save" class="btn btn-primary text-white button">Lưu</button>
-
-                                    <button class="btn btn-primary"><a asp-action="Index" class=" text-white button">Quay về danh sách</a></button>
-                                </div>
-                            </form>
+                            </div>
+                            <hr class="my-4">
 
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+                <div class="col-lg-8">
+                    <div class="card">
+                        <div class="card-body">
+                        
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Họ và tên</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input type="text" id="formValidationName" class="form-control" asp-for="StaffName"  class="form-control " />
 
+                                        <span asp-validation-for="StaffName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Email</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        
+                                        <input type="text" id="formValidationName" class="form-control" asp-for="Email" class="form-control" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+
+
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Số điện thoại</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        
+                                        <input type="text" id="formValidationName" class="form-control" asp-for="StaffPhone" class="form-control" />
+                                        <span asp-validation-for="StaffPhone" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Địa chỉ</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        
+                                        <input type="text" id="formValidationName" class="form-control" asp-for="Address" class="form-control" />
+                                        <span asp-validation-for="Address" class="text-danger"></span>
+
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Ngày sinh</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        
+                                        <input type="date" id="formValidationName" class="form-control" asp-for="BirthDay" class="form-control" />
+                                        <span asp-validation-for="BirthDay" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Giới tính</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <div>
+                                            <div>
+                                            <input asp-for="Sex" type="radio" name="gender" value="True"/>
+                                                <span>Nữ</span>
+
+                                            </div>
+                                            <div>
+                                            <input asp-for="Sex" type="radio" name="gender" value="False" />
+                                                <span>Nam</span>
+                                            </div>
+                                        </div>
+
+                                        <span asp-validation-for="Sex" class="text-danger"></span>
+
+
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Chức vụ</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <select asp-for="Position" class="form-control">
+                                            <option value="">Chọn vai trò</option>
+                                            <option value="Nhân viên">Nhân viên</option>
+                                            <option value="Admin">Admin</option>
+                                            <!-- Thêm các lựa chọn khác nếu cần -->
+                                        </select>
+                                        <span asp-validation-for="Position" class="text-danger"></span>
+
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <button type="submit" value="Save" class="btn btn-primary text-white button">Lưu</button>
+
+                                        <button class="btn btn-primary"><a asp-action="Index" class=" text-white button">Quay về danh sách</a></button>
+                                    </div>
+                                </div>
+                        
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 @section Scripts {
