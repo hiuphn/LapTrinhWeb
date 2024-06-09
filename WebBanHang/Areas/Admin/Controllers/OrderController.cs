@@ -53,7 +53,7 @@ namespace WebBanHang.Areas.Admin.Controllers
         }
         public IActionResult UpdateStatus(int orderId, OrderStatus status)
         {
-            var order = _context.Orders.FirstOrDefault(o => o.Id == 1);
+            var order = _context.Orders.FirstOrDefault(o => o.Id == orderId);
 
             if (order == null)
             {
