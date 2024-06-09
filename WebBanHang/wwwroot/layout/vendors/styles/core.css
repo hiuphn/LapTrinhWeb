@@ -171,7 +171,10 @@ caption {
   caption-side: bottom; }
 
 th {
-  text-align: inherit; }
+  text-align: center; }
+td {
+    text-align: center;
+}
 
 label {
   display: inline-block;
@@ -4232,13 +4235,13 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 .badge {
   display: inline-block;
   padding: .25em .4em;
-  font-size: 75%;
+  font-size: 90%;
   font-weight: 700;
   line-height: 1;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  border-radius: .25rem;
+  border-radius: .5rem;
   -webkit-transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,-webkit-box-shadow .15s ease-in-out;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;

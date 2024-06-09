@@ -36,6 +36,7 @@
         <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
             <div class="spinner-grow text-primary" role="status"></div>
         </div>
+        
         <!-- Spinner End -->
         <!-- Navbar start -->
         <div class="container-fluid fixed-top">
@@ -87,6 +88,7 @@
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                     <a asp-controller="ShoppingCart" asp-action="Index" class="dropdown-item">Giỏ Hàng</a>
                                     <a asp-controller="ShoppingCart" asp-action="Checkout" class="dropdown-item">Thanh Toán</a>
+                                    <a asp-controller="Order" asp-action="Index" class="dropdown-item">Lịch sử đơn hàng</a>
                                 </div>
                             </div>
                             <a href="~/Home/Contact" class="nav-item nav-link">Liên Hệ</a>

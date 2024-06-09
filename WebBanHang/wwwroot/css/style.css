@@ -676,6 +676,11 @@ img, svg {
     background-color: rgba(87,201,235,.1);
 }
 
+.badge-soft-warning {
+    color: #ffd24d !important;
+    background-color: rgba(87, 210, 235,.1);    
+}
+
 .avatar-title {
     align-items: center;
     background-color: #3b76e1;

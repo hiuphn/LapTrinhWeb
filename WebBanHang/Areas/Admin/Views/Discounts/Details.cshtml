@@ -77,7 +77,33 @@
 </div>
 <div class="mobile-menu-overlay"></div>
 
+<style>
+    .badge-soft-danger {
+        color: #f56e6e !important;
+        background-color: rgba(245,110,110,.1);
+    }
 
+    .badge-soft-success {
+        color: #63ad6f !important;
+        background-color: rgba(99,173,111,.1);
+    }
+
+    .badge-soft-primary {
+        color: #3b76e1 !important;
+        background-color: rgba(59,118,225,.1);
+    }
+
+
+    .badge-soft-info {
+        color: #57c9eb !important;
+        background-color: rgba(87,201,235,.1);
+    }
+
+    .badge-soft-warning {
+        color: #ffd24d !important;
+        background-color: rgba(255, 300, 77,.1);
+    }
+</style>
 <div class="main-container">
     <div class="xs-pd-20-10 pd-ltr-20">
 
@@ -97,7 +123,8 @@
                                         <label class="" for="formValidationName">Mã</label>
                                     </dt>
                                     <dd class="col-sm-10 boder">
-                                        @Html.DisplayFor(model => model.Code)
+                                        <a href="#" class="badge badge-soft-danger mb-0">@Html.DisplayFor(model => model.Code)</a>
+                                        
                                     </dd>
                                 </div>
                                 <div class="col-md-6">
@@ -106,24 +133,24 @@
                                     </dt>
                                     @if (Model.Type.ToString() == "Percentage")
                                     {
-                                    <a href="#" class="text-body">Phần trăm</a>
+                                        <a href="#" class="badge badge-soft-success mb-0">Phần trăm</a>
                                     }
                                     else
                                     {
-                                    <a href="#" class="text-body">Số tiền</a>
+                                        <a href="#" class="badge badge-soft-success mb-0">Số tiền</a>
                                     }
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6" style="margin-bottom:20px">
                                     <dt class="form-label">
                                         <label class="" for="formValidationName">Giá trị</label>
                                     </dt>
                                     @if (Model.Type.ToString() == "Percentage")
                                     {
-                                        <a href="#" class="text-body">@Model.Value %</a>
+                                        <a href="#" class="badge badge-soft-info mb-0">@Model.Value %</a>
                                     }
                                     else
                                     {
-                                        <a href="#" class="text-body">@Model.Value.ToString("C", cultureInfo)</a>
+                                        <a href="#" class="badge badge-soft-info mb-0">@Model.Value.ToString("C0", cultureInfo)</a>
                                     }
                                 </div>
                                 <div class="col-12">
