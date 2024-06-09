@@ -5,6 +5,15 @@
         public List<CartItem> Items { get; set; } = new List<CartItem>();
         public decimal DiscountAmount { get; set; }
         public decimal Total => Items.Sum(item => item.Price * item.Quantity) - DiscountAmount;
+        public decimal GetTotal()
+        {
+            decimal total = 0;
+            foreach (var item in Items)
+            {
+                total += item.Quantity * item.Price;
+            }
+            return total;
+        }
         public void AddItem(CartItem item)
         {
             var existingItem = Items.FirstOrDefault(i => i.ProductId ==

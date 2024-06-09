@@ -34,7 +34,10 @@ namespace WebBanHang.Controllers
                 {
                     return RedirectToAction("ForgotPassword");
                 }*/
-
+                if (user == null)
+                {
+                    return View("NoResults");
+                }
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.Action("ResetPassword", "Account1", new { token, email = user.Email }, protocol: HttpContext.Request.Scheme);
 

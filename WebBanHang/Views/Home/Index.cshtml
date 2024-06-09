@@ -69,7 +69,7 @@
                     </div>
                     <div class="featurs-content text-center">
                         <h5>Thanh toán bảo mật</h5>
-                        <p class="mb-0">Secured payment</p>
+                        <p class="mb-0">Secure payment</p>
                     </div>
                 </div>
             </div>
@@ -114,11 +114,11 @@
                                 <span class="text-dark" style="width: 130px;">Quà Tặng</span>
                             </a>
                         </li>
-                        <li class="nav-item">
+@*                         <li class="nav-item">
                             <a class="d-flex py-2 m-2 bg-light rounded-pill" data-bs-toggle="pill" href="#tab-2">
                                 <span class="text-dark" style="width: 130px;">Quà Tặng</span>
                             </a>
-                        </li>
+                        </li> *@
 
                     </ul>
                 </div>
@@ -234,7 +234,7 @@
                             <p>@item.Description</p>
                             <div class="d-flex justify-content-between flex-lg-wrap">
                                 <p class="text-dark fs-5 fw-bold mb-0">@item.Price.ToString("N0")₫</p>
-                            <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag "></i></a>
                             </div>
                         </div>
                         </a>
@@ -300,7 +300,7 @@
                                         <i class="fas fa-star text-star"></i>
                                         <i class="fas fa-star text-star"></i>
                                         <i class="fas fa-star text-star"></i>
-                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star text-secondary"></i>
                                     </div>
                                 <h4 class="mb-3">@item.Price.ToString("N0")₫</h4>
                                 <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary fa fa-shopping-bag me-2"></a>
@@ -313,111 +313,7 @@
                     
             </div>
             }
-            @* <div class="col-lg-6 col-xl-4">
-                <div class="p-4 rounded bg-light">
-                    <div class="row align-items-center">
-                        <div class="col-6">
-                            <img src="img/best-product-BRV.jpg" class="img-fluid rounded-circle w-100" alt="">
-                        </div>
-                        <div class="col-6">
-                            <a href="#" class="h5">BR-V</a>
-                            <div class="d-flex my-3">
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <h4 class="mb-3">661.000.000 VND</h4>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-xl-4">
-                <div class="p-4 rounded bg-light">
-                    <div class="row align-items-center">
-                        <div class="col-6">
-                            <img src="img/best-product-CRV.jpg" class="img-fluid rounded-circle w-100" alt="">
-                        </div>
-                        <div class="col-6">
-                            <a href="#" class="h5">CR-V</a>
-                            <div class="d-flex my-3">
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <h4 class="mb-3">1.109.000.000 VND</h4>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-xl-4">
-                <div class="p-4 rounded bg-light">
-                    <div class="row align-items-center">
-                        <div class="col-6">
-                            <img src="img/best-product-CIVIC.jpg" class="img-fluid rounded-circle w-100" alt="">
-                        </div>
-                        <div class="col-6">
-                            <a href="#" class="h5">CiVic</a>
-                            <div class="d-flex my-3">
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <h4 class="mb-3">730.000.000</h4>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-xl-4">
-                <div class="p-4 rounded bg-light">
-                    <div class="row align-items-center">
-                        <div class="col-6">
-                            <img src="img/best-product-CIVIC_R.jpg" class="img-fluid rounded-circle w-100" alt="">
-                        </div>
-                        <div class="col-6">
-                            <a href="#" class="h5">CiVic-Type-R</a>
-                            <div class="d-flex my-3">
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <h4 class="mb-3">2.399.000.000 VND</h4>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-xl-4">
-                <div class="p-4 rounded bg-light">
-                    <div class="row align-items-center">
-                        <div class="col-6">
-                            <img src="img/best-product-CITY.jpg" class="img-fluid rounded-circle w-100" alt="">
-                        </div>
-                        <div class="col-6">
-                            <a href="#" class="h5">CiTy</a>
-                            <div class="d-flex my-3">
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star text-primary"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <h4 class="mb-3">559.000.000 VND</h4>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                        </div>
-                    </div>
-                </div>
-            </div> *@
+            
             @foreach (var item in ViewBag.Motors)
             {
             
@@ -563,7 +459,7 @@
                     </div>
                     <div class="d-flex align-items-center flex-nowrap">
                         <div class="bg-secondary rounded">
-                            <img src="img/testimonial-11.jpg" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
+                            <img src="~/logo/person.png" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
                         </div>
                         <div class="ms-4 d-block">
                             <h4 class="text-dark"> Phúc Ngô </h4>
@@ -589,7 +485,7 @@
                     </div>
                     <div class="d-flex align-items-center flex-nowrap">
                         <div class="bg-secondary rounded">
-                            <img src="img/testimonial-11.jpg" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
+                            <img src="~/logo/person.png" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
                         </div>
                         <div class="ms-4 d-block">
                             <h4 class="text-dark">Ngọc Hiếu </h4>
@@ -615,7 +511,7 @@
                     </div>
                     <div class="d-flex align-items-center flex-nowrap">
                         <div class="bg-secondary rounded">
-                            <img src="img/testimonial-11.jpg" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
+                            <img src="~/logo/person.png" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
                         </div>
                         <div class="ms-4 d-block">
                             <h4 class="text-dark"> Tùng Nguyễn </h4>

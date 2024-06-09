@@ -66,6 +66,7 @@ namespace WebBanHang.Areas.Admin.Controllers
             return RedirectToAction("Index", new { orderId = order.Id });
         }
 
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

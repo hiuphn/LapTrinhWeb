@@ -243,6 +243,69 @@
         .col{
         text-align: center;
         } */
+    .badge-soft-danger {
+        color: #f56e6e !important;
+        background-color: rgba(245,110,110,.1);
+    }
+
+    .badge-soft-success {
+        color: #63ad6f !important;
+        background-color: rgba(99,173,111,.1);
+    }
+
+    .badge-soft-primary {
+        color: #3b76e1 !important;
+        background-color: rgba(59,118,225,.1);
+    }
+
+
+    .badge-soft-info {
+        color: #57c9eb !important;
+        background-color: rgba(87,201,235,.1);
+    }
+
+    .badge-soft-warning {
+        color: #ffd24d !important;
+        background-color: rgba(255, 300, 77,.1);
+    }
+
+    /* Thiết kế lại form */
+    .filter-form {
+        display: flex;
+        
+        padding-bottom: 10px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Thiết kế lại các trường chọn */
+    .form-select {
+        width: 200px;
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #ced4da;
+        border-radius: 50px;
+        margin-left: 10px;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+        .form-select:focus {
+            border-color: #57c9eb;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
+
+    /* Đặt khoảng cách giữa các trường chọn */
+    .ml-2 {
+        margin-left: 10px;
+    }
+
+    /* Căn chỉnh giữa các mục trong form */
+    .form-group {
+        display: flex;
+        align-items: center;
+    }
 </style>
 <script>
     $(document).ready(function () {
@@ -332,8 +395,8 @@
                     <div class="pd-20">
                         <h4 class="text-blue h4">Quản lý tài khoản</h4>
 
-                    </div>
-                    <form method="get" id="filterForm">
+                    
+                    @* <form method="get" id="filterForm">
                         <div class="form-group mb-0 d-flex align-items-center">
                             <select class="form-select ml-2" name="SelectedRole" onchange="document.getElementById('filterForm').submit();">
                                 <option value="">Chọn chức vụ</option>
@@ -348,7 +411,23 @@
                                 <option value="false" Model.AccountStatus="false">Chưa bị khóa</option>
                             </select>
                         </div>
+                    </form> *@
+                    <form method="get" id="filterForm" class="filter-form">
+                        <div class="form-group mb-0 d-flex align-items-center">
+                            <select class="form-select ml-2" name="SelectedRole" onchange="document.getElementById('filterForm').submit();">
+                                <option value="">Chức vụ</option>
+                                <option value="Admin" Model.SelectedRole="Admin">Admin</option>
+                                <option value="Khách hàng" Model.SelectedRole="Khách hàng">Khách hàng</option>
+                                <!-- Thêm các chức vụ khác nếu cần -->
+                            </select>
+                            <select class="form-select ml-2" name="AccountStatus" onchange="document.getElementById('filterForm').submit();">
+                                <option value="">Trạng thái tài khoản</option>
+                                <option value="true" Model.AccountStatus="true">Đã bị khóa</option>
+                                <option value="false" Model.AccountStatus="false">Chưa bị khóa</option>
+                            </select>
+                        </div>
                     </form>
+                    </div>
                     
                     <div class="pb-20">
                         
@@ -372,8 +451,8 @@
                                             <td ><span class="badge badge-soft-success mb-0">@item.FullName</span></td>
                                             <td><span class="badge badge-soft-success mb-0">@item.Email</span></td>
                                             <td><span class="badge badge-soft-info mb-0">@item.PhoneNumber</span></td>
-                                            <td><span class="badge badge-soft-info mb-0">@item.Address</span></td>
-                                            <td><span class="badge badge-soft-danger mb-0">@item.ChucVu</span></td>
+                                            <td><span class="badge badge-soft-warning mb-0">@item.Address</span></td>
+                                            <td><span class="badge badge-soft-danger mb-0">@item.ChucVu</span></td> 
                                             <td>
                                                 <ul class="list-inline mb-0" >
                                                     @if (!item.IsLocked)
