@@ -157,13 +157,14 @@
                                     <label asp-for="Input.RememberMe" class="form-label">
                                         Nhớ tài khoản
                                         <span style="margin-left:27px">
-                                        <input class="form-check-input" asp-for="Input.RememberMe " />
+                                        <input class="form-check-input" asp-for="Input.RememberMe " style="margin-top:8px"/>
                                         </span>
+                                        
                                     </label>
                                 </div>
                                 
                                 
-                                <div class="w-50 text-md-right" style="margin-left:35px">
+                                <div class="w-50 text-md-right" style="margin-left:37px">
                                     <a asp-area="" asp-controller="Account1" asp-action="ForgotPassword" style="color: #fff">Quên mật khẩu?</a>
                                 </div>
                                 
@@ -261,6 +262,9 @@
             height: 100%;
         }
 
+        .field-icon {
+            top: 40%;
+        }
         .form-control {
             background: transparent;
             border: none;

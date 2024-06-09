@@ -159,45 +159,7 @@
         color: #ff5b5b;
     }
 
-    .pagination {
-        float: right;
-        margin: 0 0 5px;
-    }
-
-        .pagination li a {
-            border: none;
-            font-size: 13px;
-            min-width: 30px;
-            min-height: 30px;
-            color: black;
-            margin: 0 2px;
-            line-height: 30px;
-            border-radius: 2px !important;
-            text-align: center;
-            padding: 0 6px;
-        }
-
-            .pagination li a:hover {
-                color: #666;
-            }
-
-        .pagination li.active a, .pagination li.active a.page-link {
-            background: #03A9F4;
-        }
-
-            .pagination li.active a:hover {
-                background: #0397d6;
-            }
-
-        .pagination li.disabled i {
-            color: #ccc;
-        }
-
-        .pagination li i {
-            font-size: 16px;
-            padding-top: 6px
-        }
-
+    
     .hint-text {
         float: left;
         margin-top: 10px;
@@ -225,74 +187,7 @@
         color: black;
     }
 
-    .pagination {
-        display: flex;
-        justify-content: center;
-        list-style: none;
-        padding: 0;
-    }
-
-    .page {
-        color: #007bff;
-        text-decoration: none;
-        padding: 5px 10px;
-        border-radius: 3px;
-        margin: 0 2px;
-        display: flex;
-        justify-content: center;
-    }
-
-        .page li {
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            padding: 5px 10px;
-            border: 1px solid #007bff;
-            border-radius: 3px;
-            margin: 0 2px;
-            display: flex;
-            justify-content: center;
-        }
-    /* Liên kết trong phân trang */
-    .pagination a {
-        color: #007bff;
-        text-decoration: none;
-        padding: 5px 10px;
-        border: 1px solid #007bff;
-        border-radius: 3px;
-        margin: 0 2px;
-        display: flex;
-        justify-content: center;
-    }
-
-    .pagination .active {
-        background-color: #007bff;
-        color: #fff;
-        display: flex;
-        justify-content: center;
-    }
-
-    .page {
-        color: #007bff;
-        text-decoration: none;
-        padding: 5px 10px;
-        border-radius: 3px;
-        margin: 0 2px;
-        display: flex;
-        justify-content: center;
-    }
-
-        .page li {
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            padding: 5px 10px;
-            border: 1px solid #007bff;
-            border-radius: 3px;
-            margin: 0 2px;
-            display: flex;
-            justify-content: center;
-        }
+    
 
     .badge-soft-danger {
         color: #f56e6e !important;
@@ -316,8 +211,8 @@
     }
 
     .badge-soft-warning {
-        color: #ffd24d !important;
-        background-color: rgba(255, 300, 77,.1);
+        color: #bfba0f !important;
+        background-color: rgba(191, 186, 15,.1);
     }
 
     .page-size-form {
@@ -356,6 +251,46 @@
     /* Đặt khoảng cách giữa các phần tử */
     .ml-2 {
     }
+    /*pHÂN TRANG*/
+    .pagination-container {
+        display: flex;
+        justify-content: center;
+        padding-top: 20px;
+    }
+
+    .pagination {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .pagination .page-item {
+            margin-right: 5px;
+        }
+
+        .pagination .page-link {
+            color: #007bff;
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            padding: 0.5rem 0.75rem;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+            .pagination .page-link:hover {
+                color: #fff;
+                background-color: #81c408;
+                border-color: #81c408;
+            }
+
+        .pagination .page-item.active .page-link {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+    /*Phân trang*/
 </style>
 <script>
     $(document).ready(function () {
@@ -461,9 +396,9 @@
                         </form> *@
                         <form method="get" asp-action="Index" id="pageSizeForm" class="page-size-form">
                             <div class="form-group d-flex align-items-center">
-                                <label for="pageSize" class="form-label">Trình bày</label>
+                                <label for="pageSize" class="form-label"><strong>Trình bày</strong></label>
                                 <select id="pageSize" name="pageSize" class="form-select ml-2" onchange="submitPageSize();">
-                                    <option value="10" selected="@(ViewBag.CurrentPageSize == 10)">10</option>
+                                    <option value="1" selected="@(ViewBag.CurrentPageSize == 1)">1</option>
                                     <option value="20" selected="@(ViewBag.CurrentPageSize == 20)">20</option>
                                     <option value="50" selected="@(ViewBag.CurrentPageSize == 50)">50</option>
                                 </select>
@@ -507,7 +442,7 @@
                                         </td>
                                         <td><span class="badge badge-soft-danger mb-0">@item.BirthDay.ToString("dd/MM/yyyy")</span></td>
                                         <td><span class="badge badge-soft-info mb-0">@item.CustomerAddress</span></td>
-                                        <td><span class="badge badge-soft-warning mb-0">@item.CustomerPhone</span></td>
+                                        <td><span class="badge badge-soft-primary mb-0">@item.CustomerPhone</span></td>
                                         <td><span class="badge badge-soft-success mb-0">@item.Email</span></td>
                                         <td>
                                             <div class="dropdown">
@@ -524,9 +459,20 @@
                                 }
                             </tbody>
                         </table>
-                        <div class="page">
-                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, pageSize = ViewBag.PageSize.SelectedValue, searchString = ViewData["CurrentFilter"] }))
+                        <div class="pagination-container" style="padding-top:10px">
+                            @Html.PagedListPager(Model, page =>
+                                     Url.Action("Index", new { page, pageSize = ViewBag.PageSize.SelectedValue, searchString = ViewData["CurrentFilter"] }),
+                                     new PagedListRenderOptions
+                            {
+                                DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                                DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                                LinkToPreviousPageFormat = "<",
+                                LinkToNextPageFormat = ">",
+                                UlElementClasses = new string[] { "pagination" },
+                                LiElementClasses = new string[] { "page-item" },
+                                PageClasses = new string[] { "page-link" },
 
+                            })
                         </div>
                     </div>
                 </div>

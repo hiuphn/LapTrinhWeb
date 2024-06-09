@@ -301,57 +301,80 @@
 
 
 <div class="main-container">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <div class="xs-pd-20-10 pd-ltr-20">
 
         <div class="row clearfix progress-box">
             <div class="col-lg-12">
-                <a asp-action="Index">
+                <div style="padding-bottom:10px">
+                    @* <a asp-action="Index" >
                     <button class="rounded-lg px-4 py-2 border-2 border-black-500 text-black-500 hover:bg-blue-600 hover:text-blue-100 duration-300">
-                        ← Quay về lại danh sách
+                    ← Quay về lại danh sách
                     </button>
-                </a>
+                    <button class="btn btn-primary"><a asp-action="Index" class=" text-white button"> ← Quay về lại danh sách</a></button>
+                    </a>
+                    </div> *@
 
 
-                <div class="flex justify-center items-center h-screen ">
-                    <div class="container p-[20px] max-w-[700px] max-h-[500px] bg-white rounded-xl">
-                        <div class="relative">
-                            <h1 class="text-[32px] font-bold">Tạo mới danh mục</h1>
-                            <span class="absolute inline-block w-[70px] h-[4px] bg-gradient-to-r from-blue-500 to-fuchsia-500 rounded-xl"></span>
-                        </div>
-                        <div class="flex justify-center gap-10 mt-[10px]">
-                            <form asp-action="Create" method="post" class="flex-wrap flex justify-around items-center" enctype="multipart/form-data">
+                    <div class="flex justify-center items-center h-screen ">
+                        <div class="container p-[20px] max-w-[700px] max-h-[500px] bg-white rounded-xl">
+                            <div class="relative">
+                                <h1 class="text-[32px] font-bold">Tạo mới nhân viên</h1>
+                                <span class="absolute inline-block w-[70px] h-[4px] bg-gradient-to-r from-blue-500 to-fuchsia-500 rounded-xl"></span>
+                            </div>
+                            <div class="flex justify-center gap-10 mt-[10px]">
+                                <form asp-action="Create" method="post" class="flex-wrap flex justify-around items-center" enctype="multipart/form-data">
 
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <div class="form-group mt-[10px] w-full">
-                                    <label asp-for="Name" class="control-label" style="text-align:center">Tên danh mục con</label>
-                                    <input asp-for="Name" class="form-control" />
-                                    <span asp-validation-for="Name" class="text-danger"></span>
-                                </div>
-                                <div class="form-group mt-[10px] w-full">
-                                    <label asp-for="CategoryId" class="control-label">Danh mục</label>
+                                    <div class="col-lg-8">
+                                        <div class="card">
+                                            <div class="card-body">
 
-                                    <select asp-for="CategoryId" asp-items="ViewBag.categories" class="form-control"></select>
-                                    <span asp-validation-for="CategoryId" class="text-danger"></span>
-                                </div>
-                                <div class="mt-[10px] w-full body">
-                                    <button value="Create" type="submit" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-violet dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
-                                        <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                                            Thêm
-                                        </span>
-                                    </button>
+                                                <div class="row mb-3">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0">Tên danh mục con</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary">
+                                                        <input type="text" id="formValidationName" class="form-control" asp-for="Name" class="form-control " />
+                                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <div class="col-sm-3">
+                                                        <h6 class="mb-0">Họ và tên</h6>
+                                                    </div>
+                                                    <div class="col-sm-9 text-secondary">
+                                                        <select asp-for="CategoryId" asp-items="ViewBag.categories" class="form-control"></select>
+                                                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="row" style="padding-top:30px">
+                                                    <div class="col-sm-3"></div>
+                                                    <div class="col-sm-9 text-secondary">
+                                                        <button type="submit" value="Save" class="btn btn-primary text-white button">Thêm</button>
+                                                        <button class="btn btn-primary"><a asp-action="Index" class=" text-white button"> ← Quay về lại danh sách</a></button>
+                                                    </div>
+                                                </div>
 
-                                </div>
-                            </form>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="card">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+        </div>
+        
     </div>
-</div>
 
 
 @section Scripts {

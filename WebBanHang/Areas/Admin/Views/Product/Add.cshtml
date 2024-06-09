@@ -289,16 +289,16 @@
 <div class="mobile-menu-overlay"></div>
 
 
-<div class="main-container">
+<div class="main-container" style="padding-bottom:50px"> 
     <div class="xs-pd-20-10 pd-ltr-20">
 
         <div class="row clearfix progress-box">
             <div class="col-lg-12">
-                <a asp-action="Index">
+                @* <a asp-action="Index">
                     <button class="rounded-lg px-4 py-2 border-2 border-black-500 text-black-500 hover:bg-blue-600 hover:text-blue-100 duration-300">
                         ← Quay về lại danh sách
                     </button>
-                </a>
+                </a> *@
 
 
                 <div class="flex justify-center items-center h-screen ">
@@ -354,12 +354,11 @@
                                     <label asp-for="SupplierID" class="control-label"></label>
                                     <select asp-for="SupplierID" asp-items="ViewBag.Supplier" class="form-control"></select>
                                 </div>
-                                <div class="col-md-12">
-                                    <button value="Add" type="submit" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-violet dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
-                                        <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                                            Thêm
-                                        </span>
-                                    </button>
+                                <div class="col-md-12" style="padding-top:30px">
+                                    <div class="col-sm-9 text-secondary">
+                                        <button type="submit" value="Save" class="btn btn-primary text-white button">Thêm</button>
+                                        <button class="btn btn-primary"><a asp-action="Index" class=" text-white button"> ← Quay về lại danh sách</a></button>
+                                    </div>
 
                                 </div>
                             </form>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using WebBanHang.Models; // Thay thế "YourAppName" bằng namespace của ứng dụng của bạn
+using WebBanHang.Models; 
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Azure;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Drawing.Printing;
+using X.PagedList;
 
 
 namespace WebBanHang.Areas.Admin.Pages
@@ -25,7 +26,7 @@ namespace WebBanHang.Areas.Admin.Pages
 
         }
 
-        public IList<ApplicationUser> Users { get; set; }
+        public IPagedList<ApplicationUser> Users { get; set; }
 
         [BindProperty(SupportsGet = true)]
         public string SearchString { get; set; }
@@ -34,6 +35,12 @@ namespace WebBanHang.Areas.Admin.Pages
         public string SelectedRole { get; set; }
         [BindProperty(SupportsGet = true)]
         public string AccountStatus { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public int PageNumber { get; set; } = 1;
+
+        [BindProperty(SupportsGet = true)]
+        public int PageSize { get; set; } = 3;
 
         public async Task OnGetAsync()
         {
@@ -54,9 +61,9 @@ namespace WebBanHang.Areas.Admin.Pages
                 users = users.Where(u => u.IsLocked.ToString() == AccountStatus);
             }
 
-            Users = await users.ToListAsync();
-           
-          
+            Users = await users.ToPagedListAsync(PageNumber, PageSize);
+
+
         }
     }
 }
