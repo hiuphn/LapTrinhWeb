@@ -1,253 +1,141 @@
 ﻿@model ShoppingCart
 
 @{
-    decimal totalPrice = 0;
-}
-@foreach (var item in Model.Items)
-{
-
-   
-    
+    decimal totalPrice = Model.Items.Sum(item => item.Price * item.Quantity);
+    int totalQuantity = Model.Items.Sum(item => item.Quantity);
 }
 
-
-   @* <span>
- @foreach(var item in Model.Items){
-    totalPrice += item.Price * Convert.ToDecimal(item.Quantity);
-}
-@totalPrice.ToString();
-</span>
- *@
- @*
-    <h2>Your Cart</h2>
-<table>
-    <tr>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Total</th>
-    </tr>
-    @foreach (var item in Model.Items)
-    {
-        <tr>
-            <td>@item.Name</td>
-            <td>
-                <div class="form-group">
-                    <label asp-for="@item.Quantity" class="control-label"></label>
-                    <input asp-for="@item.Quantity" class="form-control quantity-input" data-price="@item.Price" />
-                    <span asp-validation-for="@item.Quantity" class="text-danger"></span>
-                </div>
-            </td>
-            <td>@item.Price</td>
-            <td class="item-total">@item.Price</td>
-            <td>
-                <a asp-action="RemoveFromCart" asp-route-productId="@item.ProductId">Remove</a>
-            </td>
-        </tr>
-    }
-    <tr>
-        <td colspan="3"></td>
-        <td>Total:</td>
-        <td id="cart-total">@Model.Items.Sum(item => item.Price * item.Quantity)</td>
-    </tr>
-</table> *@
 <div style="padding-top:100px; padding-left:50px">
-<section>
-    <!-- SinglePageHeader start -->
-    <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">Shop</h1>
-        <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="#">Giới Thiệu</a></li>
-            <li class="breadcrumb-item"><a href="#">Trang</a></li>
-            <li class="breadcrumb-item active text-white">Cửa Hàng</li>
-        </ol>
-    </div>
-    <!-- Single Page Header End -->
-<!-- Cart Page Start -->
-<div class="container-fluid py-5">
-    <div class="container py-5">
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr style="padding-top: -30">
-                        <th scope="col">Sản Phẩm</th>
-                        <th scope="col">Tên</th>
-                        <th scope="col">Giá</th>
+    <section>
+        <!-- SinglePageHeader start -->
+        <div class="container-fluid page-header py-5">
+            <h1 class="text-center text-white display-6">Shop</h1>
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="#">Giới Thiệu</a></li>
+                <li class="breadcrumb-item"><a href="#">Trang</a></li>
+                <li class="breadcrumb-item active text-white">Cửa Hàng</li>
+            </ol>
+        </div>
+        <!-- Single Page Header End -->
+        <!-- Cart Page Start -->
+        <div class="container-fluid py-5">
+            <div class="container py-5">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr style="padding-top: -30">
+                                <th scope="col">Sản Phẩm</th>
+                                <th scope="col">Tên</th>
+                                <th scope="col">Giá</th>
                                 <th scope="col" style="padding-left: 35px">Số Lượng</th>
-                        <th scope="col">Tổng</th>
-                        <th scope="col">Xử lý</th>
-                    </tr>
-                </thead>
-                    <h1>Số Lượng sản phẩm : @Model.Items.Count()</h1>
-                <tbody>
-                    @foreach (var item in Model.Items)
-                    {
-                            totalPrice = item.Price * item.Quantity;
-                        <tr>
-                            <th scope="row">
-                                <div class="d-flex align-items-center">
-                                    <img src="@item.ImageUrl" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
-                                </div>
-                            </th>
-                            <td>
-                                <p class="mb-0 mt-4">@item.Name</p>
-                            </td>
-                            <td>
+                                <th scope="col">Tổng</th>
+                                <th scope="col">Xử lý</th>
+                            </tr>
+                        </thead>
+                        <h1>Số Lượng sản phẩm : @totalQuantity</h1>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                decimal itemTotalPrice = item.Price * item.Quantity;
+                                <tr>
+                                    <th scope="row">
+                                        <div class="d-flex align-items-center">
+                                            <img src="@item.ImageUrl" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                        </div>
+                                    </th>
+                                    <td>
+                                        <p class="mb-0 mt-4">@item.Name</p>
+                                    </td>
+                                    <td>
                                         <p class="mb-0 mt-4">@item.Price.ToString("N0")₫</p>
-                            </td>
-                            <td>
-                                    <div class="form-group">
-                                        @* <label asp-for="@item.Quantity" class="control-label"></label> *@
-                                        @* <input asp-for="@item.Quantity" class="form-control quantity-input" data-price="@item.Price" /> *@
-                                        @* <span asp-validation-for="@item.Quantity" class="text-danger"></span> *@
-                                        @* <form id="quantityForm" method="post" action="@Url.Action("UpdateQuantity", "ShoppingCart")">
-                                            <div class="quantity-controls">
-                                                <button type="button" class="quantity-control-btn minus-btn" onclick="decreaseQuantity()"></button>
-                                                <input style="text-align: center" type="number" id="quantity" name="quantity" value="@item.Quantity" min="1" class="quantity-input" />
-                                                <button type="button" class="quantity-control-btn plus-btn" onclick="increaseQuantity()">+</button>
-                                            </div>
-                                            <input type="hidden" name="productId" value="@item.ProductId" />
-                                            <button type="submit" style="display: none;">Update</button>
-                                        </form>
-                                         *@
-                                        @* <form id="quantityForm" method="post" action="@Url.Action("UpdateQuantity", "ShoppingCart")">
-                                            <div class="quantity-controls">
-                                                <button type="button" class="quantity-control-btn minus-btn" onclick="decreaseQuantity()"></button>
-                                                <input type="number" id="quantity" name="quantity" value="@item.Quantity" min="1" class="quantity-input" />
-                                                <button type="button" class="quantity-control-btn plus-btn" onclick="increaseQuantity()">+</button>
-                                            </div>
-                                            <input type="hidden" name="productId" value="@item.ProductId" />
-                                            <button type="submit" style="display: none">Update</button>
-                                        </form> *@
-
-                                        <form id="quantityForm" method="post" action="@Url.Action("UpdateQuantity", "ShoppingCart")">
-                                            <div class="quantity-controls" style="padding-bottom:20px">
-                                                <div class="input-group quantity mb-5" style="width: 100px;">
-                                                    <div class="input-group-btn" >
-                                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                                            <i class="fa fa-minus"></i>
-                                                        </button>
-                                                    </div>
-                                                    <input type="text" id="quantity" name="quantity" value="@item.Quantity" min="1" class="form-control form-control-sm text-center border-0" value="1" style="padding-left10px">
-                                                    <div class="input-group-btn">
-                                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border" >
-                                                            <i class="fa fa-plus"></i>
-                                                        </button>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <form id="quantityForm" method="post" action="@Url.Action("UpdateQuantity", "ShoppingCart")">
+                                                <div class="quantity-controls" style="padding-bottom:20px">
+                                                    <div class="input-group quantity mb-5" style="width: 100px;">
+                                                        <div class="input-group-btn">
+                                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border" onclick="decreaseQuantity()">
+                                                                <i class="fa fa-minus"></i>
+                                                            </button>
+                                                        </div>
+                                                        <input type="number" id="quantity" name="quantity" value="@item.Quantity" min="1" class="form-control form-control-sm text-center border-0" style="padding-left10px">
+                                                        <div class="input-group-btn">
+                                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border" onclick="increaseQuantity()">
+                                                                <i class="fa fa-plus"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <input type="hidden" name="productId" value="@item.ProductId" />
-                                            <button type="submit" style="display: none">Update</button>
-                                        </form>
-                                    </div>
-                                
-                            </td>
-                            <td>
-                                        <p class="item-total" style="padding-top: 30px">@totalPrice.ToString("N0")₫</p>
-                                    
-                                    
-                            </td>
-                            <td>
-                                    <a asp-action="RemoveFromCart" asp-route-productId="@item.ProductId" class="btn btn-md rounded-circle bg-light border mt-4">
-                                    <i class="fa fa-times text-danger"></i>
-                                </a>
-                            </td>
-                        </tr>
-
-                    }
-                   
-                   
-                </tbody>
-            </table>
+                                                <input type="hidden" name="productId" value="@item.ProductId" />
+                                                <button type="submit" style="display: none">Update</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <p class="item-total" style="padding-top: 30px">@itemTotalPrice.ToString("N0")₫</p>
+                                    </td>
+                                    <td>
+                                        <a asp-action="RemoveFromCart" asp-route-productId="@item.ProductId" class="btn btn-md rounded-circle bg-light border mt-4">
+                                            <i class="fa fa-times text-danger"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                     <button class="btn border-secondary rounded-pill px-4 py-3 text-dark" type="button"><a asp-controller="ShoppingCart" asp-action="RemoveAll">Xóa Tất Cả</a></button>
-        </div>
-                @* <div class="mt-5">
-                    <form method="post" action="@Url.Action("ApplyDiscount", "ShoppingCart")">
-                        @Html.AntiForgeryToken()
-                        <select asp-items="ViewBag.DiscountCodes" class="form-control" name="discountCode"></select>
-                        <button class="btn btn-primary" type="submit">Apply Discount</button>
-                    </form>
-                </div> *@
-        <div class="row g-4 justify-content-end">
-            <div class="col-8"></div>
-            <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
-                <div class="bg-light rounded">
-                    <div class="p-4">
-                        <h1 class="display-6 mb-4">Giỏ hàng <span class="fw-normal">tổng giá</span></h1>
-                        <div class="d-flex justify-content-between mb-4">
-                            <h5 class="mb-0 me-4">Tổng phụ:</h5>
-                                    <p id="cart-total">@Model.Items.Sum(item => item.Price * item.Quantity).ToString("N0")₫</p>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <h5 class="mb-0 me-4">Phí vận chuyển</h5>
-                            <div class="">
-                                <p class="mb-0">Miễn Phí</p>
+                </div>
+                <div class="row g-4 justify-content-end">
+                    <div class="col-8"></div>
+                    <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
+                        <div class="bg-light rounded">
+                            <div class="p-4">
+                                <h1 class="display-6 mb-4">Giỏ hàng <span class="fw-normal">tổng giá</span></h1>
+                                <div class="d-flex justify-content-between mb-4">
+                                    <h5 class="mb-0 me-4">Tổng phụ:</h5>
+                                    <p id="cart-total">@totalPrice.ToString("N0")₫</p>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <h5 class="mb-0 me-4">Phí vận chuyển</h5>
+                                    <div>
+                                        <p class="mb-0">Miễn Phí</p>
+                                    </div>
+                                </div>
+                                <p class="mb-0 text-end">...</p>
                             </div>
+                            <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+                                <h5 class="mb-0 ps-4 me-4">Tổng</h5>
+                                <p class="mb-0 pe-4">@totalPrice.ToString("N0")₫</p>
+                            </div>
+                            <a asp-controller="ShoppingCart" asp-action="Checkout" class="position-relative me-4 my-auto">
+                                <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">Thanh Toán</button>
+                            </a>
                         </div>
-                        <p class="mb-0 text-end">...</p>
                     </div>
-                    <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                        <h5 class="mb-0 ps-4 me-4">Tổng</h5>
-                                <p class="mb-0 pe-4">@Model.Items.Sum(item => item.Price * item.Quantity).ToString("N0")₫</p>
-                    </div>
-                      <a asp-controller="ShoppingCart" asp-action="Checkout" class="position-relative me-4 my-auto">
-                    <button  class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button" >Thanh Toán</button>
-                    </a>
                 </div>
             </div>
         </div>
-    </div>
-        @* <script>
-            
-            var quantityInputs = document.getElementsByClassName('quantity-input');
-            Array.from(quantityInputs).forEach(function (input) {
-                input.addEventListener('change', function () {
-                    var quantity = parseInt(this.value);
-                    var price = parseFloat(this.getAttribute('data-price'));
-                    var itemTotal = quantity * price;
-                    this.closest('tr').querySelector('.item-total').textContent = itemTotal.toFixed(2);
-                    updateCartTotal();
-                });
-            });
-
-            function updateCartTotal() {
-                var itemTotals = document.getElementsByClassName('item-total');
-                var cartTotal = 0;
-                Array.from(itemTotals).forEach(function (itemTotal) {
-                    cartTotal += parseFloat(itemTotal.textContent);
-                });
-                document.getElementById('cart-total').textContent = cartTotal.toFixed(2);
-
-                // Lưu số lượng vào giỏ hàng
-                var cartQuantity = 0;
-                Array.from(quantityInputs).forEach(function (input) {
-                    var quantity = parseInt(input.value);
-                    if (!isNaN(quantity)) {
-                        cartQuantity += quantity;
-                    }
-                });
-                document.getElementById('cart-quantity').textContent = cartQuantity;
-            }
-            
-        </script> *@
-        <script>
-            
-                    function decreaseQuantity() {
-                var currentQuantity = parseInt(quantityInput.value);
-                if (currentQuantity > 1) {
-                    quantityInput.value = currentQuantity - 1;
-                    quantityForm.submit();
-                }
-            }
-
-            function increaseQuantity() {
-                var currentQuantity = parseInt(quantityInput.value);
-                quantityInput.value = currentQuantity + 1;
-                quantityForm.submit();
-            }
-        </script>
-
-</div>  
-</section>
-<!-- Cart Page End -->
+        <!-- Cart Page End -->
+    </section>
 </div>
+
+<script>
+    function decreaseQuantity() {
+        var quantityInput = document.getElementById('quantity');
+        var quantityForm = document.getElementById('quantityForm');
+        var currentQuantity = parseInt(quantityInput.value);
+        if (currentQuantity > 1) {
+            quantityInput.value = currentQuantity - 1;
+            quantityForm.submit();
+        }
+    }
+
+    function increaseQuantity() {
+        var quantityInput = document.getElementById('quantity');
+        var quantityForm = document.getElementById('quantityForm');
+        var currentQuantity = parseInt(quantityInput.value);
+        quantityInput.value = currentQuantity + 1;
+        quantityForm.submit();
+    }
+</script>
