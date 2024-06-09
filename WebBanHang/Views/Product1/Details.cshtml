@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <a id="addToCartLink" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@Model.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary">
-                            <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                            <i class="fa fa-shopping-bag me-2 text-primary"></i> Thêm vào giỏ
                         </a>
                         
                     </div>
@@ -141,7 +141,7 @@
                             <a href="@Url.Action("Details", "Product1", new { id = item.Id })" class="h5">@item.Name</a>
                             <div class="d-flex justify-content-between flex-lg-wrap">
                                         <a href="@Url.Action("Details", "Product1", new { id = item.Id })" class="text-dark fs-5 fw-bold">@item.Price.ToString("N0")₫</a>
-                                <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@Model.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@Model.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Thêm vào giỏ</a>
                             </div>
                         </div>
                     </div>
