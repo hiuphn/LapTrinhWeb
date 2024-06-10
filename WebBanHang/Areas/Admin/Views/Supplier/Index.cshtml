@@ -378,13 +378,13 @@
             <div class="col-lg-12">
                 <div class="card-box mb-30">
                     <div class="pd-20">
-                        <h4 class="text-blue h4">Thông tin các nhà cung cấp</h4>
+                        <h2 class="text-blue h2">Thông Tin Các Nhà Cung Cấp</h2>
 
                     </div>
                     <div class="pb-20">
                         <form method="get" asp-action="Index" id="pageSizeForm" class="page-size-form">
                             <div class="form-group d-flex align-items-center">
-                                <label for="pageSize" class="form-label"><strong>Trình bày</strong></label>
+                                <label for="pageSize" class="form-label"><h6>Trình bày</h6></label>
                                 <select id="pageSize" name="pageSize" class="form-select ml-2" onchange="submitPageSize();">
                                     <option value="10" selected="@(ViewBag.CurrentPageSize == 10)">10</option>
                                     <option value="20" selected="@(ViewBag.CurrentPageSize == 20)">20</option>

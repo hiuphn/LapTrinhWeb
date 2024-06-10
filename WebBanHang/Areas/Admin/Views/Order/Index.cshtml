@@ -396,22 +396,38 @@
                 <div class="card-box mb-30">
                     <div class="pd-20">
                         <div class="pd-20">
-                            <h4 class="text-blue h4">Quản lí đơn hàng</h4>
+                            <h2 class="text-blue h2">Quản Lí Đơn Hàng</h2>
 
                         </div>
-                        <form asp-action="Index" method="get">
+                        @* <form asp-action="Index" method="get">
                             <label for="date">Chọn ngày:</label>
                             <input type="date" id="date" name="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
                             <button type="submit" class="btn btn-outline-success btn-rounded" data-mdb-ripple-init data-mdb-ripple-color="dark"><i class="bi bi-eye"></i>Xem</button>
                            
 
+                        </form> *@
+                        <form method="get" action="/Admin/Order/Index">
+                            @* <div class="form-group">
+                                <label for="searchString">Search by Order ID:</label>
+                                <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control" />
+                            </div> *@
+                            <div class="form-group">
+                                <label for="filterDate"><h6>Chọn ngày:</h6></label>
+                               <input type="date" name="filterDate" value="@(((DateTime?)ViewData["CurrentFilterDate"])?.ToString("yyyy-MM-dd"))" class="form-control badge-soft-primary" style="width:200px" />
+                                <button type="submit" class="btn btn-outline-primary btn-rounded" data-mdb-ripple-init data-mdb-ripple-color="dark"><i class="bi bi-eye"></i>Xem</button>
+                            </div>
+                            @* <div class="form-group">
+                                <label for="pageSize">Page Size:</label>
+                                @Html.DropDownList("pageSize", ViewBag.PageSize as SelectList, new { @class = "form-control" })
+                            </div> *@
+                            @* <button type="submit" class="btn btn-primary">Filter</button> *@
                         </form>
 
                     </div>
-                    <div class="pb-20">
+                    <div class="pb-20" style="margin-top:-40px">
                         <form method="get" asp-action="Index" id="pageSizeForm" class="page-size-form">
                             <div class="form-group d-flex align-items-center">
-                                <label for="pageSize" class="form-label"><strong>Trình bày</strong></label>
+                                <label for="pageSize" class="form-label"><h6>Trình bày</h6></label>
                                 <select id="pageSize" name="pageSize" class="form-select ml-2" onchange="submitPageSize();">
                                     <option value="10" selected="@(ViewBag.CurrentPageSize == 10)">10</option>
                                     <option value="20" selected="@(ViewBag.CurrentPageSize == 20)">20</option>
