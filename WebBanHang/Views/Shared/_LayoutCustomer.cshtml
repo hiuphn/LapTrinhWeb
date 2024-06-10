@@ -1,4 +1,7 @@
-﻿
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,18 +71,17 @@
                                 <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                     <a href="/Product1/DisplayProducts?categoryId=1" class="dropdown-item">Quà sinh nhật</a>
                                     <a href="/Product1/DisplayProducts?categoryId=2" class="dropdown-item">Quà kỉ niệm</a>
-                                    <a href="/Product1/DisplayProducts?categoryId=3" class="dropdown-item">Quà tết</a>
-                                    <a href="/Product1/DisplayProducts?categoryId=4" class="dropdown-item">Quà Cho Người Yêu</a>
-                                    <a href="/Product1/DisplayProducts?categoryId=5" class="dropdown-item">Quà Cưới</a>
-                                    <a href="/Product1/DisplayProducts?categoryId=6" class="dropdown-item">Quà Tân Gia</a>
-                                    <a href="/Product1/DisplayProducts?categoryId=7" class="dropdown-item">Quà Giáng Sinh</a>
+                                    <a href="/Product1/DisplayProducts?categoryId=3" class="dropdown-item">Quà tết</a>        
+                                    <a href="/Product1/DisplayProducts?categoryId=4" class="dropdown-item">Quà Cưới</a>
+                                    <a href="/Product1/DisplayProducts?categoryId=5" class="dropdown-item">Quà Tân Gia</a>
+                                    <a href="/Product1/DisplayProducts?categoryId=6" class="dropdown-item">Quà Giáng Sinh</a>
 
                                 </div>
                             </div>
                             @if (User.IsInRole(SD.Role_Admin))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-item nav-link " asp-area="Admin" asp-controller="Product" asp-action="Index">AdminDashboard</a>
+                                    <a class="nav-item nav-link " asp-area="Admin" asp-controller="Product" asp-action="Index">Admin</a>
                                 </li>
                             }
 
@@ -98,7 +100,6 @@
                             <a class="position-relative me-4 my-auto" asp-controller="ShoppingCart" asp-action="Index">
                                 <i class="fa fa-shopping-bag fa-2x"></i>
                                 <span id="cart-count" class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1" style="top: -5px; left: 15px; height: 20px; min-width: 20px;">0</span>
-
                             </a>
                             <a href="#" class="my-auto">
                                 <partial name="_LoginPartial"></partial>
@@ -138,9 +139,6 @@
         @RenderBody()
 
     </div>
-
-
-
 
     @await Html.PartialAsync("_foodter")
 

@@ -48,7 +48,7 @@ namespace WebBanHang.Controllers
 
             return RedirectToAction("Index", new { orderId = order.Id });
         }
-        public IActionResult FilterOrders(DateTime? filterDate)
+        public IActionResult FilterOrders(DateTime? filterDate, string id)
         {
             List<Order> filteredOrders;
 

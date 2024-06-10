@@ -170,7 +170,7 @@ namespace WebBanHang.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Checkout(Order hoadon, string payment)
+        public async Task<IActionResult> Checkout(Order hoadon, string payment, int id)
         {
             var cart = HttpContext.Session.GetObjectFromJson<ShoppingCart>("Cart");
             if (cart == null || !cart.Items.Any())
