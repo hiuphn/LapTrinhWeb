@@ -1630,6 +1630,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Admin\NewFolder\" />
     <Folder Include="Components\" />
   </ItemGroup>
 
