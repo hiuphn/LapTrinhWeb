@@ -279,65 +279,112 @@
 
 
 <div class="main-container">
-    <div class="xs-pd-20-10 pd-ltr-20">
+<div class="xs-pd-20-10 pd-ltr-20">
 
-        <div class="row clearfix progress-box">
-            <div class="col-lg-12">
-                <a asp-action="Index">
-                    <button class="rounded-lg px-4 py-2 border-2 border-black-500 text-black-500 hover:bg-blue-600 hover:text-blue-100 duration-300">
-                        ← Quay về lại danh sách
-                    </button>
+    <div class="row clearfix progress-box">
+        <div class="col-lg-12">
+            <div style="padding-bottom:10px">
+                @* <a asp-action="Index" >
+                <button class="rounded-lg px-4 py-2 border-2 border-black-500 text-black-500 hover:bg-blue-600 hover:text-blue-100 duration-300">
+                ← Quay về lại danh sách
+                </button>
+                <button class="btn btn-primary"><a asp-action="Index" class=" text-white button"> ← Quay về lại danh sách</a></button>
                 </a>
+                </div> *@
 
 
                 <div class="flex justify-center items-center h-screen ">
                     <div class="container p-[20px] max-w-[700px] max-h-[500px] bg-white rounded-xl">
                         <div class="relative">
-                            <h1 class="text-[32px] font-bold">Tạo mới danh mục</h1>
+                            <h1 class="text-[32px] font-bold">Tạo mới nhân viên</h1>
                             <span class="absolute inline-block w-[70px] h-[4px] bg-gradient-to-r from-blue-500 to-fuchsia-500 rounded-xl"></span>
                         </div>
                         <div class="flex justify-center gap-10 mt-[10px]">
                             <form asp-action="Create" method="post" class="flex-wrap flex justify-around items-center" enctype="multipart/form-data">
+                                <div class="col-lg-8">
+                                    <div class="card">
+                                        <div class="card-body">
 
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="CompanyName" class="control-label">Tên công ty</label>
-                                    <input asp-for="CompanyName" class="form-control" />
-                                    <span asp-validation-for="CompanyName" class="text-danger"></span>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="Logo" class="control-label">Logo</label>
-                                    <input type="file" asp-for="Logo" class="form-control" />
-                                    <span asp-validation-for="Logo" class="text-danger"></span>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="Email" class="control-label">Email</label>
-                                    <input asp-for="Email" class="form-control" />
-                                    <span asp-validation-for="Email" class="text-danger"></span>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="SuplierPhone" class="control-label">Điện thoại</label>
-                                    <input asp-for="SuplierPhone" class="form-control" />
-                                    <span asp-validation-for="SuplierPhone" class="text-danger"></span>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="SupplierAddress" class="control-label">Địa chỉ</label>
-                                    <input asp-for="SupplierAddress" class="form-control" />
-                                    <span asp-validation-for="SupplierAddress" class="text-danger"></span>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="Description" class="control-label">Mô tả</label>
-                                    <input asp-for="Description" class="form-control" />
-                                    <span asp-validation-for="Description" class="text-danger"></span>
-                                </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Tên công ty</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    <input type="text" id="formValidationName" class="form-control" asp-for="CompanyName" class="form-control " />
 
-                                <div class="mt-[10px] w-full body">
-                                    <button type="submit" value="Create" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-violet dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
-                                        <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                                            Thêm
-                                        </span>
-                                    </button>
+                                                    <span asp-validation-for="CompanyName" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Logo</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
 
+                                                    <input type="file" id="formValidationName" class="form-control" asp-for="Logo" class="form-control" />
+                                                    <span asp-validation-for="Logo" class="text-danger"></span>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Email</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+
+                                                    <input type="text" id="formValidationName" class="form-control" asp-for="Email" class="form-control" />
+                                                    <span asp-validation-for="Email" class="text-danger"></span>
+
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Số điện thoại</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+
+                                                    <input type="number" id="formValidationName" class="form-control" asp-for="SuplierPhone" class="form-control" />
+                                                    <span asp-validation-for="SuplierPhone" class="text-danger"></span>
+
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Địa chỉ</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+
+                                                    <input id="formValidationName" class="form-control" asp-for="SupplierAddress" class="form-control" />
+                                                    <span asp-validation-for="SupplierAddress" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Mô tả</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+
+                                                    <input id="formValidationName" class="form-control" asp-for="Description" class="form-control" />
+                                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                                </div>
+                                            </div>                                           
+                                            <div class="row">
+                                                <div class="col-sm-3"></div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    <button type="submit" value="Save" class="btn btn-primary text-white button">Thêm</button>
+                                                    <button class="btn btn-primary"><a asp-action="Index" class=" text-white button"> ← Quay về lại danh sách</a></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="card">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </form>
                         </div>

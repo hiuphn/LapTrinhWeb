@@ -32,12 +32,12 @@ namespace WebBanHang.Areas.Admin.Controllers
                 discountsQuery = discountsQuery.Where(n => n.Code.ToLower().Contains(searchString.ToLower()));
             }
 
-            int defaultPageSize = pageSize ?? 10; // Default page size is 10 if not provided
+            int defaultPageSize = pageSize ?? 5; // Default page size is 10 if not provided
             int pageNumber = page ?? 1; // Default page number is 1 if not provided
 
             var pagedDiscounts = await discountsQuery.ToPagedListAsync(pageNumber, defaultPageSize);
 
-            ViewBag.PageSize = new SelectList(new List<int> { 10, 20, 50 }, defaultPageSize);
+            ViewBag.PageSize = new SelectList(new List<int> { 5, 20, 50 }, defaultPageSize);
             ViewBag.CurrentPageSize = defaultPageSize; // Update the value of ViewBag.CurrentPageSize
 
             return View(pagedDiscounts);

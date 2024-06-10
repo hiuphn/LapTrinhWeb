@@ -198,11 +198,41 @@
         margin-top: 10px;
         font-size: 13px;
     }
+    /* Input Password*/
+    .form-group {
+        margin: 20px;
+    }
+
+    .password-container {
+        position: relative;
+    }
+
+    .toggle-password {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+        color: #007bff;
+    }
+
+        .toggle-password:focus {
+            outline: none;
+        }
+
+        .toggle-password .fas {
+            pointer-events: none;
+        }
+    /* Input Password*/
 </style>
 <script>
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
+    
 </script>
 <div class="left-side-bar">
     <div class="brand-logo">
@@ -278,15 +308,19 @@
 
 
 <div class="main-container">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <div class="xs-pd-20-10 pd-ltr-20">
-
+        
         <div class="row clearfix progress-box">
             <div class="col-lg-12">
-                <a asp-action="Index">
-                    <button class="rounded-lg px-4 py-2 border-2 border-black-500 text-black-500 hover:bg-blue-600 hover:text-blue-100 duration-300">
+                <div style="padding-bottom:10px">
+                @* <a asp-action="Index" >
+                     <button class="rounded-lg px-4 py-2 border-2 border-black-500 text-black-500 hover:bg-blue-600 hover:text-blue-100 duration-300">
                         ← Quay về lại danh sách
-                    </button>
+                    </button> 
+                    <button class="btn btn-primary"><a asp-action="Index" class=" text-white button"> ← Quay về lại danh sách</a></button>
                 </a>
+                </div> *@
 
 
                 <div class="flex justify-center items-center h-screen ">
@@ -298,70 +332,133 @@
                         <div class="flex justify-center gap-10 mt-[10px]">
                             <form asp-action="Create" method="post" class="flex-wrap flex justify-around items-center" enctype="multipart/form-data">
 
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="StaffName">Họ Và Tên</label>
-                                    <input asp-for="StaffName" class="form-control" autocomplete="StaffName" aria-required="true" />
+                                <div class="col-lg-8">
+                                    <div class="card">
+                                        <div class="card-body">
 
-                                    <span asp-validation-for="StaffName" class="text-danger"></span>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="AvatarPath" class="control-label">Ảnh đại diện</label>
-                                    <input type="file" asp-for="AvatarPath" class="form-control" />
-                                    <span asp-validation-for="AvatarPath" class="text-danger"></span>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="Email" class="control-label">Email</label>
-                                    <input asp-for="Email" class="form-control" />
-                                    <span asp-validation-for="Email" class="text-danger"></span>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="Sex" class="control-label">Giới tính</label>
-                                    <div>
-                                        <input asp-for="Sex" type="radio" name="gender" value="True" />
-                                        <span>Nữ</span>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Họ và tên</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    <input type="text" id="formValidationName" class="form-control" asp-for="StaffName" class="form-control " />
+                                                    <span asp-validation-for="StaffName" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Email</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
 
+                                                    <input type="text" id="formValidationName" class="form-control" asp-for="Email" class="form-control" />
+                                                    <span asp-validation-for="Email" class="text-danger"></span>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Số điện thoại</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+
+                                                    <input type="text" id="formValidationName" class="form-control" asp-for="StaffPhone" class="form-control" />
+                                                    <span asp-validation-for="StaffPhone" class="text-danger"></span>
+
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Địa chỉ</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+
+                                                    <input type="text" id="formValidationName" class="form-control" asp-for="Address" class="form-control" />
+                                                    <span asp-validation-for="Address" class="text-danger"></span>
+
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Ngày sinh</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+
+                                                    <input type="date" id="formValidationName" class="form-control" asp-for="BirthDay" class="form-control" />
+                                                    <span asp-validation-for="BirthDay" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Mật khẩu</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">                
+                                                    <div class="password-container">
+                                                        <input asp-for="Password" type="password" id="password" class="form-control" placeholder="Nhập mật khẩu" />
+                                                        <button type="button" id="togglePassword" class="toggle-password">
+                                                            <i class="fas fa-eye" id="toggleIcon"></i>
+                                                        </button>
+                                                    </div>
+                                                    @* <input asp-for="Password" id="password-field" type="password" class="form-control" placeholder="Password" required>
+                                                    <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                                                    <span asp-validation-for="Password" class="text-danger"></span> *@                                                   
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Giới tính</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    <div>
+                                                        <div>
+                                                            <input asp-for="Sex" type="radio" name="gender" value="True" />
+                                                            <span>Nữ</span>
+
+                                                        </div>
+                                                        <div>
+                                                            <input asp-for="Sex" type="radio" name="gender" value="False" />
+                                                            <span>Nam</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <span asp-validation-for="Sex" class="text-danger"></span>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Chức vụ</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    <select asp-for="Position" class="form-control">
+                                                        <option value="">Chọn vai trò</option>
+                                                        <option value="Nhân viên">Nhân viên</option>
+                                                        <option value="Admin">Admin</option>
+                                                        <!-- Thêm các lựa chọn khác nếu cần -->
+                                                    </select>
+                                                    <span asp-validation-for="Position" class="text-danger"></span>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-3"></div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    <button type="submit" value="Save" class="btn btn-primary text-white button">Thêm</button>
+                                                    <button class="btn btn-primary"><a asp-action="Index" class=" text-white button"> ← Quay về lại danh sách</a></button>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
-                                    <div>
-                                        <input asp-for="Sex" type="radio" name="gender" value="False" />
-                                        <span>Nam</span>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="card">
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="Position" class="control-label">Chức vụ</label>
-                                    <select asp-for="Position" class="form-control">
-                                        <option value="Admin">Admin</option>
-                                        <option value="Nhân viên">Nhân viên</option>
-                                    </select>
-                                    <span asp-validation-for="Position" class="text-danger"></span>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="BirthDay" class="control-label">Ngày sinh</label>
-                                    <input type="date" asp-for="BirthDay" class="form-control" />
-                                    <span asp-validation-for="BirthDay" class="text-danger"></span>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="Address" class="control-label">Địa chỉ</label>
-                                    <input asp-for="Address" class="form-control" />
-                                    <span asp-validation-for="Address" class="text-danger"></span>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="StaffPhone" class="control-label">Số điện thoại</label>
-                                    <input asp-for="StaffPhone" class="form-control" />
-                                    <span asp-validation-for="StaffPhone" class="text-danger"></span>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label asp-for="Password" class="control-label">Mật khẩu</label>
-                                    <input asp-for="Password" class="form-control" />
-                                    <span asp-validation-for="Password" class="text-danger"></span>
-                                </div>
-                                <div class="mt-[10px] w-full body">
-                                    <button value="Create" type="submit" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-500 to-pink-500 group-hover:from-purple-500 group-hover:to-pink-500 hover:text-violet dark:text-white focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800">
-                                        <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                                            Thêm
-                                        </span>
-                                    </button>
-
                                 </div>
                             </form>
                         </div>
@@ -371,6 +468,18 @@
         </div>
 
     </div>
+    <script>
+        const passwordInput = document.getElementById('password');
+        const togglePasswordButton = document.getElementById('togglePassword');
+        const toggleIcon = document.getElementById('toggleIcon');
+
+        togglePasswordButton.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            toggleIcon.classList.toggle('fa-eye');
+            toggleIcon.classList.toggle('fa-eye-slash');
+        });
+    </script>
 </div>
 
 

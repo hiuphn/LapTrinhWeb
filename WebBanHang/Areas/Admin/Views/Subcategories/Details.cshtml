@@ -315,27 +315,22 @@
 
                                 <input type="hidden" asp-for="Id" /> <input type="hidden" asp-for="Id" />
 
-
+                                
                                 <div class="col-md-6">
                                     <dt class="form-label">
                                         <label class="" for="formValidationName">Tên danh mục con</label>
                                     </dt>
-                                    <dd class="col-sm-10 boder">
-                                        @Html.DisplayFor(model => model.Name)
-                                    </dd>
-
+                                    <input type="text" id="formValidationName" class="form-control" asp-for="Name" class="form-control" readonly/>
                                 </div>
                                 <div class="col-md-6">
                                     <dt class="form-label">
                                         <label class="" for="formValidationName">Tên danh mục </label>
                                     </dt>
-                                    <dd class="col-sm-10 boder">
-                                        @Html.DisplayFor(model => model.Category.Name)
-                                    </dd>
+                                    <input type="text" id="formValidationName" class="form-control" asp-for="Category.Name" class="form-control" readonly />
 
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-12" style="padding-top:20px">
                                     <button type="submit" name="submitButton" class="btn btn-primary text-white button"><a asp-action="Index" class=" text-white button"> Quay về danh sách</a></button>
                                     <button type="submit" name="submitButton" class="btn btn-primary text-white button"><a asp-action="Edit" class=" text-white button" asp-route-id="@Model?.Id"> Chỉnh sửa</a></button>
                                 </div>
