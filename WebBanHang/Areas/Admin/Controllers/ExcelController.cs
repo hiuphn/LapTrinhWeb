@@ -35,6 +35,7 @@ namespace WebBanHang.Areas.Admin.Controllers
                     sheet.Cells[row, 3].Value= item.OrderDate;
                     sheet.Cells[row, 4].Value=item.TotalPrice;
                     sheet.Cells[row, 5].Value=item.ShippingAddress;
+                    sheet.Cells[row, 3].Style.Numberformat.Format = "dd/MM/yyyy";
                     row++;
                 }
                 // Lưu

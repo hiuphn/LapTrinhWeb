@@ -17,7 +17,7 @@
             </div>
             <div class="modal-body d-flex align-items-center">
                 <div class="input-group w-75 mx-auto d-flex">
-                    <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                    <input type="search" class="form-control p-3" placeholder="từ khóa" aria-describedby="search-icon-1">
                     <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
                 </div>
             </div>
@@ -53,11 +53,11 @@
                         <p class="mb-3">Loại: @Model.Category.Name</p>
                         <h5 class="fw-bold mb-3">@Model.Price.ToString("N0")₫</h5>
                         <div class="d-flex mb-4">
+                            <i class="fa fa-star text-star"></i>
+                            <i class="fa fa-star text-star"></i>
+                            <i class="fa fa-star text-star"></i>
+                            <i class="fa fa-star text-star"></i>
                             <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star text-secondary"></i>
-                            <i class="fa fa-star"></i>
                         </div>
                         <p class="mb-4">@Model.Description</p>
                         
@@ -75,7 +75,7 @@
                             </div>
                         </div>
                         <a id="addToCartLink" asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@Model.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 text-primary">
-                            <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                            <i class="fa fa-shopping-bag me-2 text-primary"></i> Thêm vào giỏ
                         </a>
                         
                     </div>
@@ -86,10 +86,10 @@
             <div class="col-lg-4 col-xl-3" style="float: right">
                 <div class="row g-4 fruite">
                     <div class="col-lg-12">
-                        <div class="input-group w-100 mx-auto d-flex mb-4">
+                     @*    <div class="input-group w-100 mx-auto d-flex mb-4">
                             <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
                             <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                        </div>
+                        </div> *@
                         @await Component.InvokeAsync("MenuLoai")
                     </div>
                     <div class="col-lg-12">
@@ -141,7 +141,7 @@
                             <a href="@Url.Action("Details", "Product1", new { id = item.Id })" class="h5">@item.Name</a>
                             <div class="d-flex justify-content-between flex-lg-wrap">
                                         <a href="@Url.Action("Details", "Product1", new { id = item.Id })" class="text-dark fs-5 fw-bold">@item.Price.ToString("N0")₫</a>
-                                <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@Model.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@Model.Id" asp-route-quantity="@numOfQuantity" class="btn border border-secondary rounded-pill px-3 py-1 mb-4 text-primary"><i class="fa fa-shopping-bag"></i></a>
                             </div>
                         </div>
                     </div>

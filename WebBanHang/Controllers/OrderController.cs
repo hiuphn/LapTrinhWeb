@@ -14,11 +14,12 @@ namespace WebBanHang.Controllers
             _orderRepository = orderRepository;
         }
         
-        public IActionResult Index(int orderId)
+        public IActionResult Index(int orderId,string user)
         {
             // Lấy danh sách các đơn hàng đã mua, ví dụ từ cơ sở dữ liệu
-            var orders = _context.Orders.ToList();
 
+
+            var orders = _context.Orders.Where(n => n.UserId ==user).ToList();
             return View(orders);
         }
         
