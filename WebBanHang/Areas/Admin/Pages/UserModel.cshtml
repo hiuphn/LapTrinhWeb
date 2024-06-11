@@ -265,8 +265,8 @@
     }
 
     .badge-soft-warning {
-        color: #ffd24d !important;
-        background-color: rgba(255, 300, 77,.1);
+        color: #bfba0f !important;
+        background-color: rgba(191, 186, 15,.1);
     }
 
     /* Thiết kế lại form */
@@ -306,6 +306,7 @@
         display: flex;
         align-items: center;
     }
+    
 </style>
 <script>
     $(document).ready(function () {
@@ -386,80 +387,61 @@
 </div>
 <div class="mobile-menu-overlay"></div>
 
+
 <div class="main-container">
     <div class="xs-pd-20-10 pd-ltr-20">
-       
         <div class="row clearfix progress-box">
             <div class="col-lg-12">
                 <div class="card-box mb-30">
                     <div class="pd-20">
-                        <h4 class="text-blue h4">Quản lý tài khoản</h4>
+                        <h2 class="text-blue h2">Quản Lý Tài Khoản</h2>
 
-                    
-                    @* <form method="get" id="filterForm">
-                        <div class="form-group mb-0 d-flex align-items-center">
-                            <select class="form-select ml-2" name="SelectedRole" onchange="document.getElementById('filterForm').submit();">
-                                <option value="">Chọn chức vụ</option>
-                                <option value="Admin" Model.SelectedRole="Admin">Admin</option>
-
-                                <option value="Khách hàng" Model.SelectedRole="Khách hàng">Khách hàng</option>
-                                <!-- Thêm các chức vụ khác nếu cần -->
-                            </select>
-                            <select class="form-select ml-2" name="AccountStatus" onchange="document.getElementById('filterForm').submit();" >
-                                <option value="">Chọn trạng thái tài khoản</option>
-                                <option value="true" Model.AccountStatus="true">Đã bị khóa</option>
-                                <option value="false" Model.AccountStatus="false">Chưa bị khóa</option>
-                            </select>
-                        </div>
-                    </form> *@
-                    <form method="get" id="filterForm" class="filter-form">
-                        <div class="form-group mb-0 d-flex align-items-center">
-                            <select class="form-select ml-2" name="SelectedRole" onchange="document.getElementById('filterForm').submit();">
-                                <option value="">Chức vụ</option>
-                                <option value="Admin" Model.SelectedRole="Admin">Admin</option>
-                                <option value="Khách hàng" Model.SelectedRole="Khách hàng">Khách hàng</option>
-                                <!-- Thêm các chức vụ khác nếu cần -->
-                            </select>
-                            <select class="form-select ml-2" name="AccountStatus" onchange="document.getElementById('filterForm').submit();">
-                                <option value="">Trạng thái tài khoản</option>
-                                <option value="true" Model.AccountStatus="true">Đã bị khóa</option>
-                                <option value="false" Model.AccountStatus="false">Chưa bị khóa</option>
-                            </select>
-                        </div>
-                    </form>
+                        <form method="get" id="filterForm" class="filter-form">
+                            <div class="form-group mb-0 d-flex align-items-center">
+                                <select class="form-select ml-2" name="SelectedRole" onchange="document.getElementById('filterForm').submit();">
+                                    <option value="">Chức vụ</option>
+                                    <option value="Admin" Model.SelectedRole="Admin">Admin</option>
+                                    <option value="Khách hàng" Model.SelectedRole="Khách hàng">Khách hàng</option>
+                                    <!-- Thêm các chức vụ khác nếu cần -->
+                                </select>
+                                <select class="form-select ml-2" name="AccountStatus" onchange="document.getElementById('filterForm').submit();">
+                                    <option value="">Trạng thái tài khoản</option>
+                                    <option value="true" Model.AccountStatus="true">Đã bị khóa</option>
+                                    <option value="false" Model.AccountStatus="false">Chưa bị khóa</option>
+                                </select>
+                            </div>
+                        </form>
                     </div>
-                    
+
                     <div class="pb-20">
-                        
                         <div class="table-responsive">
                             <table class="table project-list-table table-nowrap align-middle table-borderless">
                                 <thead>
                                     <tr>
                                         <th scope="col">Tên</th>
-                                        <th scope="col style="text-align">Email</th>
+                                        <th scope="col">Email</th>
                                         <th scope="col">Số Điện Thoại</th>
                                         <th scope="col">Địa chỉ</th>
                                         <th scope="col">Chức vụ</th>
-                                        <th scope="col">Khóa  </th>
+                                        <th scope="col">Khóa</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (var item in Model.Users)
                                     {
-                                        <tr >
-
-                                            <td ><span class="badge badge-soft-success mb-0">@item.FullName</span></td>
-                                            <td><span class="badge badge-soft-success mb-0">@item.Email</span></td>
+                                        <tr>
+                                            <td><span class="badge badge-soft-success mb-0">@item.FullName</span></td>
+                                            <td><span class="badge badge-soft-primary mb-0">@item.Email</span></td>
                                             <td><span class="badge badge-soft-info mb-0">@item.PhoneNumber</span></td>
                                             <td><span class="badge badge-soft-warning mb-0">@item.Address</span></td>
-                                            <td><span class="badge badge-soft-danger mb-0">@item.ChucVu</span></td> 
+                                            <td><span class="badge badge-soft-danger mb-0">@item.ChucVu</span></td>
                                             <td>
-                                                <ul class="list-inline mb-0" >
+                                                <ul class="list-inline mb-0">
                                                     @if (!item.IsLocked)
                                                     {
                                                         <li class="list-inline-item">
                                                             <a asp-page="banedModel" asp-route-id="@item.Id" data-bs-toggle="tooltip" data-bs-placement="top" title="Khóa Tài khoản" class="px-2 text-danger">
-                                                                <i class="bi bi-lock"></i>Khóa
+                                                                <i class="bi bi-lock"></i> Khóa
                                                             </a>
                                                         </li>
                                                     }
@@ -475,15 +457,37 @@
                                             </td>
                                         </tr>
                                     }
-
                                 </tbody>
                             </table>
                         </div>
+
+                        <!-- Pagination controls -->
+                        <nav>
+                            <ul class="pagination justify-content-center">
+                                @if (Model.Users.HasPreviousPage)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" asp-route-pageNumber="@(Model.Users.PageNumber - 1)" asp-route-pageSize="@(Model.PageSize)">←</a>
+                                    </li>
+                                }
+                                @for (int i = 1; i <= Model.Users.PageCount; i++)
+                                {
+                                    <li class="page-item @(Model.Users.PageNumber == i ? "active" : "")">
+                                        <a class="page-link" asp-route-pageNumber="@i" asp-route-pageSize="@(Model.PageSize)">@i</a>
+                                    </li>
+                                }
+                                @if (Model.Users.HasNextPage)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" asp-route-pageNumber="@(Model.Users.PageNumber + 1)" asp-route-pageSize="@(Model.PageSize)">→</a>  
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 @section Scripts {
@@ -503,4 +507,5 @@
             });
         });
     </script>
+    
 }

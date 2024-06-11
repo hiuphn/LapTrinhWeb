@@ -36,12 +36,12 @@ namespace WebBanHang.Areas.Admin.Controllers
                 staffsQuery = staffsQuery.Where(n => n.StaffName.ToString().Contains(searchString.ToLower()));
             }
 
-            int defaultPageSize = pageSize ?? 10; // Default page size is 10 if not provided
+            int defaultPageSize = pageSize ?? 2; // Default page size is 10 if not provided
             int pageNumber = page ?? 1; // Default page number is 1 if not provided
 
             var pagedStaffs = await staffsQuery.ToPagedListAsync(pageNumber, defaultPageSize);
 
-            ViewBag.PageSize = new SelectList(new List<int> { 10, 20, 50 }, defaultPageSize);
+            ViewBag.PageSize = new SelectList(new List<int> { 2, 20, 50 }, defaultPageSize);
             ViewBag.CurrentPageSize = defaultPageSize; // Update the value of ViewBag.CurrentPageSize
 
             return View(pagedStaffs);

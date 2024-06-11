@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using WebBanHang.Models;
 using X.PagedList;
 
@@ -13,14 +14,22 @@ namespace WebBanHang.Areas.Admin.Controllers
     {
 
         private readonly ApplicationDbContext _context;
-        public OrderController(ApplicationDbContext context)
+        private readonly OrderRepository _orderRepository;
+        public OrderController(ApplicationDbContext context, OrderRepository orderRepository)
         {
             _context = context;
-
+            _orderRepository = orderRepository;
         }
-        public async Task<IActionResult> Index(string searchString, int? page, int? pageSize)
+        private string GetUserId()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier);
+        }
+        public async Task<IActionResult> Index(string searchString, DateTime? filterDate, int? page, int? pageSize)
         {
             ViewData["CurrentFilter"] = searchString;
+            ViewData["CurrentFilterDate"] = filterDate;
+            int defaultPageSize = pageSize ?? 10; // Default page size is 10 if not provided
+            int pageNumber = page ?? 1; // Default page number is 1 if not provided
 
             var ordersQuery = _context.Orders.AsQueryable();
 
@@ -29,13 +38,15 @@ namespace WebBanHang.Areas.Admin.Controllers
                 ordersQuery = ordersQuery.Where(n => n.Id.ToString().Contains(searchString.ToLower()));
             }
 
-            int defaultPageSize = pageSize ?? 10; // Default page size is 10 if not provided
-            int pageNumber = page ?? 1; // Default page number is 1 if not provided
+            if (filterDate.HasValue)
+            {
+                ordersQuery = ordersQuery.Where(o => o.OrderDate.Date == filterDate.Value.Date);
+            }
 
             var pagedOrders = await ordersQuery.ToPagedListAsync(pageNumber, defaultPageSize);
 
             ViewBag.PageSize = new SelectList(new List<int> { 10, 20, 50 }, defaultPageSize);
-            ViewBag.CurrentPageSize = defaultPageSize; // Update the value of ViewBag.CurrentPageSize
+            ViewBag.CurrentPageSize = defaultPageSize;
 
             return View(pagedOrders);
         }
@@ -98,6 +109,35 @@ namespace WebBanHang.Areas.Admin.Controllers
             await _context.SaveChangesAsync();
 
             return Ok();
+        }
+        public IActionResult FilterOrders(DateTime? filterDate)
+        {
+            /*List<Order> filteredOrders;
+
+            if (filterDate.HasValue)
+            {
+                // Lọc đơn hàng theo ngày tháng
+                filteredOrders = _orderRepository.GetOrdersByDate(filterDate.Value);
+            }
+            else
+            {
+                // Lấy tất cả đơn hàng
+                filteredOrders = _orderRepository.GetAllOrders();
+            }
+
+            return View("Index", filteredOrders);*/
+
+            var filteredOrders = _context.Orders.AsQueryable();
+
+            if (filterDate.HasValue)
+            {
+                filteredOrders = filteredOrders
+                    .Where(o => o.OrderDate.Date == filterDate.Value.Date);
+            }
+
+            var result = filteredOrders.ToList();
+
+            return View("Index", result);
         }
 
         private bool HoaDonExists(int id)

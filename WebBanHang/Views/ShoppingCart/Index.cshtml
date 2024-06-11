@@ -50,7 +50,7 @@
                                         <p class="mb-0 mt-4">@item.Price.ToString("N0")₫</p>
                                     </td>
                                     <td>
-                                        <div class="form-group">
+                                        <div class="form-group" style="padding-left:25px">
                                             <form id="quantityForm" method="post" action="@Url.Action("UpdateQuantity", "ShoppingCart")">
                                                 <div class="quantity-controls" style="padding-bottom:20px">
                                                     <div class="input-group quantity mb-5" style="width: 100px;">
@@ -59,7 +59,7 @@
                                                                 <i class="fa fa-minus"></i>
                                                             </button>
                                                         </div>
-                                                        <input type="number" id="quantity" name="quantity" value="@item.Quantity" min="1" class="form-control form-control-sm text-center border-0" style="padding-left10px">
+                                                        <input type="text" id="quantity" name="quantity" value="@item.Quantity" min="1" class="form-control form-control-sm text-center border-0" style="padding-left10px">
                                                         <div class="input-group-btn">
                                                             <button class="btn btn-sm btn-plus rounded-circle bg-light border" onclick="increaseQuantity()">
                                                                 <i class="fa fa-plus"></i>
@@ -121,9 +121,24 @@
 </div>
 
 <script>
+    // function decreaseQuantity() {
+    //     var quantityInput = document.getElementById('quantity');
+    //     var quantityForm = document.getElementById('quantityForm');
+    //     var currentQuantity = parseInt(quantityInput.value);
+    //     if (currentQuantity > 1) {
+    //         quantityInput.value = currentQuantity - 1;
+    //         quantityForm.submit();
+    //     }
+    // }
+
+    // function increaseQuantity() {
+    //     var quantityInput = document.getElementById('quantity');
+    //     var quantityForm = document.getElementById('quantityForm');
+    //     var currentQuantity = parseInt(quantityInput.value);
+    //     quantityInput.value = currentQuantity + 1;
+    //     quantityForm.submit();
+    // }
     function decreaseQuantity() {
-        var quantityInput = document.getElementById('quantity');
-        var quantityForm = document.getElementById('quantityForm');
         var currentQuantity = parseInt(quantityInput.value);
         if (currentQuantity > 1) {
             quantityInput.value = currentQuantity - 1;
@@ -132,8 +147,6 @@
     }
 
     function increaseQuantity() {
-        var quantityInput = document.getElementById('quantity');
-        var quantityForm = document.getElementById('quantityForm');
         var currentQuantity = parseInt(quantityInput.value);
         quantityInput.value = currentQuantity + 1;
         quantityForm.submit();

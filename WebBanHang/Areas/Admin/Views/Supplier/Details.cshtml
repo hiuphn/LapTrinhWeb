@@ -210,6 +210,32 @@
     .boder {
         border: 1.5px solid black;
     }
+
+    .badge-soft-danger {
+        color: #f56e6e !important;
+        background-color: rgba(245,110,110,.1);
+    }
+
+    .badge-soft-success {
+        color: #63ad6f !important;
+        background-color: rgba(99,173,111,.1);
+    }
+
+    .badge-soft-primary {
+        color: #3b76e1 !important;
+        background-color: rgba(59,118,225,.1);
+    }
+
+
+    .badge-soft-info {
+        color: #57c9eb !important;
+        background-color: rgba(87,201,235,.1);
+    }
+
+    .badge-soft-warning {
+        color: #bfba0f !important;
+        background-color: rgba(191, 186, 15,.1);
+    }
     /* Profile */
            
     .card {
@@ -317,7 +343,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="~/images/image.png" alt="Ảnh nhà cung cấp" class="rounded-circle p-1 bg-primary" style="height:110px;width:110px">
+                            <img src="@Html.DisplayFor(model => model.Logo)" alt="Ảnh nhà cung cấp" class="rounded-circle p-1 bg-primary" style="height:110px;width:110px">
                             <div class="mt-3">
                                 <h4>@Html.DisplayFor(model => model.CompanyName)</h4>
                                 
@@ -377,7 +403,7 @@
                                 <h6 class="mb-0">Địa chỉ</h6>
                             </div>
                             <div class="col-sm-9 text-secondary">
-                                <td><span class="badge badge-soft-info mb-0">@Html.DisplayFor(model => model.Description)</span></td>
+                                <td><span class="badge badge-soft-primary mb-0">@Html.DisplayFor(model => model.Description)</span></td>
 
                                 <span asp-validation-for="Description" class="text-danger"></span>
 

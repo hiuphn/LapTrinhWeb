@@ -32,17 +32,24 @@
                             </div>
 
                         <div class="form-item">
-                            <label asp-for="CustomerName" class="form-label my-3">Tên khách hàng <sup>*</sup></label>
+                            <label asp-for="CustomerName" class="form-label my-3">Tên khách hàng <sup></sup></label>
                             <input asp-for="CustomerName" type="text" class="form-control" placeholder="Tên Khách Hàng">
+                            
                         </div>
                             <div class="form-item">
                         <label asp-for="ShippingAddress" class="form-label my-3">Địa chỉ <sup>*</sup></label>
                         <input asp-for="ShippingAddress" type="text" class="form-control" placeholder="Địa chỉ">
+                            <span asp-validation-for="ShippingAddress" class="text-danger"></span>
                             </div>
-                            
+                        <div class="form-item">
+                            <label asp-for="PhoneCheckout" class="form-label my-3">Số điện thoại <sup>*</sup></label>
+                            <input asp-for="PhoneCheckout" type="number" class="form-control" placeholder="Số điện thoại">
+                            <span asp-validation-for="PhoneCheckout" class="text-danger"></span>
+                        </div>
                             <div class="form-item">
                             <label asp-for="Notes">Ghi Chú</label><br />
                         <textarea asp-for="Notes" class="form-control"  placeholder="Ghi chú cho đơn hàng"></textarea>
+                            
                             </div>
                             <div class="form-item">
                             <form method="post" action="@Url.Action("ApplyDiscount", "ShoppingCart")">
@@ -157,3 +164,6 @@
 }
 
 </script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

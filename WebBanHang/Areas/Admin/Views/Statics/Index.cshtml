@@ -364,10 +364,10 @@
                 <div class="card-box mb-30">
                   
                     <div class="pb-20">
-                        <form asp-controller="Statics" asp-action="Index" method="post">
+                        @* <form asp-controller="Statics" asp-action="Index" method="post">
                             <input name="year" type="number" id="inputYear" min="1900" max="2100" placeholder="Nhập năm..." >
                             <button type="submit">Xem doanh thu</button>
-                        </form>
+                        </form> *@
                         @if (year.HasValue)
                         {
                             <div class="container-fluid pt-4 px-4">
@@ -377,7 +377,7 @@
                                             <i class="fa fa-chart-bar fa-3x text-primary"></i>
                                             <div class="ms-3">
                                                 <p class="mb-2">Tổng doanh thu của năm @(year.Value)</p>
-                                                <h6 class="mb-0">@totalRevenue.Value.ToString("C", cultureInfo)</h6>
+                                                <h6 class="mb-0">@totalRevenue.Value.ToString("C0", cultureInfo)</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -414,7 +414,7 @@
                                             <i class="fa fa-chart-bar fa-3x text-primary"></i>
                                             <div class="ms-3">
                                                 <p class="mb-2">Tổng doanh thu </p>
-                                                <h6 class="mb-0">@totalRevenue.Value.ToString("C", cultureInfo)</h6>
+                                                <h6 class="mb-0">@totalRevenue.Value.ToString("C0", cultureInfo)</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -429,10 +429,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>
+                            @* <div>
                                 <h4 class="text-blue h4 " style="text-align:center">Biểu đồ thống kê các loại hàng hóa đã bán  </h4>
                                 <canvas id="productSalesChart2"></canvas>
-                            </div>
+                            </div> *@
                         }
                       
                         

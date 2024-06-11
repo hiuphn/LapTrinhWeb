@@ -46,7 +46,7 @@ namespace WebBanHang.Areas.Admin.Controllers
 
             var pagedCustomers = await customersQuery.ToPagedListAsync(pageNumber, defaultPageSize);
 
-            ViewBag.PageSize = new SelectList(new List<int> { 10, 20, 50 }, defaultPageSize);
+            ViewBag.PageSize = new SelectList(new List<int> { 1, 20, 50 }, defaultPageSize);
             ViewBag.CurrentPageSize = defaultPageSize; // Update the value of ViewBag.CurrentPageSize
 
             return View(pagedCustomers);
