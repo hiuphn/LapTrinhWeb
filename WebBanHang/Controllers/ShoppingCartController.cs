@@ -183,6 +183,10 @@ namespace WebBanHang.Controllers
                 var user = await _userManager.GetUserAsync(User);
                 hoadon.UserId = user.Id;
                 hoadon.OrderDate = DateTime.UtcNow;
+                if(hoadon.CustomerName== null)
+                {
+                    hoadon.CustomerName = user.FullName;
+                }
                 hoadon.TotalPrice = cart.Items.Sum(i => i.Price * i.Quantity);
                 hoadon.OrderDetails = cart.Items.Select(i => new OrderDetail
                 {
