@@ -187,6 +187,14 @@ namespace WebBanHang.Controllers
                 {
                     hoadon.CustomerName = user.FullName;
                 }
+                if (hoadon.ShippingAddress == null)
+                {
+                    hoadon.ShippingAddress = user.Address;
+                }
+                if (hoadon.PhoneCheckout == null)
+                {
+                    hoadon.PhoneCheckout = user.PhoneNumber;
+                }
                 hoadon.TotalPrice = cart.Items.Sum(i => i.Price * i.Quantity);
                 hoadon.OrderDetails = cart.Items.Select(i => new OrderDetail
                 {

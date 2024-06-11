@@ -12,8 +12,8 @@ using WebBanHang.Models;
 namespace WebBanHang.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240611010108_connect")]
-    partial class connect
+    [Migration("20240611030932_connecr")]
+    partial class connecr
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -376,7 +376,6 @@ namespace WebBanHang.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ShippingAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("StaffId")

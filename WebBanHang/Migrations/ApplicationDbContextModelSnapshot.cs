@@ -373,7 +373,6 @@ namespace WebBanHang.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ShippingAddress")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("StaffId")

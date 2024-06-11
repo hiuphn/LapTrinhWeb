@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebBanHang.Migrations
 {
     /// <inheritdoc />
-    public partial class connect : Migration
+    public partial class connecr : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -337,7 +337,7 @@ namespace WebBanHang.Migrations
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ShippingAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShippingAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneCheckout = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DiscountId = table.Column<int>(type: "int", nullable: true),

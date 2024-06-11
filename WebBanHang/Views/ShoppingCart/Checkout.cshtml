@@ -30,19 +30,22 @@
                             <div class="row">
                                 
                             </div>
+                        <div class="form-item">
+                            <span>Nếu bạn muốn gửi về địa chỉ khác vui lòng điền thông tin vào bên dưới</span>
 
+                        </div>
                         <div class="form-item">
                             <label asp-for="CustomerName" class="form-label my-3">Tên khách hàng <sup></sup></label>
                             <input asp-for="CustomerName" type="text" class="form-control" placeholder="Tên Khách Hàng">
                             
                         </div>
                             <div class="form-item">
-                        <label asp-for="ShippingAddress" class="form-label my-3">Địa chỉ <sup>*</sup></label>
+                        <label asp-for="ShippingAddress" class="form-label my-3">Địa chỉ <sup></sup></label>
                         <input asp-for="ShippingAddress" type="text" class="form-control" placeholder="Địa chỉ">
                             <span asp-validation-for="ShippingAddress" class="text-danger"></span>
                             </div>
                         <div class="form-item">
-                            <label asp-for="PhoneCheckout" class="form-label my-3">Số điện thoại <sup>*</sup></label>
+                            <label asp-for="PhoneCheckout" class="form-label my-3">Số điện thoại <sup></sup></label>
                             <input asp-for="PhoneCheckout" type="number" class="form-control" placeholder="Số điện thoại">
                             <span asp-validation-for="PhoneCheckout" class="text-danger"></span>
                         </div>

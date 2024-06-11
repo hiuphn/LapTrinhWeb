@@ -11,11 +11,11 @@ namespace WebBanHang.Models
 		public DateTime OrderDate { get; set; }
 		public decimal TotalPrice { get; set; }
         public string? CustomerName {  get; set; }
-		public string ShippingAddress { get; set; }
+		public string? ShippingAddress { get; set; }
         
-        [Required(ErrorMessage = "Vui lòng nhập số điện thoại")]
+       
         [RegularExpression(@"^(0|\+84)[3|5|7|8|9]\d{8}$", ErrorMessage = "Số điện thoại không hợp lệ")]
-        public string PhoneCheckout { get; set; }
+        public string? PhoneCheckout { get; set; }
 		public string? Notes { get; set; }
         public int? DiscountId { get; set; }
         public Discount Discount { get; set; }
