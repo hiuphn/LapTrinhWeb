@@ -50,9 +50,9 @@
                                         <p class="mb-0 mt-4">@item.Price.ToString("N0")₫</p>
                                     </td>
                                     <td>
-                                        <div class="form-group" style="padding-left:25px">
+                                        @* <div class="form-group" style="padding-left:150px"> *@
                                             <form id="quantityForm" method="post" action="@Url.Action("UpdateQuantity", "ShoppingCart")">
-                                                <div class="quantity-controls" style="padding-bottom:20px">
+                                                <div class="mb-0 mt-4" style="padding-bottom:20px;padding-left:170px">
                                                     <div class="input-group quantity mb-5" style="width: 100px;">
                                                         <div class="input-group-btn">
                                                             <button class="btn btn-sm btn-minus rounded-circle bg-light border" onclick="decreaseQuantity()">
@@ -70,7 +70,7 @@
                                                 <input type="hidden" name="productId" value="@item.ProductId" />
                                                 <button type="submit" style="display: none">Update</button>
                                             </form>
-                                        </div>
+                                        @* </div> *@
                                     </td>
                                     <td>
                                         <p class="item-total" style="padding-top: 30px">@itemTotalPrice.ToString("N0")₫</p>

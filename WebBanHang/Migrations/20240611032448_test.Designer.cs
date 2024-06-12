@@ -12,8 +12,8 @@ using WebBanHang.Models;
 namespace WebBanHang.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240611030932_connecr")]
-    partial class connecr
+    [Migration("20240611032448_test")]
+    partial class test
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -369,7 +369,6 @@ namespace WebBanHang.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PhoneCheckout")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhuongThucThanhToan")

@@ -18,6 +18,7 @@ namespace WebBanHang.Areas.Admin.Controllers
         {
             var data = _context.Orders.ToList();
             var stream= new MemoryStream();
+            ExcelPackage.LicenseContext = LicenseContext.Commercial;
             using (var package = new ExcelPackage(stream))
             {
                 var sheet = package.Workbook.Worksheets.Add("Order");
