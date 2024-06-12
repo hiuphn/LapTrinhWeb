@@ -35,7 +35,7 @@ namespace WebBanHang.Areas.Admin.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                ordersQuery = ordersQuery.Where(n => n.Id.ToString().Contains(searchString.ToLower()));
+                ordersQuery = ordersQuery.Where(n => n.CustomerName.ToString().Contains(searchString.ToLower()));
             }
 
             if (filterDate.HasValue)

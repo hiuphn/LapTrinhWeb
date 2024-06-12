@@ -226,8 +226,7 @@ namespace WebBanHang.Controllers
                                                 $"Bạn đã thanh toán thành công Hóa đơn .<br><br> " +
                                                 $"Bạn đã thanh toán thành công hóa đơn vào lúc {currentTime}.<br><br>" +
                                                 $"Tổng tiền đã thanh toán là {TongTien.ToString("C", new CultureInfo("vi-VN"))}<br><br>" +
-                                                $"Đơn hàng sẽ sớm về với bạn.<br><br>" +
-                                                $"Thông tin chi tiết:<br><br>";
+                                                $"Đơn hàng sẽ sớm về với bạn.<br><br>" ;
 
                     hoadon.PhuongThucThanhToan = "VN-PAY";
                     await _context.SaveChangesAsync();
@@ -240,8 +239,7 @@ namespace WebBanHang.Controllers
                                                 $"BẠN CÓ HÓA ĐƠN CẦN THANH TOÁN .<br><br> " +
                                                 $"Bạn đã đặt đơn hàng thành công vào lúc {currentTime}.<br><br>" +
                                                 $"Tổng tiền chưa thanh toán là {TongTien.ToString("C", new CultureInfo("vi-VN"))}<br><br>" +
-                                                $"Bạn cần thanh toán số tiền khi nhận được hàng.<br><br>" +
-                                                $"Thông tin chi tiết:<br><br>";
+                                                $"Bạn cần thanh toán số tiền khi nhận được hàng.<br><br>" ;
 
                     hoadon.PhuongThucThanhToan = "COD";
                     await _context.SaveChangesAsync();

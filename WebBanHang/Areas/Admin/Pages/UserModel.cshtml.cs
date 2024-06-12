@@ -40,7 +40,7 @@ namespace WebBanHang.Areas.Admin.Pages
         public int PageNumber { get; set; } = 1;
 
         [BindProperty(SupportsGet = true)]
-        public int PageSize { get; set; } = 3;
+        public int PageSize { get; set; } = 10;
 
         public async Task OnGetAsync()
         {

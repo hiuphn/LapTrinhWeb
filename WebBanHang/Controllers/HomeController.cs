@@ -19,7 +19,7 @@ namespace WebBanHang.Controllers
 		public async Task<IActionResult> Index()
 		{
             var products = await _productRespository.GetAllAsync();
-            ViewBag.productss = products.Take(20);
+            ViewBag.productss = products.Take(16);
             ViewBag.productsss = products.Take(20);
             List<Product> cars = products.Where(p => p.Category.Name == "Quà Sinh Nhật").Take(6).ToList();
             ViewBag.Cars = cars;
